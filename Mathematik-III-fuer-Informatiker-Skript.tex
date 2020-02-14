@@ -1,0 +1,2481 @@
+	\documentclass[a4paper,11pt]{article}
+
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+\usepackage{stmaryrd}
+\usetikzlibrary{arrows.meta}
+\usepackage{cancel}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{satz}[definition]{Satz}
+\newtheorem{bsp}[definition]{Beispiel}
+\newtheorem{bem}[definition]{Bemerkung}
+\newtheorem{vorue}[definition]{Vorüberlegung}
+\newtheorem{koro}[definition]{Korollar}
+\newtheorem{erinn}[definition]{Erinnerung (Schule) Vorwissen}
+\newtheorem{quest}[definition]{Fragen}
+\newtheorem{anw}[definition]{Anwendungen}
+\newtheorem{wdh}[definition]{Wiederholung Mathe II}
+\newtheorem{wdhlg}[definition]{Wiederholung}
+\newtheorem{ver}[definition]{Verfahren}
+\newtheorem{theo}[definition]{Theorem}
+\newtheorem{abem}[definition]{Abschlussbem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{folg}[definition]{Folgerung}
+\newtheorem{vorb}[definition]{Vorbereitung}
+\usepackage[ruled,linesnumbered]{algorithm2e}
+
+% eigene Befehle
+\newcommand{\zerovec}{\overset{\rightarrow}{0}}
+\newcommand{\hsp}{\hspace{5mm}}
+
+
+\setlength{\parindent}{0px}
+\usepackage[left=25mm,right=25mm,top=30mm,bottom=30mm]{geometry}
+
+\setcounter{page}{1}
+
+\begin{document}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+	\centering
+	{\scshape\LARGE Eberhard Karls Universität Tübingen \par}
+	\vspace{2.5cm}
+	{\huge Mathematik für Informatiker III\par}
+	\vspace{1.5cm}
+	{\Large Wintersemester 2019/2020\par}
+	\vspace{1.5cm}
+	{\Large Dr. Britta Dorn\par}
+	\vspace{4cm}
+	{\Large\itshape \par}
+	Mitschrieb von\par
+	Felix Pfeiffer
+	\vfill
+
+% Bottom of the page
+	{\large \today\par}
+\end{titlepage}
+
+\newpage
+\pagenumbering{roman}
+
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+\section{Lineare Abbildungen}
+\begin{definition}
+Lineare Abbildung, VR-Isomorphismus
+\end{definition}
+Seien $V,W$ $K$-Vektorräume ($K$ Körper)
+\begin{enumerate}[label=\alph*)]
+\item $\varphi\colon V\rightarrow W$ heiß \underline{lineare Abbildung} ($VR$-Homomorphismus) falls
+	\begin{enumerate}[label=(\roman*)]
+	\item $\varphi(v_1+v_2)=\varphi(v_1)+\varphi(v_2)\hsp\forall v_1,v_2\in V$ (Additivität)
+	\item $\varphi(\lambda v)=\lambda*\varphi(v)\hsp\forall v\in V,\lambda\in K$ (Homogenität)
+	\end{enumerate}
+	gilt.
+	\item Ist die lin. Abb. $\varphi\colon V\rightarrow W$ bijektiv, so heißt $\varphi$ \underline{Isomorphismus}, $V$ und $W$ heißen dann isomorph, $V\cong W$
+\end{enumerate}
+
+\begin{bem}
+\end{bem}
+$\varphi\colon V\rightarrow W$ lin. Abb.
+\begin{enumerate}[label=\alph*)]
+	\item $\varphi(\zerovec)=\zerovec\hsp(\varphi(\lambda\zerovec)=\lambda*\varphi(\zerovec))$
+	\item $\varphi(\sum_{i=0}^n\lambda_iv_i)=\sum_{i=0}^n\lambda_i\varphi(v_i)\hsp$(d.h. LK in $V$ wurden in LK in $W$ überführt)
+\end{enumerate}
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item Nullabbildung: $\varphi\colon V\rightarrow W\hsp v\mapsto\zerovec$ ist linear
+	\item $\varphi\colon V\rightarrow V\hsp v\mapsto\lambda v$ für festes $\lambda\in K$ ist linear\hsp ($\lambda=1:\:\varphi=id_v)$
+	\item $\varphi\colon\mathbb{R}^3\rightarrow\mathbb{R}^3\hsp\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}\mapsto\begin{pmatrix}x_1\\x_2\\-x_3\end{pmatrix}$ Spiegelung an $x_1x_2$-Ebene ist lin. Abb.
+	\item $\varphi\colon\mathbb{R}\rightarrow\mathbb{R}\hsp x\mapsto x+1$\hsp nicht linear
+	\item $\varphi\colon\mathbb{R}^2\rightarrow\mathbb{R}^2\hsp\begin{pmatrix}x_1\\x_2\end{pmatrix}\mapsto\begin{pmatrix}x_1^2\\x_2\end{pmatrix}$\hsp nicht linear
+\end{enumerate}
+
+\begin{satz}
+\end{satz}
+Sei $A\in M_{m,n}(K)$ eine Matrix. Dann ist $\varphi\colon K^n\rightarrow K^m\hsp x\mapsto A*x$\hsp eine lineare Abbildung \\
+Beweis: \\
+Folgt aus den Rechenregel für Matrizen (Distributivgesetz) Mathe II: \\
+$\varphi(x+y)=A(x+y)=Ax+Ay=\varphi(x)+\varphi(y)$ \\
+$\varphi(\lambda x)=A(\lambda x)=\lambda *Ax=\lambda*\varphi(x)$ \\ Alle bisherigen Beispiele waren in dieser Form. \\
+1.3 
+\begin{enumerate}[label=\alph*)]
+	\item $A=0=$Nullmatrix
+	\item $A=\begin{pmatrix}\lambda&0&\cdots&0\\0&\lambda&\cdots&\vdots\\\vdots&\vdots&\ddots&\vdots\\0&0&\cdots&\lambda\end{pmatrix}=\lambda*E_n$
+	\item $A=\begin{pmatrix}1&0&0\\0&1&0\\0&0&-1\end{pmatrix}\in M_{3,3}(\mathbb{R})$
+\end{enumerate}
+Es gilt (später) \underline{ALLE} lin. Abb. $K^n\rightarrow K^m$ sind in der Form 1.4 also Matrizen
+
+\newpage
+
+\begin{satz}
+Eigenschaften des Bilds einer lin. Abb.
+\end{satz}
+Sei $\varphi\colon V\rightarrow W$ lin. Abb.
+\begin{enumerate}[label=\alph*)]
+	\item $U\subseteq V$ Untervektorraum von $V$, dann ist $\underbrace{\varphi(U)}_{\text{Bild von }U}\subseteq W$ UR von $W$
+	\item Falls $dim(U)<\infty:\:dim(\varphi(U))\leq dim(U)$
+\end{enumerate}
+Beweis:
+\begin{enumerate}[label=\alph*)]
+	\item $\varphi(U)$ ist UR
+	\vspace{-3mm}
+	\begin{itemize}
+		\item $\varphi(\zerovec)\overset{1.2}{=}\varphi(\zerovec)\in\varphi(U)$
+		\item Seien $u,v\in U,\lambda\in K$ Dann sind $\varphi(u),\varphi(v)\in\varphi(U)$ und damit \\ $\varphi(u)+\varphi(v)\overset{\text{lin. Abb.}}{=}\varphi(u+v)\in\varphi(U)$
+	\end{itemize}
+	\vspace{-3mm}
+	\item $\{u_1,...,u_k\}$ Basis von $U$ \\ $\overset{\varphi\text{ lin.}}{\Rightarrow}\{\varphi(u_1,...,\varphi(u_k)\}$ Erzeugendensystem von $\varphi(U)$ \\ $\Rightarrow$ enthält Basis \\ $\Rightarrow$ Beh.
+\end{enumerate}
+
+\begin{definition}
+Rang einer lin. Abb.
+\end{definition}
+$\varphi\colon V\rightarrow W$ lin. Abb. $dimV<\infty$
+\begin{enumerate}[label=\alph*)]
+	\item $Ker\varphi :=\{v\in V\mid \varphi(v)=\zerovec\}$ (alle Vektoren, die von $\varphi$ uf $\zerovec$ abgebildet werden) \\ heißt der \underline{Kern von $\varphi$} und ist eun UR von $V$.
+	\item $\varphi$ ist injektiv $\Leftrightarrow Ker\varphi=\{\zerovec\}$
+\end{enumerate}
+Beweis: \\
+\vspace{-5mm}
+\begin{enumerate}[label=\alph*)]
+	\item UR-Kriterium
+	\begin{itemize}
+		\item $\varphi(\zerovec)\overset{=}{1.2}\zerovec=\zerovec\in Ker\varphi$
+		\item Seien $u,v\in Ker\varphi$ d.h. $\varphi(u)=\varphi(v)=\zerovec$ und $\lambda,\mu\in K.$ \\ $\varphi(\lambda u+\mu v)\overset{=}{\text{lin. Abb.}}\lambda*\underbrace{\varphi(u)}_{\zerovec}+\mu*\underbrace{\varphi(v)}_{\zerovec}=\zerovec$ \\ $\Rightarrow\lambda u+\mu v\in Ker\varphi$ \\ $\Rightarrow Ker\varphi$ UR
+	\end{itemize}
+	\item "$\Rightarrow$" \\ $\varphi(\zerovec)=\zerovec$ (1.2), wegen Injektivität kann kaein weiteres Element auf $\zerovec$ abg. werden. \\ "$\Leftarrow$" \\
+	Sei $Ker\varphi=\{\zerovec\}$, zeige $\varphi$ inj. \\ Ang. es gibt $v_1,v_2\in V$ mit $\varphi(v_1)=\varphi(v_2)$. \\ 
+	Dann ist $\zerovec=\varphi(v_1)-\varphi(v2)\overset{\text{lin. Abb.}}{=}\varphi(v_1-v_2)=\zerovec$ \\
+	$\Rightarrow v_1-v_2=\zerovec$ (nur $\zerovec$ wurd auf $\zerovec$ abg. laut Vorr.) \\
+	$\Rightarrow v_1=v_2$ \\
+	$\Rightarrow\varphi$ inj.
+\end{enumerate}
+
+\newpage
+
+\begin{definition}
+Rang einer lin. Abb.
+\end{definition}
+$\varphi\colon V\rightarrow W$
+\begin{enumerate}[label=\alph*)]
+	\item $Ker\varphi:=\{v\in V\mid\varphi(v)=\zerovec\}$ (alle Vektoren, die von $\varphi$ auf $\zerovec$ abgebildet werden) heißt der \underline{Kern von $\varphi$} und ist ein UR von $V$.
+	\item $\varphi$ ist injektiv $\Leftrightarrow Ker\varphi=\{\zerovec\}$
+\end{enumerate}
+
+\begin{bsp}
+\end{bsp}
+$\varphi\colon\mathbb{R}^3\rightarrow\mathbb{R}^3\hsp\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}\mapsto\begin{pmatrix}x_1\\2x_1\\x_1+x_2+2x_3\end{pmatrix}$ lin. Abb., zugehörige Matrix $A=\begin{pmatrix}1&0&0\\2&0&0\\1&1&2\end{pmatrix}$ \\
+Betracete UR $U=<e_2,e_3>,\:dimU=2$ \\
+$\varphi(U)?,\:dim\varphi(U)?,\:Ker\varphi?$
+\begin{itemize}
+	\item $\varphi(U)=<\varphi(e_2),\varphi(e_3)>\hsp\varphi(e_2)=\varphi\begin{pmatrix}0\\1\\0\end{pmatrix}=\begin{pmatrix}0\\0\\1\end{pmatrix},\varphi(e_3)=\varphi\begin{pmatrix}0\\0\\1\end{pmatrix}=\begin{pmatrix}0\\0\\2\end{pmatrix}$ \\
+	$=<\begin{pmatrix}0\\0\\1\end{pmatrix},\begin{pmatrix}0\\0\\2\end{pmatrix}>=<\begin{pmatrix}0\\0\\1\end{pmatrix}>=x_3$-Achse
+	\item $dim\varphi(U)=1$
+	\item $Ker\varphi:$ für welche $\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}\in\mathbb{R}^3$ gilt $\varphi\left(\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}\right)=\begin{pmatrix}0\\0\\0\end{pmatrix}$? \\
+	Löse LGS! \\
+	\begin{tabular}{ccccccc}
+	$x_1$ & & & & & = & 0 \\
+	$2x_1$ & & & & & = & 0 \\
+	$x_1$ & + & $x_2$ & + & $2x_3$ & = & 0 \\
+	\hline
+	\end{tabular} \\
+	$\Rightarrow x_1=0, x_2-2x_3$ \\
+	$\Rightarrow Ker\varphi=\{\begin{pmatrix}0\\-2\lambda\\\lambda\end{pmatrix}\mid\lambda\in\mathbb{R}\}$
+\end{itemize}
+
+\newpage
+
+\begin{satz}
+\end{satz}
+Seien $V,W$ K-VR, $dimV=n$ \\
+$\{v_1,...,v_n\}$ Basis von $V$, $w_1,...,w_n$ Vektoren aus $W$ (nicht notw. verschieden) \\
+Dann $\exists!$ lin. Abb. $\varphi\colon V\rightarrow W$ mit $\varphi(v_1)=w, \forall i\in\{1,,,.,n\}$ und zwar \\
+$\varphi\colon V\rightarrow W\hsp v=\underbrace{\sum^n_{i=1}\lambda_iv_i}_{\text{LK der }v_i}\mapsto\underbrace{\sum^n_{i=1}\lambda_iw_i}_{\text{LK der }w_i}\hsp(w_i=\varphi(v_i))$ \\
+D.h. wenn man weiß, wie die Basisvektoren abgeb. werden, so kennt man die lin. Abb. vollständing. \\
+Beweis: \\
+Für jedes $\varphi$ gilt: 
+\vspace{-3mm}
+\begin{itemize}
+	\item $\varphi$ ist linear
+	\item $\varphi(v_i)=w_i$
+	\item $\varphi$ ist eindeutig: ang. es gibt $\Psi\colon v\rightarrow W$ linear mit $\Psi(v_i)=w_i\hsp\forall i$ \\
+	Dann ist $\Psi(\underbrace{\sum^n_{i=1}\lambda_iv_i}_{v\in V})\overset{\text{lin. Abb.}}{=}\sum^n_{i=1}\lambda_i\Psi(v_i)=\sum^n_{i=1}\lambda_iw_i=\varphi(\sum^n_{i=1}\lambda_1v_i)$
+\end{itemize}
+
+\begin{bsp}
+\end{bsp}
+$V=\mathbb{R}^2,\varphi\colon\mathbb{R}^2\rightarrow\mathbb{R}^2$ Drehung um Winkel $\alpha\:(0\leq\alpha\leq 2\pi)$ um Nullpunkt, gg. Uhrzeigersinn. \\
+$\varphi$ ist lin. Abb. \\
+Darstellung mit Matrix $A$? \\
+Basisvektoren: \\
+$e_1=\begin{pmatrix}1 \\ 0\end{pmatrix}\overset{\varphi}{\mapsto}\begin{pmatrix}\cos\alpha \\ \sin\alpha\end{pmatrix},\hsp e_2=\begin{pmatrix}0 \\ 1\end{pmatrix}\overset{\varphi}{\mapsto}\begin{pmatrix}-\sin\alpha \\ \cos\alpha\end{pmatrix}$ \\
+Allg. Vektor: $x=\begin{pmatrix}x_1 \\ x_2\end{pmatrix}=x_1\begin{pmatrix}1 \\ 0\end{pmatrix}+x_2\begin{pmatrix}0 \\ 1\end{pmatrix}$ \\
+$\varphi(x)=x_1*\varphi\left(\begin{pmatrix}1 \\ 0\end{pmatrix}\right)+x_2*\varphi\left(\begin{pmatrix}0 \\ 1\end{pmatrix}\right)$\hsp SATZ 1.9! \\
+$=x_1*\varphi\left(\begin{pmatrix}\cos\alpha \\ \sin\alpha\end{pmatrix}\right)+x_2*\varphi\left(\begin{pmatrix}-\sin\alpha \\ \cos\alpha\end{pmatrix}\right)=\begin{pmatrix}x_1*\cos\alpha-x_2*\sin\alpha \\ x_1*\sin\alpha+x_2*\cos\alpha\end{pmatrix}$ \\
+$=Ax$ mit $A=\begin{pmatrix}\cos\alpha&-\sin\alpha\\\sin\alpha&\cos\alpha\end{pmatrix}$ \\
+Drehung um $\alpha=0^\circ\hsp A=\begin{pmatrix}1&0\\0&-1\end{pmatrix}$ \\
+Drehung um $\alpha=90^\circ=\frac{\pi}{2}\hsp A=\begin{pmatrix}0&-1\\1&0\end{pmatrix}$
+
+\newpage
+
+\begin{satz}
+Dimensionssatz für lin. Abb.
+\end{satz}
+$V,W$ K-VR,$\hsp dimV=n\hsp\varphi\colon V\rightarrow W$ lin. Abb. \\
+Dann gilt $dimV=dim(Ker\varphi)+\underbrace{rg(\varphi)}_{dim\varphi(V)}$ \\
+Beweis: \\
+Sei $\{u_1,...,u_k\}$ Basis von $Ker\varphi$. Ergänze zu Basis $\{u_1,...,u_n\}$ von $V$ (Basisergänzungssatz) und setze $U:=<u_{k+1},...,u_n>_K$ \\
+Basis $<u_{k+1},...,u_n>\hsp u_1,...,u_k=U$ \\
+Da $Ker\varphi\cap U=\{\zerovec\}$ und $V=Ker\varphi+U$, ist $dimV=dim(Ker\varphi)+dimU$ \\
+zeige: $dimU\overset{(1)}{=}dim\varphi(U)\overset{(2)}{=}\underbrace{dim\varphi(V)}_{rg\varphi}$ \\
+$(1) Ker\varphi\cap U=\{\zerovec\}\Rightarrow Ker(\varphi(u))=\{\zerovec\}\overset{\text{1.7 b)}}{\Rightarrow}\varphi\mid u$ injektiv $\Rightarrow dimU=dim\varphi(U)$ \\
+$(2) dim\varphi(U)=dim\varphi/V)$, da $\varphi/V)=\varphi(U+Ker\varphi)\overset{\varphi\text{ lin.}}{=}\varphi(U)+\underbrace{\varphi(Ker\varphi)}_{\zerovec}=\varphi(U)$
+
+\begin{koro}
+\end{koro}
+$V,W$ K-VR mit $dimV=dimW=n$ \\
+$\varphi\colon V\rightarrow W$ lin. Abb. \\
+Dann sind äquivalent.
+\begin{enumerate}[label=\alph*)]
+	\item $\varphi$ surjektiv
+	\item $\varphi$ injektiv
+	\item $\varphi$ bijektiv
+\end{enumerate}
+Beweis: \\
+1.11 $\Rightarrow n=dim(Ker\varphi)+rg(\varphi)$ \\
+$\varphi$ surj. $\Leftrightarrow rg\varphi=n\Leftrightarrow dim(Ker\varphi)=0\Leftrightarrow\varphi$ inj.
+
+\newpage
+
+\section{Matritzen und Lineare Abbildungen}
+
+\begin{definition}
+Darstellungsmatrix
+\end{definition}
+Seien $V,W$ endlich dim VR mit geordneten Basen $\mathcal{B}=(v_1,...,v_n\}$ (von $V$) und $\mathcal{C}=(w_1,...,w_n)$ (von $W$) \\
+Sei $\varphi\colon V\rightarrow W$ lin. Abb. \\
+Stelle die Bilder $\underbrace{\varphi(v_1),...,\varphi(v_n)}_{\in W}$ bezgl. der Basis $\mathcal{C}$ dar: \\
+$\varphi(v_1)=a_{11}*w_1+\hdots+a_{m1}*w_m \\
+\vdots \\
+\varphi(v_n)=a_{1m}*w_1+\hdots+a_{mn}*w_m$ \\
+Dann heißt die $m\times n$ Matrix $A_\varphi^{\mathcal{B},\mathcal{C}}:=\begin{pmatrix}a_{11}&\hdots&a_{1n}\\\vdots&\ddots&\vdots\\a_{mn}&\hdots&a_{mn}\end{pmatrix}$ \\
+(Spalte $i$ erhält die Koordinaten von $\varphi(v_i)$ bzgl. $\mathcal{C}$) \\
+(Schreibeweise: auch $A_\varphi$ (falls $\mathcal{B},\mathcal{C})\hsp A_\varphi^{\mathcal{B}}$(falls $V=W,\mathcal{B}=\mathcal{C}$)) \\
+(Bem.: $\varphi$ ist durch $A_\varphi^{\mathcal{B},\mathcal{C}}$ eindeutig best. vgl.  SATZ 1.9)
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item $V=W=\mathbb{R}^2,\quad \mathcal{B}=\mathcal{C}=(e_1,e_2)=\left(\begin{pmatrix}1\\0\end{pmatrix},\begin{pmatrix}0\\1\end{pmatrix}\right)$ \\
+	$\varphi\colon V\to V,\quad v\mapsto 2v$ (Streckung Faktor 2) \\
+	$\varphi\left(\begin{pmatrix}1\\0\end{pmatrix}\right)=\begin{pmatrix}2\\0\end{pmatrix}=2e_1+0e_2$ \\
+	$\varphi\left(\begin{pmatrix}0\\1\end{pmatrix}\right)=\begin{pmatrix}0\\2\end{pmatrix}=0e_1+2e_2$ \\
+	$A^{\mathcal{B},\mathcal{C}}_\varphi=A^\mathcal{B}_\varphi=\begin{pmatrix}2 & 0 \\ 0 & 2\end{pmatrix}$ \\
+	andere Basis $\mathcal{D}=\left(\begin{pmatrix}1\\2\end{pmatrix},\begin{pmatrix}0\\2\end{pmatrix}\right)$ \\
+	$\varphi\left(\begin{pmatrix}1\\0\end{pmatrix}\right)=\begin{pmatrix}2\\0\end{pmatrix}=2*\begin{pmatrix}1\\2\end{pmatrix}-2*\begin{pmatrix}0\\2\end{pmatrix}$ \\
+	$\varphi\left(\begin{pmatrix}0\\1\end{pmatrix}\right)=\begin{pmatrix}0\\2\end{pmatrix}=0*\begin{pmatrix}1\\2\end{pmatrix}+1*\begin{pmatrix}0\\2\end{pmatrix}$ \\
+	$A^{\mathcal{B},\mathcal{D}}_\varphi=\begin{pmatrix}2 & 0 \\ -2 & 1\end{pmatrix}$
+	\item $V=W$ mit $\dim V=n,\quad \mathcal{B}$ bel. Basis \\
+	$\varphi=id_v$, dann ist $A^{\mathcal{B},\mathcal{B}}_\varphi=A^\mathcal{B}_\varphi=E_n$
+	\item $V=W=\mathbb{R}^2,\quad\mathcal{B}=\mathcal{C}=(e_1,e_2)$ \\
+	$\varphi$ Drehung um Nullp. um Winkel $\alpha$ \\
+	$\Rightarrow A^\mathcal{B}_\varphi=\begin{pmatrix}\cos\alpha & -\sin\alpha \\ \sin\alpha & \cos\alpha\end{pmatrix}$, vgl. Bsp. 1.10
+	
+	\newpage
+	
+	\item $V=W=\mathbb{R}^2,\quad\mathcal{B}=(e_1,e_2)$ \\
+	$\varphi$ Spiegelung an $<e_1>$ ($x_1$-Achse), d.h.: \\
+	$\varphi\colon\begin{pmatrix}x_1\\x_2\end{pmatrix}\mapsto\begin{pmatrix}x_1\\-x_2\end{pmatrix}$ \\
+	$A^\mathcal{B}_\varphi=\begin{pmatrix}1&0\\0&-1\end{pmatrix}$ \\
+	andere Basis: $\mathcal{B}^\prime=\left(\begin{pmatrix}1\\1\end{pmatrix},\begin{pmatrix}1\\-1\end{pmatrix}\right)$ \\
+	$A^{\mathcal{B}^\prime}_\varphi=\begin{pmatrix}0&1\\1&0\end{pmatrix}$ \\
+	$\varphi\left(\begin{pmatrix}1\\1\end{pmatrix}\right)=\begin{pmatrix}1\\-1\end{pmatrix}=0*\begin{pmatrix}1\\1\end{pmatrix}+1*\begin{pmatrix}1\\-1\end{pmatrix}$ \\
+	$\varphi\left(\begin{pmatrix}1\\-1\end{pmatrix}\right)=\begin{pmatrix}1\\1\end{pmatrix}=1*\begin{pmatrix}1\\1\end{pmatrix}+0*\begin{pmatrix}1\\-1\end{pmatrix}$ \\ \\
+	$A^{\mathcal{B},\mathcal{B}^\prime}_\varphi=?$ \\
+	$\varphi\left(\begin{pmatrix}1\\0\end{pmatrix}\right)=\begin{pmatrix}1\\0\end{pmatrix}=a_{11}*\begin{pmatrix}1\\1\end{pmatrix}+a_{21}*\begin{pmatrix}1\\-1\end{pmatrix}$ \\
+	$\varphi\left(\begin{pmatrix}0\\1\end{pmatrix}\right)=\begin{pmatrix}0\\-1\end{pmatrix}=a_{12}*\begin{pmatrix}1\\1\end{pmatrix}+a_{22}*\begin{pmatrix}1\\-1\end{pmatrix}$ \\
+	$\rightarrow$ LGS lösen, erhalte $A^{\mathcal{B},\mathcal{B}^\prime}_\varphi=\begin{pmatrix}\frac{1}{2} & -\frac{1}{2} \\ \frac{1}{2} & \frac{1}{2}\end{pmatrix}$ \\
+	d.h.: dieselbe lin. Abb. $\varphi$ hat i.A. bzgl. anderer Wahl der Basen andere Darst. matrix!
+	\item umgekehrt: \\
+	$V=W=\mathbb{R}^2,\quad\mathcal{B}=(e_1,e_2)$ \\
+	$A^\mathcal{B}_\varphi=\begin{pmatrix}1 & 2 \\ 3 & 4\end{pmatrix}$ \\
+	was macht $\varphi$? was ist z.B. $\varphi\left(\begin{pmatrix}7\\-5\end{pmatrix}\right)$ \\
+	geg.: Koord. eines Punktes btzl. einer Basis $\mathcal{B}$ von $V$. (z.B. Roboterkoord.), lin. Abb $\varphi\colon V\to W$ \\
+	ges.: Koord. dieses Punktes (z.B. Weltkoord.) bzgl. Basis $\mathcal{C}$ von $W$\hsp$\rightarrow$ später (Basiswechselmatrix) \\
+	Koord. des mit $\varphi$ abg. Punktes bzgl. $\mathcal{C}\hsp\rightarrow$ jetzt
+\end{enumerate}
+
+\begin{satz}
+	Koordinatenvektorberechnung
+\end{satz}
+$V,W,\mathcal{B},\mathcal{C},\varphi$ wie in 2.1 \\
+Sei $v\in V$, \\
+$\kappa_\mathcal{B}(v)$ \underline{Koordinatenvektor} von $v$ bzgl. $\mathcal{B}$ (enthält Koord. von $v$ bzgl. $\mathcal{B}$) \\
+Dann lässt sich der Koordinatenvektor von $\varphi(v)$ bzgl. $\mathcal{C}$ berechnen als \\
+$\underbrace{\kappa_\mathcal{C}(\varphi(v))}_{\varphi(v)\text{ in }\mathcal{C}}=\underbrace{A^{\mathcal{B},\mathcal{C}}_\varphi}_{\text{wie werden Bilder der Basiswechselmatrix $\mathcal{B}$ in $\mathcal{C}$ dargestellt?}}*\underbrace{\kappa_\mathcal{B}(v)}_{\text{welche Koord. von $v$ in $\mathcal{B}$}}$
+
+\newpage
+
+\underline{Beweis:} \\
+$A^{\mathcal{B},\mathcal{C}}—varphi=\begin{pmatrix}a_{11} & \hdots & a_{1n} \\ \vdots & \ddots \\ a_{m1} & & a_{mn}\end{pmatrix}\quad v=\sum^n_{i=1}\lambda_iv_i\quad(\lambda_i\in\kappa)$ \\
+$\kappa_\mathcal{B}(v)=\begin{pmatrix}\lambda_1 \\ \vdots \\ \lambda_n\end{pmatrix}$ \\
+$A^{\mathcal{B},\mathcal{C}}_\varphi*\kappa_\mathcal{B}(v)=\begin{pmatrix}\sum^n_{i=1}a_{1i}\lambda_i \\ \vdots \\ \sum^n_{i=1}a_{mi}\lambda_i\end{pmatrix}$ \\ \\
+$\varphi(v)=\varphi(\sum^n_{i=1}\lambda_iv_i) \\
+=\sum^n_{i=1}\lambda_i\underbrace{\varphi(v_i)}_{\sum^m_{k=1}a_{ki}w_k}$ (linear) \\
+$=\sum^m_{k=1}(\underbrace{\sum^n_{i=1}\lambda_ia_{ki}}_{\text{Koord. von $\varphi(v)$ bzgl. $\mathcal{C}$}})*w_k$ \\
+Also $\kappa_\mathcal{C}(\varphi(v))=\begin{pmatrix}\sum^n_{i=1}\lambda_ia_{1j} \\ \vdots \\ \sum^m_{i=1}\lambda_ia_{mi}\end{pmatrix}=A^{\mathcal{B},\mathcal{C}}_\varphi*\kappa_\mathcal{B}(v)$
+
+\begin{bsp}
+\end{bsp}
+$V$ mit $\dim V=3$, Basis $\mathcal{B}=(v_1,v_2,v_3)$ \\
+$W$ mit $\dim W=2$, Basis $\mathcal{B}=(w_1,w_2)$ \\
+$\varphi\colon V\to W$ mit $A^{\mathcal{B},\mathcal{C}}_\varphi=\begin{pmatrix}1&1&-2\\2&0&3\end{pmatrix}$ \\
+z.B. $v=5v_1-2v_2+4v_3$ \\
+Koord. von $v$ bzgl. $\mathcal{B}$ sind also $5,-2,4\quad\kappa_\mathcal{B}(v)=\begin{pmatrix}5\\-2\\4\end{pmatrix}$ \\
+Was sind die Koord. von $\varphi(v)$ in Basis $\mathcal{C}$? \\
+$\kappa_\mathcal{C}(\varphi(v))=\begin{pmatrix}1&1&-2\\2&0&3\end{pmatrix}*\begin{pmatrix}5\\-2\\4\end{pmatrix}=\begin{pmatrix}-5\\22\end{pmatrix}$ \\
+(d.h. $\varphi(v)=-5*w_1+22*w_2$, Koord sind $-5,22$)
+
+\newpage
+
+\begin{bem}
+	Korollar zu 2.3
+\end{bem}
+Der Koord. vektor kann als Bild des ''Koord. ab.'' \\
+$\kappa_\mathcal{B}\colon V\to K^n\quad v=\sum^n_{i=1}\lambda_iv_i\mapsto\begin{pmatrix}\lambda_1 \\ \vdots \\ \lambda_n\end{pmatrix}$ \\
+aufgfasst werden, dann erhalte folg. Übersicht: \\
+\begin{tikzpicture}[thick]
+	\begin{scope}[every node/.style={circle,thick,draw}]
+		\node (1) at (0,6) {$V$};
+		\node (2) at (6,6) {$W$};
+		\node (3) at (0,0) {$K^n$};
+		\node (4) at (6,0) {$K^m$};
+	\end{scope}	
+	\begin{scope}[>={Stealth[black]},
+		every node/.style={fill=white,circle},
+             	every edge/.style={draw=black,very thick}]
+    		\path [->] (1) edge node {$\varphi$} (2);
+		\path [->] (1) edge node {$\kappa_\mathcal{B}$} (3);
+		\path [->] (3) edge node {Mult mit $A^{\mathcal{B},\mathcal{C}}_\varphi$} (4);
+		\path [->] (2) edge node {$\kappa_\mathcal{C}$} (4);
+	\end{scope}
+\end{tikzpicture} \\
+$\dim W=m$ Basis $\mathcal{C}$ \\ \\
+\underline{Damit folgt.} \\
+\underline{Jede} lin. Abb $K^n\to K^m$ ($K$ Körper) ist von der Form $\varphi(x)=Ax$ für ein $A\in M_{m,n}(K)$ \\
+\underline{Beweis:} \\
+Benutze kanon. Basis bon $K^n$ bzw. $K^m$. Damit stimmen El. von $K^n$ bzw. $K^m$ mit ihren Koord. vektoren bzgl. Basis überein, \\
+Beh. folgt mit 2.3: $\underbrace{K_\mathcal{C}(\varphi(v))}_{=\varphi(v)}=A^{\mathcal{B},\mathcal{C}}_\varphi\underbrace{\kappa_\mathcal{B}(v)}_{=v}$ also $\varphi(v)=A^{\mathcal{B},\mathcal{C}}_\varphi v$
+
+\begin{satz}
+	Eigenschaften der Darstellungsmatrix
+\end{satz}	
+$V;W;U$ VR mit Basen $\mathcal{B},\mathcal{C},\mathcal{D}$ \\
+$\varphi,\varphi_1,\varphi_2\colon V\to W$ \\
+$\Psi\colon W\to V$ lin. Abb. \\
+Dann gilt: 
+\begin{enumerate}[label=\alph*)]
+	\item $A^{\mathcal{B},\mathcal{C}}_{\varphi_1+\varphi_2}=A^{\mathcal{B},\mathcal{C}}_{\varphi_1}+A^{\mathcal{B},\mathcal{C}}_{\varphi_2}$
+	\item $A^{\mathcal{B},\mathcal{C}}_{\lambda\varphi}=\lambda * A^{\mathcal{B},\mathcal{C}}_\varphi$
+	\item $A^{\mathcal{B},\mathcal{C}}_{\Psi\circ\varphi}=A^{\mathcal{B},\mathcal{C}}_\Psi*A^{\mathcal{B},\mathcal{C}}_\varphi$
+\end{enumerate}
+(d.h.: Das Matrixprodukt der Darstellungsmatrix entspricht der Hintereinanderausführung von lin. Abb.) \\
+\underline{Beweis:} \\
+Übungsaufgabe
+
+\newpage
+
+\begin{folg}
+\end{folg}
+$V$ K-VR, $\dim V=n$, $\mathcal{B}$ Basis, $\varphi\colon V\to V$ linear ist Darstellungsmatrix $A^\mathcal{B}_\varphi$ \\
+Dann: $\varphi$ invertierbar $\Leftrightarrow A^\mathcal{B}_\varphi$ invertierbar und $A^\mathcal{B}_{\varphi^{-1}}=(A^\mathcal{B}_\varphi)^{-1}$ \\
+\\
+\underline{Beweis:} \\
+($\Rightarrow$) Zeige $(A^\mathcal{B}_\varphi) * (A^\mathcal{B}_{\varphi^{-1}})=E_n$ \\
+$\varphi$ inv. bar. $\Rightarrow A^\mathcal{B}_\varphi * A^\mathcal{B}_{\varphi^{-1}}=\overset{2.6}{=}A_{\underbrace{\varphi\circ\varphi^{-1}}_{id}}=E_n$ \\
+Analog: $(A^\mathcal{B}_{\varphi^{-1}}) * (A^\mathcal{B}_\varphi) =E_n$ \\
+($\Leftarrow$) Sei nun $A^\mathcal{B}_\varphi$ inv. bar. \\
+$\Rightarrow\exists\gamma\in M_n(\kappa)\colon A^\mathcal{B}_\varphi*\gamma=\gamma*A^\mathcal{B}_\varphi=E_n$ \\
+$\gamma$ ist Darstellungsmatrix für eine eindeutig def. lin. Abb. $\Psi\colon V\to V$ (siehe 2.1), d.h. $\gamma=A^\mathcal{B}_\Psi$ \\
+$\Rightarrow\left\{\begin{array}{l}E_n=A^\mathcal{B}_\varphi*A^\mathcal{B}_\Psi\overset{2.6}{=}A^\mathcal{B}_{\varphi\circ\Psi} \\ E_n=A^\mathcal{B}_\Psi*A^\mathcal{B}_\varphi\overset{2.6}{=}A^\mathcal{B}_{\Psi\circ\varphi}\end{array}\right.$ \\
+$\Rightarrow\varphi\circ\Psi=\Psi\circ\varphi=id_v$ \\
+$\Rightarrow\varphi$ besitzt Inverse $\Psi$
+
+\begin{satz}
+	Wdh. Mathe II
+\end{satz}
+$A\in M_n(\kappa)$ inv. bar. $\Leftrightarrow rg(A)=n$ \\
+\\
+\underline{Beweis:} \\
+$2.1\Rightarrow A=A^\mathcal{E}_\varphi$ für eine end. best. lin. Abb. $\varphi\colon K^n\to K^m$ $(\varphi(v)=A*v)$ \\
+$A$ inv. bar. $\overset{2.7}{\Leftrightarrow}\varphi$ inv. bar. \\
+$\Leftrightarrow\varphi$ bijketiv \\
+$\overset{1.12}{\Leftrightarrow}$ surjektiv \\
+$\Leftrightarrow rg(\varphi)=n$ \\
+$\Leftrightarrow rg(A)=n$
+
+\begin{bsp}
+\end{bsp}
+$A=\begin{pmatrix}1&2\\2&4\end{pmatrix}\Rightarrow rg(A)=1\Rightarrow A$ nicht inv. bar. \\
+$B=\begin{pmatrix}1&1\\1&0\end{pmatrix}\Rightarrow rg(B)=2\Rightarrow B$ inv. bar.
+
+\newpage
+
+\begin{bsp}
+	Berechnung von $A^{-1}$ (Wdh. Mathe II)
+\end{bsp}
+Bsp.: $A=\begin{pmatrix}2&1\\1&3\end{pmatrix}$ \\
+Suche Matrix $X$, die $AX=E_n$ löst. \\
+$AX=E_n\Leftrightarrow A\begin{pmatrix}x_{11} & x_{12} \\ x_{21} & x_{22}\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}$ \\
+$\Leftrightarrow\underbrace{A\begin{pmatrix}x_{11}\\x_{21}\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}}_{(*)}$ und $\underbrace{A\begin{pmatrix}x_{12}\\x_{22}\end{pmatrix}=\begin{pmatrix}0\\1\end{pmatrix}}_{(**)}$ \\
+Wende dazu Gauß-Algorithmus simultan auf die LGS $(*)$ und $(**)$ an. Das Ergebnis lässt sich direkt ablesen, wenn auf der linken Seite des LGS statt der Stufenform die Einheitsmatrix steht. \\
+$\left(\begin{array}{cc|cc}2 & 1 & 1 & 0 \\ 1 & 3 & 0 & 1\end{array}\right)\overset{II=I-2II}{\Rightarrow}\left(\begin{array}{cc|cc}2 & 1 & 1 & 0 \\ 0 & -5 & 1 & -2\end{array}\right)\overset{(-\frac{1}{5})II}{\Rightarrow}\left(\begin{array}{cc|cc}2 & 1 & 1 & 0 \\ 0 & 1 & -\frac{1}{5} & \frac{2}{5}\end{array}\right)$ \\
+$\overset{I=I-II}{\Rightarrow}\left(\begin{array}{cc|cc}2 & 0 & \frac{6}{5} & -\frac{2}{5} \\ 0 & 1 & -\frac{1}{5} & \frac{2}{5}\end{array}\right)\overset{\frac{1}{2}I}{\Rightarrow}\left(\begin{array}{cc|cc}1 & 0 & \frac{3}{5} & -\frac{1}{5} \\ 0 & 1 & -\frac{1}{5} & \frac{2}{5}\end{array}\right)$ \\
+$X=\begin{pmatrix}\frac{3}{5} & -\frac{1}{5} \\ -\frac{1}{5} & \frac{2}{5}\end{pmatrix}=A^{-1}$ \\
+\\
+\underline{Bemerkung:}
+$A^{\mathcal{B},\mathcal{C}}_\varphi$ hängt von der Wahl der Basen $\mathcal{B},\mathcal{C}$ ab. \\
+Wie kann man einen Basiswechsel berechnen?
+
+\begin{bsp}
+\end{bsp}
+Geg.: Basen $B^\prime=\left(\begin{pmatrix}1\\1\end{pmatrix},\begin{pmatrix}4\\7\end{pmatrix}\right),\quad B=\left(\begin{pmatrix}1\\2\end{pmatrix},\begin{pmatrix}2\\3\end{pmatrix}\right)$. \\
+Aufgabe: Die Koord von $\begin{pmatrix}\lambda_1\\\lambda_2\end{pmatrix}$ eines Vektors $v\in\mathbb{R}^2$ bzgl. $B^\prime$ sind gegeben. \\
+Wie erhält man die Kooord. von $v$ bzgl. $B$? \\
+\\
+$v=\lambda_1\begin{pmatrix}1\\1\end{pmatrix}+\lambda_2\begin{pmatrix}4\\7\end{pmatrix}=\mu_1\begin{pmatrix}1\\2\end{pmatrix}+\mu_2\begin{pmatrix}2\\3\end{pmatrix}$ \\
+Geg.: $\lambda_1$ und $\lambda_2$ Koord. bzgl. $B^\prime$ \\
+Ges.: $\mu_1$ und $\mu_2$ Koord. bzgl. $B$ \\
+\\
+$I:\hsp\begin{pmatrix}\lambda_1\\\lambda_2\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}:\quad\begin{pmatrix}1\\1\end{pmatrix}=\underbrace{-1}_{\mu_1}*\begin{pmatrix}1\\2\end{pmatrix}+\underbrace{1}_{\mu_2}*\begin{pmatrix}2\\3\end{pmatrix}$ \\
+$II:\hsp\begin{pmatrix}\lambda_1\\\lambda_2\end{pmatrix}=\begin{pmatrix}0\\1\end{pmatrix}:\quad\begin{pmatrix}4\\7\end{pmatrix}=\underbrace{2}_{\mu_1}*\begin{pmatrix}1\\2\end{pmatrix}+\underbrace{1}_{\mu_2}*\begin{pmatrix}2\\3\end{pmatrix}$ \\
+$\Rightarrow\begin{pmatrix}\lambda_1\\\lambda_2\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}\rightarrow\begin{pmatrix}\mu_1\\\mu_2\end{pmatrix}=\begin{pmatrix}-1\\1\end{pmatrix}$ \\
+$\begin{pmatrix}\lambda_1\\\lambda_2\end{pmatrix}=\begin{pmatrix}0\\1\end{pmatrix}\rightarrow\begin{pmatrix}\mu_1\\\mu_2\end{pmatrix}=\begin{pmatrix}2\\1\end{pmatrix}$ \\
+\\
+$\overset{1.9}{\Rightarrow}\underbrace{\begin{pmatrix}-1&2\\1&1\end{pmatrix}}_{\text{Basiswechselmatrix }S_{B,B^\prime}\text{ (Def. 2.12)}}\begin{pmatrix}\lambda_1\\\lambda_2\end{pmatrix}=\begin{pmatrix}\mu_1\\\mu_2\end{pmatrix}$
+
+\newpage
+
+\begin{definition}
+	Basistransformation
+\end{definition}
+$V$ VR, $B=\{v1,...,v_n)$, $B^\prime=\{v^\prime_1,...,v^\prime_n\}$ Basen von $V$ \\
+Schreibe $v^\prime_i$ als Linearkombination der Vektoren aus $B$: \\
+$v^\prime_1=s_{11}v_1+\hdots+s_{n1}v_n \\
+\vdots \\
+v^\prime_n=s_{1n}v_1+\hdots+s_{nn}v_n$ \\
+Dann heißt \\
+$S_{B,B^\prime}=\begin{pmatrix}s_{11} & \hdots & s_{1n} \\ \vdots & & \vdots \\ s_{n1} & \hdots & s_{nn}\end{pmatrix}$ \\
+Basiswechselmatrix \\
+Spalte $i$ enthält die Koord. von $v^\prime$ bzgl. Basis $B$.
+
+\begin{satz}
+	Umrechnung von Koordinaten
+\end{satz}
+$V,B,B^\prime$ wie in 2.12. Für $v\in V$ ist $K_B(v)=S_{B,B^\prime}K_{B^\prime}(v)$ \\
+\\
+\underline{Beweis:}
+Sei $K_{B^\prime}(v)=\begin{pmatrix}\lambda_1 \\ \hdots \\ \lambda_n\end{pmatrix}$ \\
+$\Rightarrow v=\sum^n_{k=1}\lambda_k\underbrace{v^\prime_k}_{=\sum^n_{e=1}s_{ek}*v_e\text{ Def 2.12}}$ \\
+$v=\sum^n_{e=1}(\underbrace{\sum^n_{k=1}\lambda_ks_{ek}}_{\mu_e=\text{ Koord. von Basis }B})*v_e$
+
+\begin{satz}
+	Umrechnung von Darstellungsmatritzen
+\end{satz}
+$\varphi\colon V\to W$ lin. Abb., $B.B^\prime$ Basen von $V$, $C,C^\prime$ Basen von $W$. \\
+$\Rightarrow A^{B^\prime,C^\prime}_\varphi=S_{C^\prime,C}A^{B,C}_\varphi S_{B,B^\prime}$ \\
+\\
+\underline{Beweis:}
+Sei $v\in V$. \\
+$\Rightarrow A^{B^\prime, C^\prime}_\varphi * K_{B^\prime}(v)\overset{2.3}{=}K_{C^\prime}(\varphi(v)) \\
+\overset{2.13}{=}S_{C^\prime, C}*K_C(\varphi(v)) \\
+\overset{2.3}{=}S_{C^\prime, C}*A^{B,C}_\varphi*K_B(v) \\
+\overset{2.13}{=}S_{C^\prime, C}*A^{B,C}_\varphi*S_{B,B^\prime}*K_{B^\prime}(v)$
+
+\begin{lemma}
+\end{lemma}
+$V$ VR, $B,B^\prime$ Basen $\Rightarrow S_{B,B^\prime}=(S_{B^\prime, B})^{-1}$ \\
+\underline{Beweis:} \\
+Sei $v\in V$ \\
+$S_{B,B^\prime}*S_{B^\prime,B}*K_B(v)\overset{2.13}{=}S_{B,B^\prime}*K_{B^\prime}\overset{2.13}{=}K_B(v)$ \\
+$\Rightarrow S_{B,B^\prime}*S_{B^\prime,B}=E_n$
+
+\begin{koro}
+\end{koro}
+$\varphi\colon V\to V$ linear, $B,B^\prime$ Basen von $V$ \\
+$S:=S_{B,B^\prime}$ \\
+$\overset{2.14}{\Rightarrow}A^{B^\prime}_\varphi=\underbrace{S^{-1}}_{\overset{2.15}{=}S_{B^\prime,B}}A^B_\varphi\underbrace{S}_{S_{B,B^\prime}}$
+
+\newpage
+
+\begin{bsp}
+\end{bsp}
+Wie sieht Darstellungsmatrix einer Drehung $\varphi\colon\mathbb{R}^2\to\mathbb{R}^2$ um $\frac{\pi}{2}$ bzgl. $B=\left(\begin{pmatrix}1\\1\end{pmatrix},\begin{pmatrix}1\\0\end{pmatrix}\right)$ aus? \\
+$A_\varphi=\begin{pmatrix}0 & -1 \\ 1 & 0\end{pmatrix}$ Drehung um $\frac{\pi}{2}$ bzgl. $E=(e_1,e_2)$ \\
+$A^B_\varphi=S_{B,E}A_\varphi S_{E,B}$ \\
+Es ist $S_{E,B}=\begin{pmatrix}1 & 1 \\ 1 & 0\end{pmatrix}\Rightarrow S_{B,E}=(S_{B,E})^{-1}=\begin{pmatrix}0 & 1 \\ 1 & -1\end{pmatrix}$ \\
+$\Rightarrow A^B_\varphi=\begin{pmatrix}1 & 1 \\ 1 & 0\end{pmatrix}\begin{pmatrix}0 & -1 \\ 1 & 0\end{pmatrix}\begin{pmatrix}0 & 1 \\ 1 & -1\end{pmatrix}=\begin{pmatrix}-1 & 2 \\ -1 & 1\end{pmatrix}$
+
+\newpage
+
+\section{Orthogonale und unitäre Matritzen}
+
+\begin{wdh}
+	Mathe II
+\end{wdh}
+Norm, Skalarprodukt, endl. VR, ONS, ONB, Gram.Schmidt $\Rightarrow$ Folien
+
+
+\begin{definition}
+	Orthogonale Matrix
+\end{definition}
+Eine Matrix $A\in M_n(\mathbb{R})$ heißt \underline{orthogonal}, falls ihre Spaltenvektoren ein ONB des $\mathbb{R}^n$. bilden.
+
+\begin{bsp}
+\end{bsp}
+im $\mathbb{R}^2$
+\begin{enumerate}[label=\alph*)]
+	\item $E_2=\begin{pmatrix}1 & 0 \\0 & 1\end{pmatrix}$ ist orth. \hsp (Bem.: $\det E_n=1$)
+	\item $R=\begin{pmatrix}\cos\alpha & -\sin\alpha \\ \sin\alpha & \cos\alpha\end{pmatrix}\quad(\alpha\in\mathbb{R}$) \\
+	$\phantom{}\hspace{13mm}\uparrow\hspace{12mm}\uparrow$ \\
+	$\phantom{}\hspace{13mm}s_1\hspace{12mm}s_2$ \\
+	$(s_1\vert s_2)=(\cos\alpha)(-\sin\alpha)+\sin\alpha\cos\alpha=0$ \\
+	$(s_1\vert s_1)=(s_2\vert s_2)=\cos^2\alpha+\sin^2\alpha=1$ \\
+	$s_1,s_2$ bilden Also ONS, sind damit (Bem.: 8.8 in Mathe II) l.n. \\
+	$\Rightarrow$ bilden ONB (da $\dim\mathbb{R}^2=2$, 2 l.n. Vektoren sind schon Basis) \\
+	(Bem.: $\det R=1$)
+	\item $S=\begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}$ Bt orth., aber keine Rotation: \\
+	$\begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}y\\x\end{pmatrix}$, $S$ ist Spiegelung an 1. Winkelhalbierenden (vertauscht $x$- und $y$-Koord.) \\
+	(Bem.: $\det S=-1$)
+\end{enumerate}
+
+\begin{satz}
+	Eigenschaften orthogonaler Matrizen
+\end{satz}
+Für eine orthogonale Matrix $A\in M_n(\mathbb{R})$ gilt:
+\begin{enumerate}[label=\alph*)]
+	\item $A^TA=E_n$
+	\item $A$ ist inv. bar. mit $A^{-1}=A^T$ \\
+	($\rightarrow$ zugehörige lin. Abb. ist bij.)
+	\item $\Vert Av\Vert=\Vert v\Vert$ (zugehörige lin. Abb. ist 'lLängentreu'') 
+	\item $\vert\det A\vert=1$
+	\item $A$ hat nur Eigenwerte mit Betrag 1
+\end{enumerate}
+
+\newpage
+
+\underline{Beweis:}
+\begin{enumerate}[label=\alph*)]
+	\item seien $s_1,...,s_n$ Spalten von $A$. \\
+	$A$ orth. $\Rightarrow s_1,...,s_n$ ONB $\Rightarrow(s_i\vert s_j)=\left\{\begin{array}{ll}1 & \text{für }i=j \\ 0 & i\neq j\end{array}\right.$ \\
+	$\Rightarrow A^TA=E_n$
+	\item folgt aus a)
+	\item $\Vert Av\Vert^2=(Av\mid Av) \\
+	=(Av)^TAv \\
+	=v^T\underbrace{A^TA}_{E_n}Av \\
+	=v^TE_nv \\
+	=v^Tv \\
+	=v\mid v) \\
+	=\Vert v\Vert^2$
+	\item$1=\det E_n=\det(A^TA) \\
+	=\det A^T*\det A \\
+	=\det A*\det A \\
+	=(\det A)^2 \\
+	\Rightarrow\det A=\pm1$
+	\item Sei $\lambda\in W$ von $A$, d.h. $\exists v\neq0$ mit $Av=\lambda v$. \\
+	Dann ist $\Vert v\Vert=\Vert Av\Vert \\
+	=\Vert\lambda v\Vert \\
+	=\vert\lambda\vert\Vert v\Vert \\
+	\Rightarrow\vert\lambda\vert=1$
+\end{enumerate}
+
+\begin{definition}
+	orthogonale Gruppe
+\end{definition}
+$O(n):=\{A\in M_n(\mathbb{R}\mid A$ orth $\}$, die \underline{orthogonale Gruppe}, und \\
+$SO(n):=O^+(n)=\{A\in O(n)\mid\det A=1\}$, die \underline{spezielle orth. Gruppe}, \\
+sind Untergruppen der \underline{allgemein linearen Gruppe} \\
+$OL(n,\mathbb{R}):=\{A\in M_n(\mathbb{R})\mid A$ inv. bar $\}$
+
+\begin{definition}
+	orthogonale Abbildung
+\end{definition}
+Sei allgemeines $V$ ein eukildischer VR mit Skalarprodukt $(.\mid.)$, \\
+$B$ ein ONB von $V,\quad\varphi\colon V\to V$ lin. Abb. \\
+$\varphi$ heißt \underline{orthogonale Abb.}, wenn \\
+$(\varphi(v)\mid\varphi(w))=(v\mid w)\quad\forall v,w\in V$ gilt. \\Die Eigenschaften aus 3.4 gelten dann für $A^B_\varphi$ und analog für $\varphi$.
+
+\newpage
+
+\begin{satz}
+	orthogonale Abbildung im 2-dim euklidschen Vektorraum
+\end{satz}
+Sei $V$ ein 2-dim VR, $B$ ONB, $\varphi$ orth. Abb. auf $V$ ($\varphi\colon V\to V$ orth. Abb.) \\
+$A=A^B_\varphi$
+\begin{enumerate}[label=\alph*)]
+	\item Ist $\det A=1$, so ist $A=\begin{pmatrix}\cos\alpha & -\sin\alpha \\ \sin\alpha & \cos\alpha\end{pmatrix}\quad$ für $\alpha\in\mathbb{R}$, \\
+	$\varphi$ ist Drehung/Rotation um Winkel $\alpha$ um Nullpunkt.
+	\item Ist $\det A=-1$, so ist $A=\begin{pmatrix}\cos\alpha & \sin\alpha \\ \sin\alpha & -\cos\alpha\end{pmatrix}\quad$ für $\alpha\in\mathbb{R}$, \\
+	Dann gibt es eine ONB $\mathcal{C}=(w_1,w_2)$ von $V$, so dass $A^\mathcal{C}_\varphi=\begin{pmatrix}1&0\\0&-1\end{pmatrix}$ \\
+	$\varphi$ ist Spiegelung an der Achse $<w_1>$.
+\end{enumerate}
+\underline{Beweis:} \\
+$\rightarrow$ Folien
+
+\begin{bem}
+	orthogonale Abbildung im 3-dim euklifschen Vektorraum
+\end{bem}
+Sei $V$ ein 3-dim VR, $\varphi\colon V\to V$ orth. Abb. \\
+Dann tritt einer der folgenden Fälle auf: \\
+\begin{enumerate}[label=\alph*)]
+	\item Es ex. ONB $B=(v_1,v_2,v_3)$, so dass \\
+	$A=A^B_\varphi=\begin{pmatrix}\cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & -1\end{pmatrix}\quad$ für $\alpha\in\mathbb{R}$ \\
+	$\det A=-1$ \\
+	($\varphi$ ist Drehspiegelung: Drehung um Achse $<v_3>$ und Spiegelung an Ebene $<v_1,v_2>$
+\end{enumerate}
+Spezialfälle: 
+\begin{enumerate}[label=\alph*)]
+	\item $\alpha=\pi\colon A=\begin{pmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 1\end{pmatrix}$ \\
+	(Achsen-)Spiegelung an $<v_3>$
+	\item $\alpha=0\colon A=\begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & -1\end{pmatrix}$ \\
+	(Ebenen-)Spiegelung an $<v_1,v_2>$
+	\item $\alpha=\pi\colon A=\begin{pmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1\end{pmatrix}$ \\
+	Punktspiegelung an Nullpunkt.
+\end{enumerate}
+
+\newpage
+
+\begin{bem}
+	Affine Abbildungen, homogene Koordinaten
+\end{bem}
+\begin{enumerate}[label=\alph*)]
+	\item Für geometrische Anwendungen reichen lin. Abb. oft nicht aus, z.B. Translation (Verschiebung) um Vektor $b\in V\colon$ \\
+	$t\colon V\to V,\quad v\mapsto v+b$ \\
+	nicht linear für $b\neq0$
+	\item Die Komposition einer lin. Abb. mit einer Translation heißt \underline{affine Abbildung} \\
+	$\alpha\colon V\to V,\quad v\mapsto\varphi(v)+b=(t\circ\varphi)(v)$\hsp mit $\varphi$ lin. Abb., $v\in V$
+	\item Affine Abb. bilden UR nicht unbedingt auf UR ab, sondern auf sogenannte \underline{affine UR} der Form \\
+	$U+b=\{u+b\mid u\in U\}$ mit $U$ UR, $b\in V$ \\
+	(z.B. Geraden/Ebenen, die nicht unbedingt durch 0 gehen)
+	\item Affine Abb. auf $n$-dim eukl. VR lassen sich nicht durch $n\times n$-Matrizen beschreiben. \\
+	Es gibt aber Beschreibungen durch $(n+1)\times(n+1)$-Matrizen, sog. \underline{homogene Koordinaten} ($\rightarrow$ Robotik, Computergrafik, ...)
+\end{enumerate}
+
+\begin{definition}
+	Skalarprodukt über $\mathbb{C}$-Vektorräume
+\end{definition}
+Sei $V$ ein $\mathbb{C}$-VR, Eine Abb. $(*\mid*)\colon V\times V\to\mathbb{C}$, heißt hier Skalarprodukt, wenn sie folg Eig. für alle $u,v,w\in V,\quad\lambda\in\mathbb{C}$ erfüllt:
+\begin{enumerate}[label=(\arabic*)]
+	\item \underline{konjungiertsymmetrisch (hermitesch)}: \\
+	$(u\mid v)=\overline{(v\mid u)}$
+	\item semilinear im 1. Argument:\\
+	$\lambda u\mid v=\bar\lambda(u\mid v)$, \\
+	$(u+v\mid w)=(u+w)+(v\mid w)$ \\
+	linear im 2. Argument: \\
+	$(u\mid\lambda v)=\lambda(u\mid v)$ \\
+	$(u\mid v+w)=(u\mid v)+(u\mid w)$
+	\item positiv definit: \\
+	$(v\mid v)\geq 0$ und $(v\mid v)=0\Leftrightarrow v=\zerovec$  \\
+	$V$ mit $(*\mid*)$ nennt man auch \underline{Prä-Hilbertraum} %punkte statt mal
+\end{enumerate}
+
+\begin{bsp}
+	Standardskalarprodukt auf $\mathbb{C}^n$
+\end{bsp}
+für $u,v\in\mathbb{C}^n$ ist $(u\mid v=\sum^n_{i=0}\bar u_iv_i=\bar u^Tv$ \\
+z.B. $\left(\begin{pmatrix}i\\1+2i\end{pmatrix}\begin{pmatrix}0\\5\end{pmatrix}\right)=-i*0+(1-3i)5=5-15i\:\left(\begin{pmatrix}i\\1+3i\end{pmatrix}\begin{pmatrix}i\\1+3i\end{pmatrix}\right) \\
+=(-i,1-3i)\begin{pmatrix}i\\1+3i\end{pmatrix}=(-i)i+(1-3i)(1+3i)=...\in\mathbb{R}$
+
+\begin{definition}
+	unitäre Matritzen
+\end{definition}
+Eine Matrix $Q\in M_n(\mathbb{C})$ heißt \underline{unitär} wenn ihre Spalten eine ONB des $\mathbb{C}^n$ bilden. (bzgl. Skalarprodukt aus 3.11) \\
+$U(n):=\{Q\in M_n(\mathbb{C}\mid Q\text{unitär}\}$ - unitäre Gruppe, \\
+$SU(n):=\{Q\in U(n)\mid detQ=1\}$ - spezielle unit. Gruppe (Untergruppe von $GL(n,\mathbb{C})$, analog zu Beweis 3.5)
+
+\begin{satz}
+	Eigenschaften unitäre Matritzen
+\end{satz}
+Für $Q\in U(n)$ gilt
+\begin{enumerate}[label=\alph*)]
+	\item $\bar Q^TQ=E_n$ (nach Schreibweise $Q^*$ für $\bar Q^T$ üblich, \underline{Adjungierte}\hsp $Q^H$ für $\bar Q^T$ üblich von $Q$)
+	\item $Q$ ist inv. bar. mit $Q^{-1}=\bar Q^T$
+	\item $\vert\vert Q*v\vert\vert=\vert\vert v\vert\vert$ (Norm aus Skalarprodukt), (auch $(Q*v\mid Qv)=(v\mid v)$)
+	\item $\vert detQ\vert=1$ (Achtung nicht nur $\pm$ 1, auch komplexe Zahlen mit Betrag 1)
+	\item Die Eigenwerte von $Q$ haben Betrag 1.
+\end{enumerate}
+Beweis: \\
+wie für Satz 3.4.
+
+\begin{bsp}
+\end{bsp}
+a) $\begin{pmatrix}0&i\\i&0\end{pmatrix}$,\hsp b)$\begin{pmatrix}1+i&1-i\\1-i&1+i\end{pmatrix}$ sind unitär \\
+c) jede orth. Matrix ist unitär (über $\mathbb{C}$ betrachtet)
+
+\begin{bsp}
+	symmetrische und hermitesche Matritzen
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item $A\in M_n(\mathbb{R})$ heißt \underline{symmetrisch}, falls $A=A^T$ gilt, d.h. $\underbrace{(Ax\mid y)}_{Ax)^Ty=x^TA^Ty=}=\underbrace{(x\mid Ay)}_{x^TAy} 
+	\forall x,y\in\mathbb{R}^n$
+	\item $A\in M_n(\mathbb{C}$ heißt hermitesch, falls $A=\bar A^T$ gilt, d.h. $\underbrace{(Ax\mid y)}_{\bar(Ax)^T=\bar x^TA^Ty=}=\underbrace{(x\mid Ay)}_{\bar x^TAy}$
+\end{enumerate}
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item $\begin{pmatrix}1&2\\2&0\end{pmatrix}\in M_2(\mathbb{R})$ symmetrisch
+	\item $\begin{pmatrix}1&i\\-i&0\end{pmatrix}\in M_2(\mathbb{C})$ hermitesch
+\end{enumerate}
+
+\newpage
+
+\begin{satz}
+	EV/EW von hermiteschen Matritzen
+\end{satz}
+Sei $A\in M_n(\mathbb{C})$ hermitesch, dann gilt:
+\begin{enumerate}[label=\alph*)]
+	\item $A$ besitzt nur reelle EW.
+	\item EV zu verschiedenen EW sind orthogonal.
+\end{enumerate}
+
+Beweis:
+\begin{enumerate}[label=\alph*)]
+	\item Sei $\lambda$ EW von $A$ mit EV $x$, d.h. \hsp (*) $Ax=\lambda x, x\neq\zerovec$ \\
+	Dann ist $\lambda(x\mid x)\overset{3.10}{=}(x\mid\lambda x)\overset{(*)}{=}(x\mid Ax)\overset{3.15}{=}(Ax\mid x)\overset{(*)}{=}(\lambda x\mid x)\overset{3.10}{=}\bar\lambda(x\mid x)$ \\
+	wegen $x\neq\zerovec$ ist $(x\mid x)\neq0$ also $\lambda=\bar\lambda$, also $\lambda$ reell.
+	\item Seien $\lambda_1\neq\lambda_2$ EW von $A$ mit EV $x_1,x_2$, d.h. $Ax_1=\lambda_1 x_1\hsp Ax_2=\lambda_2 x_2$ \\
+	Wegen a) sind $\lambda_1,\lambda_2$ reell. \\
+	Dann ist $\lambda_1(x_1\mid x_2)\overset{3.10}{=}(\lambda_1x_1\mid\ x_2)\overset{(*)}{=}(Ax_1\mid x_2)\overset{3.15}{=}(x_1\mid Ax_2)\overset{(*)}{=}(x_1\mid\lambda_2x_2)\overset{3.10}{=}\lambda_2(x_1\mid x_2)$ \\
+	$\Leftrightarrow\lambda_1(x_1\mid x_2)-\lambda_2(x_1\mid x_2)=0 \\
+	\Leftrightarrow\underbrace{(\lambda_1-\lambda_2)}_{\neq0\text{, da }\lambda_1\neq\lambda_2}*(x_1\mid x_2)=0 \\
+	\Rightarrow(x_1\mid x_2)=0$, d.h. $x_1,x_2$ orthogonal
+\end{enumerate}
+
+\begin{koro}
+	EV/EW symm. Matr.
+\end{koro}
+Satz 3.17 gilt ebenso für symm. Matritzen.
+
+\begin{bsp}
+\end{bsp}
+$A=\begin{pmatrix}1&2\\2&4\end{pmatrix}\in M_2(\mathbb{R})$ ist symm. hermitesch \\
+mit (nachrechnen) \\
+EW $\lambda_1=0,\lambda_2=5$ (beide reell) \\
+EV sin z.B. $x_1=\begin{pmatrix}-2\\1\end{pmatrix}$ EV zu $\lambda_1=0,x_2=\begin{pmatrix}1\\2\end{pmatrix}$ EV zu $\lambda_2=5$ sind orthogonal
+
+\begin{definition}
+	orthogonale / unitäre Diagonalisierbarkeit
+\end{definition}
+$A\in M_n(\mathbb{R})$ heißt \underline{orthogonal diagonalisierbar} falls es eine orthogonale Matrix $Q\in M_n(\mathbb{R})$ und eine Diagonalmatrix $D\in M_n(\mathbb{R})$ gibt, sodass $A=Q^TDQ$ \\
+(durch Umformen: $D=QAQ^T$) \\
+$A\in M_n(\mathbb{C})$ heißt \underline{unitär diagonalisierbar} falls es eine unitäre Matrix $U\in M_n(\mathbb{C})$ und eine Diagonalmatrix $D\in M_n(\mathbb{C})$ gibt, sodass $A=\bar U^TDU$ \\
+(durch Umformen: $D=UA\bar U^T$)
+
+\begin{satz}
+\end{satz}
+Eine orthogonal diagonalisierbare Matrix $A\in M_n(\mathbb{R})$ ist symmetrisch. \\
+Beweis; \\
+Sei $A=Q^TDQ$ wie in 3.20. \\
+$\Rightarrow A^T=(Q^TDQ)^T=Q^TD^T(Q^T)^T=Q^TDQ=A$ \\
+Im Gegensatz dazu ist eine unitär diagonalisierbare Matrix nicht unbedingt hermitesch. Es gilt aber: 
+
+\begin{satz}
+\end{satz}
+Ist $A\in M_n(\mathbb{C})$ unitär diagonalisierbar mit \underline{reeller} Diagonalmatrix, so ist $A$ hermitesch. \\
+Beweis: \\
+Sei $A=\bar U^TDU$ mit $\bar D=D$ ($D$ reell) \\
+$\Rightarrow\bar A^T=\overline{(\bar U^TDU)^T}=\bar U^T\bar D^T\overline{(\bar U^T)}=\bar U^TDU=A$
+
+\begin{satz}
+	Hauptachsentransformation
+\end{satz}
+\begin{enumerate}[label=\alph*)]
+	\item Sei $A\in M_n(\mathbb{R})$ symm. \\
+	Dann ist $A$ orthogonal diagonalisierbar d.h. $A=Q^TDQ\hsp(Q\in\mathcal{O}(b),D$ Diagonalmatrix)
+	\item Sei $A\in M_n(\mathbb{C})$ hermitesch. \\
+	Dann ist $A$ unitär diagonalisierbar mit reeller Diagonalmatrix, d.h. $A=\bar U^TDU \\
+	(U\in \mathcal{U}(n), D\in M_n(\mathbb{R})$ Diagonalmatrix)
+\end{enumerate}
+Beweis von a): \\
+Induktion über $n$: \\
+\underline{IA:} $n=1$, dann ist $A=(a)=D\hsp(A=(1)*(a)*(1)$, orthogonal diagonalisierbar) \\
+\underline{IS:} (fpr $n\geq2) n-1\rightarrow n$ \\
+\underline{IV:} Die Aussage gelte für symm. Matrix $A\in M_n(\mathbb{R})$: \\
+\underline{I. Behh.:} Dann ist auch $A\in M_n(\mathbb{R}),\hsp A$ symmetrisch orthogonal diagonalisierbar \\
+Sei $A\in M_n(\mathbb{R})$, symmetrisch \\
+$\Rightarrow A$ besitzt EW $\lambda$ (reell), zugehöriger EV sei $v_1$, o.B.d.A. normiert ($\vert\vert v_1\vert\vert=1$) \\
+Ergänze $v<_1$ zu ONB ($v_1,...,v_n$) von $\mathbb{R}^n$ (Gram-Schmidt) \\
+Sei $Q$ Matrix mit Spalten $v_1,...,v_n$. \\
+$Q$ ist dann orthogonal. \\
+Setzt $B=Q^TAQ$ \\
+Dann ist $B^T=(Q^TAQ)^T=Q^TA^T(Q^T)^T=Q^TAQ=B$, also ist $B$ symmetrisch. \\
+Es gilt $Qe_1=v_1$ (1. Spalte von $Q$ ist $v_1$)\hsp(*) \\
+und damit auch $e_1=Q^Tv_1$\hsp(**) \\
+$\Rightarrow$ 1. Spalte von $B$ ist $Be_1=Q^TAQe_1$ \\
+$\overset{(*)}{=}Q^TAv_1\overset{\lambda\text{ EW}}{=}Q^T\lambda v_1=\lambda Q^Tv_1\overset{(**)}{=}\lambda e_1=\begin{pmatrix}\lambda\\0\\\vdots\\0\end{pmatrix}$ \\
+$B$ symmetrisch $\Leftrightarrow$ 1. Zeile von $B$ ist ($\lambda,0,...,0)\Rightarrow B=\begin{pmatrix}\lambda&0\cdots&0\\0\\\vdots&\overset{\sim}{B}&\\0\end{pmatrix}$ \\
+$\overset{\text{IV.}}{\Rightarrow}\exists\overset{\sim}{P}\in M_{n-1}(\mathbb{R})$ orthogonal, sodass $\overset{\sim}{B}=\overset{\sim}{P}^T\overset{\sim}{D}\overset{\sim}{P}\hsp\overset{\sim}{P}$ Diagonalmatrix \\
+(bzw. $\overset{\sim}{D}=\overset{\sim}{P}\overset{\sim}{B}\overset{\sim}{P}^T)$ \\
+setzt $P:=\begin{pmatrix}1&0\cdots&0\\0\\\vdots&\overset{\sim}{P}&\\0\end{pmatrix}\in M_n(\mathbb{R})$ \\
+$\Rightarrow P$ auch orthogonal und \\
+$P^TBP=\begin{pmatrix}\lambda&0\cdots&0\\0\\\vdots&\overset{\sim}{D}&\\0\end{pmatrix}=:D$ ist ebenfalls Diagonalmatrix $\in M_n(\mathbb{R})$ \\
+Mit $Q$ und $P$ ist auch $QP$ orthogonal. Dann ist $(QP)^T\:A(QP)$ \\
+$=\underbrace{P^T\underbrace{Q^TAQ}_{=B\text{ war so definiert}}}_{=D}P$  \\
+d.h. $A$ ist orthogonal diagonalisierbar \\
+Beweis von b) folgt analog.
+
+\begin{bsp}
+vgl. 3.19 Bsp.
+\end{bsp}
+$A=\begin{pmatrix}1&2\\2&4\end{pmatrix}\in M_2(\mathbb{R})$ symm. $\overset{3.23}{\Rightarrow}$ orth. diag. bar. \\
+$\lambda_1=5,\lambda_2=0$ \\
+$v_1=\begin{pmatrix}1\\2\end{pmatrix},v_2=\begin{pmatrix}-2\\1\end{pmatrix}\in V$ (sind orthogonal) \\
+normiere EV$*\vert\vert v_1\vert\vert=\sqrt{1^2*2^2}=\sqrt{5}=\vert\vert v_2\vert\vert$ \\
+$v_1^\prime=\frac{1}{\sqrt{5}}\begin{pmatrix}1\\2\end{pmatrix}\hsp v_2^\prime=\frac{1}{\sqrt{5}}\begin{pmatrix}-2\\1\end{pmatrix}$ bilden ONB von $\mathbb{R}^2$. \\
+(Achtung, falls EV zu nicht verschiedenen EW. Muss sie erst orthog. machen $\rightarrow$ Gram-Schmidt!) \\
+setze $Q=\left((v_1^\prime)(v_2^\prime)\right)=\frac{1}{\sqrt{5}}\begin{pmatrix}1&-2\\2&1\end{pmatrix}$ \\
+$Q^T=\frac{1}{\sqrt{5}}\begin{pmatrix}1&2\\-2&1\end{pmatrix}$  \\
+$D=\begin{pmatrix}5&0\\0&0\end{pmatrix}=\begin{pmatrix}\lambda_1&0\\0&\lambda_2\end{pmatrix}$  \\
+Dann ist $A=QDQ^T$ \\
+$=\frac{1}{\sqrt{5}}\begin{pmatrix}1&-2\\2&1\end{pmatrix}\begin{pmatrix}5&0\\0&0\end{pmatrix}\frac{1}{\sqrt{5}}\begin{pmatrix}1&2\\-2&1\end{pmatrix} \\
+=\frac{1}{5}\begin{pmatrix}1&-2\\2&1\end{pmatrix}\begin{pmatrix}5&10\\0&0\end{pmatrix} \\
+=\frac{1}{5}\begin{pmatrix}5&10\\10&20\end{pmatrix}=\begin{pmatrix}1&2\\2&4\end{pmatrix}$
+
+\newpage
+
+\section*{Exkurs 1} 
+(Mehr zu $\mathbb{C}$ (Wdhlg. u. Neues))
+\begin{enumerate}[label=\arabic*)]
+	\item In $\mathbb{C}$ existiert $\sqrt{-1}\colon\pm i$, d.h. $x^2+1=0$ ist lösbar in $\mathbb{C}$, \\
+ 	$x^2+1$ als Polynom in $\mathbb{C}[x]$ zerfällt in Linearfaktoren: \\
+	$x^2+1=(x+i)(x-i)$
+	\item Mann kann jede quadrat. Gl. $ax^2+bx+c\hsp(a,b,c\in\mathbb{R}$ in $\mathbb{C}$ lösen: \\
+	$x_{1/2}=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$ falls $b^2-4ac<0$, schreibe $\frac{-b\pm\sqrt{4ac-b^2}*i}{2a}$ \\
+	(Bsp.: $x^2+x+2=0\hsp x_{1/2}=\frac{-1\pm\sqrt{1^2-4*1*2}}{2}=\frac{-1\pm\sqrt{-7}}{2}=\frac{-1\pm i\sqrt{7}}{2}$
+	\item Fundamentalsatz der Algebra: \\
+	jedes Polynom $f\in\mathbb{C}[x]$ vom Grad $>1$ hat \underline{genau} $n$ Nullstellen in $\mathbb{C}$ \\
+	(D.h. es zerfällt in $n$ Linearfaktoren)
+	\item $\mathbb{C}$ hat alle algebraischen und analytischen Eigenschaften wie $\mathbb{R}$ (oder besser), außer: \\
+	Es gibt auf $\mathbb{C}$ keine vollst. Ordnung $\leq$,  die mit $+$ und $*$ verträglich ist. \\
+	(d.h. für die gelten würde: $a\leq b, c\leq d\Rightarrow a+c\leq b+d\hsp a\leq b, r\geq 0\Rightarrow ra\leq rb$)
+	\item \underline{Polarkoordinaten} \\
+	Andere Möglichkeit komplexe Zahlen zu beschreiben:  \\
+	$z=x+iy$ (Koordinatensystem im $\mathbb{R}^2$) Angabe vom Winkel $\varphi$ und Abstand zum Nullpunkt. Zu jedem $z=x+iy\in\mathbb{C}$ gibt es ein eindeutig best. $r\geq0\in\mathbb{R}$ und ein $\varphi\in\mathbb{R}$ \\
+	(nicht eind., $\varphi$ im Bogenmaß) mit $z=r*(\cos\varphi+i*\sin\varphi)$ \\
+	(Polarkoordinatendarstellung von $z$) und zwar ist $r=\vert z\vert=\sqrt{x^2+y^2}$ \\
+	$\frac{x}{r}=\cos\varphi,\frac{y}{r}=\sin\varphi\Rightarrow z=x+iy=r*\cos\varphi+i(r*\sin\varphi)=r(\cos\varphi+i*\sin\varphi)$ \\
+	Aus den Additionstheoremen aus $\sin,\cos$ folgt, $z_1*z_2=r_1*r_2(\cos(\varphi_1+\varphi_2)+i*\sin(\varphi_1+\varphi_2))$ \\
+	$z^2=r^2(\cos(2\varphi)+i*\sin(2\varphi))$ \\
+	$\pm\sqrt{z}=\pm\sqrt{r}(\cos(\frac{\varphi}{2})+i*\sin(\frac{\varphi}{2}))$ usw. \\
+	\underline{Bsp.:}
+	\begin{enumerate}[label=\alph*)]
+		\item $z_1=1=1+i*0 \\
+		r_1=1,\varphi_1=0 \\
+		z_1=1*(\underbrace{\cos0}_{1}+i*\underbrace{\sin0}_{0})$ 
+		\item $z_2=i=0+1*i \\
+		r_2=1,\varphi_2=\frac{\pi}{2}$
+		\item $z_3=1+i \\
+		r_3=\sqrt{2},\varphi_3=\frac{\pi}{4}$
+	\end{enumerate}
+	\underline{Definition / Schreibweise:} \\
+	$e^{i\varphi}:=\cos\varphi+i*\sin\varphi \\
+	z=\underbrace{r}_{\text{Betrag}}*e^{(i\varphi)\rightarrow\text{Winkel}}$(Argument) \\
+	(Idee: für $z\in\mathbb{C}$ konvergiert $\sum_{k=0}^\infty\frac{z^k}{k!}=exp(z)=e^z$, also $e^{i\varphi}=\sum_{k=0}^\infty\frac{(i\varphi)^k}{k!}$ \\
+	Es gilt: $i^0=1, i^1=i, i^2=-i^3=-i, i^4=i^0$ \\
+	$\rightarrow\sum_{k=0}^\infty\frac{(i\varphi)^k}{k!}=\underbrace{\sum_{k=0}^\infty(-1)^k*\frac{\varphi^{2k}}{(2k)!}}_{\cos\varphi}+i*\underbrace{\sum_{k=0}^\infty(-1)^k*\frac{\varphi^{2k+1}}{(2k+1)!}}_{\sin\varphi}$
+	
+	\newpage
+	
+	\underline{Bsp.:}
+	\begin{enumerate}[label=\alph*)]
+		\item $e^{i0}=1$ 
+		\item $e^{i\pi}=-1$
+		\item $2e^{i\frac{\pi}{4}},3e^{-i\frac{\pi}{2}}$
+		\item $z=r_1*e^{i\varphi_1},w=r_2*e^{i\varphi_2}\in\mathbb{C}$ \\
+		$zw=r_1*r_2*e^{i(\varphi_1+\varphi_2)}$ (Beträge werden multipliziert, Argumente werden addiert) \\
+		$\frac{z}{w}=\frac{r_1}{r_2}*e^{i(\varphi_1-\varphi_2)}\hsp(w\neq0)$ \\
+		$z^n=r^n*e^{n*i*\varphi}\hsp(n\in\mathbb{N})$
+		\item \underline{$n$-te Einheitswurzeln:} \\
+		in $\mathbb{R}$: Wie viele Lösungen besitzt die Gleichung $x^n=1$?\hsp$(n\in\mathbb{N})$ \\
+		$n$ ungerade: eine $(x=1)$ \\
+		$n$ gerade: zwei $(x_1=1,x_2=-1)$ \\
+		\underline{in $\mathbb{C}$:} \\ Die Gleichung $z^n=1$ besitzt $n$ verschiedene Lösungen $z_0,z_1,...,z_{n-1}$, nämlich \\
+		$z_k=e^{\frac{2\pi i}{n}*k}\hsp(k=0,1,...,n-1)$ diese werden als die $n$-te Einheitswurzeln bezeichnet. \\
+		Nachrechnen: \\
+		für jedes $z_k$ muss gelten: $(z_k)^n=1$ \\
+		$(z_k)^n=(e^{\frac{2\pi i}{n}*k})=e^{2\pi i k}=\underbrace{(e^{2\pi i})^k}_{1}=1$ \\
+		\underline{Bsp:} $n=3$, dritte Einheitswurzeln. \\
+		Löse $z^3=1$ in $\mathbb{C}:$ \\
+		$z_0=e^{\frac{2\pi i}{3}*0}=e^0=1, \\
+		z_1=e^{\frac{2\pi i}{3}*1}\hsp\frac{2}{3}\pi\widehat{=}\frac{2}{3}180^\circ=120^\circ \\
+		z_2=e^{\frac{2\pi i}{3}*1}\hsp\frac{3}{4}\pi\widehat{=}240^\circ$
+	\end{enumerate}
+\end{enumerate}
+
+\newpage
+
+\section*{Exkurs 2}
+Polynomdivision (mit Rest)
+\begin{enumerate}[label=\arabic*)]
+	\item Wdhlg. Mathe II $\rightarrow$ Folien
+	\item \underline{Def:} $f,g\in K[x]$ \\
+	\underline{$f$ teilt $g$},\hsp $f\mid g$, falls $\exists q\in K[x]$ mit $g=q*f$ \\
+	(nach Gradformel ist dann $grad(f)\leq grad(g)$) (falls $g\neq0$)
+	\item Satz: (division mit Rest) \\
+	$0\neq f\in K[x],g\in K[x]$ \\
+	Dann ex. eind. best. Polynome $q,r\in K[x]$ mit $g=q*f+r$ und $grad(r)<grad(f)$ \\
+	(Beweis wie für $\mathbb{Z}$, machen wir evtl. später) \\
+	\item \underline{Bsp.:}
+		\begin{enumerate}[label=\alph*)]
+			\item $g=x^4+2x^3-x+2$ \\
+			$f=3x^2-1\hsp\in\mathbb{R}[x]$ \\
+			$(x^4+2x^3+0x^2-x+2):(\underbrace{x^2-1}_{f})=\underbrace{(\frac{1}{3}x^2+\frac{2}{3}x+\frac{1}{9})}_{q}+r$ \\
+			$-(x^4-\frac{1}{3}x^2)$ \\
+			\rule{3cm}{1pt} \\
+			$2x^3+\frac{1}{3}x^2-x+2$ \\
+			$-(2x^3-\frac{2}{3}x)$ \\
+			\rule{3cm}{1pt} \\
+			$\frac{1}{3}x^2-\frac{1}{3}x+2$ \\
+			$-(\frac{1}{3}x^2-\frac{1}{9})$ \\
+			\rule{3cm}{1pt} \\
+			$-\frac{1}{3}x+\frac{19}{9}$
+			\item $g=x^4+x^2+1 \\
+			f=x^2+x\hsp\in\mathbb{Z}_2[x]$ \\
+			$(x^4+0x^3+x^2+0x+1):(x^2+x)=(x^2+x)+1$ \\
+			$-(x^4+x^3)$ \\
+			\rule{3cm}{1pt} \\
+			$x^3+x^2+0x+1$ \\
+			$-(x^3+x^2)$ \\
+			\rule{3cm}{1pt} \\
+			$1$
+		\end{enumerate}
+		\item \underline{Korollar:} $K$ Körper, $a\in K$ \\
+		$f\in K[x]$ ist genau dann durch $(x-a)$ teilbar, wenn $f(a)=0$ ist. (d.h. $a$ ist Nullst. von $f$)
+		\underline{Beweis:} \\
+		''$\Rightarrow$'' $f=q*(x-a)\Rightarrow f(a)=q(a)*\underbrace{(a-a)}_{0}=0$ \\
+		''$\Leftarrow$'' $[f(a)=0,$ zeige $(x-a)\mid f$ d.h. zeige $r=0]$ \\
+		Div. mit Rest: $f=q*(x-a)+r\hsp$ mit $\underbrace{grad(r)}_{0,-\infty}<\underbrace{grad(x-a)}_{1}$ \\
+		$\Rightarrow r$ ist konst. Polynom, also $r\in K$ (oder 0) \\
+		$0=f(a)=g(a)*\underbrace{(a-a)}_{0}+r\Rightarrow r=0$ 
+		
+		\newpage
+		
+		\item Anwendungsbsp.: \\
+		Nullstellen von $f(x)=x^3-6x^2+11x-6\hsp\in\mathbb{R}[x]$ \\
+		$\rightarrow$ rate eine Nullstelle (falls ganzzahlig Teiler von $a_0$ also hier $\pm1,\pm2,\pm3,\pm6$) \\
+		z.B. $x=1: f(1)=1-6+11-6=0$ \\
+		$\Rightarrow$ Polynomdivision durch $(x-1)$ ohne Rest möglich: $(x^3-6x^2+11x-6):(x-1)=\underbrace{x^2-5x+6}_{\text{weitere Nullst. sind 2 und 3}}$
+\end{enumerate}
+
+\newpage
+
+\section{Singulärwertzerlegung}
+\begin{definition}
+	SWZ
+\end{definition}
+Sei $A\in M_{m,n}(\mathbb{C}), rg(A)=r$ \\
+Eine \underline{Singulärwertzerlegung von $A$} (SWZ. engl. SVD) ist ein Produkt der Form $A=U\Sigma\bar V^T$ mit $U\in U(m), V\in U(n)$ (unitäre Matritzen) und $\Sigma\in M_{m,n}(\mathbb{R})$ der Form $\begin{pmatrix}\sigma_1&&0&\\&\ddots&&0\\0&&\sigma_r&&\\&0&&0\end{pmatrix}$ mit $\sigma_1\geq\sigma_2\geq,...,\geq\sigma_r>0$ den \underline{Singulärwerten} von $A$. \\
+(für $A\in M_{m,n}(\mathbb{R})$ sind $U,V$ orthogonale Matritzen)
+
+\begin{satz}
+	SWZ
+\end{satz}
+Jede Matrix besitzt ein SWZ. \\
+\underline{Beweis:} mit vollst. Ind. (vgl. H.A.T.) oder konstruktiv: \\
+(hier nur für den Fall $A\in M_{m,n}(\mathbb{R})$ - für komplexe Matrix analog!)
+\begin{enumerate}[label=\arabic*)]
+	\item setze $B:=A^TA$, dann ist $B\in M_n(\mathbb{R})$ symmetrisch.
+	\item Bestimme die EW $\lambda_1,...,\lambda_n$ von $B$ und eine ONB aus EW $v_1,...,v_n$ von $B$, dabei sei $\lambda_1\geq\lambda_2\geq,...,\geq\lambda_n$. \\
+	Es gilt: \\
+	$\lambda_i$ sind reell (3.17/3.18, da $B$ symm.) und alle $\geq0$ \\
+	$\lambda_i=\lambda_i*\underbrace{(v_i\mid v_i)}_{\text{1, da $v$ ONB}}$ \\
+	$= \lambda_i*v_i^T*v_i \\
+	= v_i^T*\lambda_i*v_i \\
+	= v_i^TBv_i \\
+	= v_i^T(A^TA)v_i \\
+	= (Av_i)^T(Av_i) \\
+	= (Av_i)^T(Av_i)\geq0$ \\
+	$\lambda_1,...,\lambda_r>0,\lambda_{r+1}=...=\lambda_n=0$, da $rg(A)=rg(B)=r$
+	\item für $i=1,...,r$ setzte $u_i:=\frac{1}{\sqrt{\lambda_i}}*A*v_i$ \\
+	Diese bilden ONS: \\
+	$(u_i\mid u_j) \\
+	= \frac{1}{\sqrt{\lambda_i}}(Av_i)^T\frac{1}{\sqrt{\lambda_j}}Av_j \\
+	= \frac{1}{\sqrt{\lambda_i}\sqrt{\lambda_j}}v_i^TA^TAv_j \\
+	= \frac{\sqrt{\lambda_j}}{\sqrt{\lambda_i}}\underbrace{(v_i\mid v_j)}_{}=\left\{\begin{array}{ll}\sqrt{\frac{\lambda_j}{\lambda_i}}=1&\text{, falls }i=j \\ 0 & \text{, falls }i\neq j\end{array}\right.$ 
+	\item Ergänze zu ONB $u_1,...,u_m$ des $\mathbb{R}^m$
+	
+	\newpage
+	
+	\item $U:=(u_1,...,u_m)$ ($u_i$ als Spalten) $\in M_m(\mathbb{R})$ \\
+	$V:=(v_1,...,v_m)$ ($v_i$ als Spalten) $\in M_n(\mathbb{R})$ \\
+	und $\sum=(s_{ij})_{i,j}\in M_{m,n}(\mathbb{R})$ mit $s_{ij}=\left\{\begin{array}{ll}\sqrt{\lambda_i}=1&\text{, für }i=j\geq r \\ 0 & \text{sonst}\end{array}\right.$ \\
+	Dann ist $A=U\sum V^T$ SWZ von $A$: \\
+	- $V$ orthogonal (nach 2)) \\
+	- $U$ orthogonal (nach 3), 4)) \\
+	- $U\sum V^T=\sum_{i=1}^r\sqrt{\lambda_i}\underbrace{u_iv_i^T}_{\in M_{m,n}(\mathbb{R})}$
+	$=\sum^r_{i=1}Av_iv_i^T$ \\
+	$=\sum^n_{i=1}Av_iv_i^T \hsp(v_{r+1},...,v_n$ sind EV zum EW 0
+	$=A\sum^n_{i=1}v_iv_i^T$ \\
+	$=A\underbrace{VV^T}_{=E_n\text{, da }v_1,...,v_n\text{ ONB}}$ \\
+	=$A*E_n$ \\
+	$=A$
+\end{enumerate}
+
+\begin{bem}
+\end{bem}
+\begin{enumerate}[label=\alph*)]
+	\item $kerA=<v_{r+1},...,v_n>$ $Im(A)=<u_1,...,u_r>$
+	\item Ist $A$ symm., entsprechen die Singulärwerte den Beträgen der EW. Sind alle EW$\geq$0 so ist die Hauptachsentransformation (H.A.T.) $A=QDQ^T$ auch eine SWZ (analog in $\mathbb{C}$)
+\end{enumerate}
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item $A=\begin{pmatrix}1&0\\2&1\\0&1\end{pmatrix}\in M_{3,2}(\mathbb{R})$ \\
+	$B=A^TA=\begin{pmatrix}1&2&0\\0&1&1\end{pmatrix}\begin{pmatrix}1&0\\2&1\\0&1\end{pmatrix}=\begin{pmatrix}5&2\\2&2\end{pmatrix}$ symm. \\
+	EW von $B$:  $\lambda_1=6,\lambda_2=1$ \\
+	EV: $v_1=\frac{1}{\sqrt{5}}\begin{pmatrix}2\\1\end{pmatrix}, v_2=\frac{1}{\sqrt{5}}\begin{pmatrix}1\\-2\end{pmatrix}$ orth., da $B$ symm. (normieren!) \\
+	$V=\frac{1}{\sqrt{5}}\begin{pmatrix}2&1\\1&-2\end{pmatrix}, \sum=\begin{pmatrix}\sqrt{6}&0\\0&1\\0&0\end{pmatrix}$ \\
+	$u_1=\frac{1}{\sqrt{6}}Av_1=\frac{1}{\sqrt{30}}\begin{pmatrix}2\\5\\1\end{pmatrix}$ \\
+	$u_2=\frac{1}{\sqrt{1}}Av_2=\frac{1}{\sqrt{5}}\begin{pmatrix}1\\0\\-2\end{pmatrix}$ \\
+	ergänze zu ONB des $\mathbb{R}^3$, z.B. mittels $e_2=\begin{pmatrix}0\\1\\0\end{pmatrix} (e_2,u_1,u_2$ l.u.) mit Gram-Schmidt erhalte $w_3=...=\frac{1}{\sqrt{6}}\begin{pmatrix}-2\\2\\-1\end{pmatrix} \\
+	u_3=\frac{1}{\vert\vert w_3\vert\vert}w_3=\frac{1}{\sqrt{6}}\begin{pmatrix}-2\\1\\-1\end{pmatrix}$ \\
+	$\Rightarrow$ SWZ: $A=U\Sigma V^T=\begin{pmatrix}\frac{2}{\sqrt{30}} & \frac{1}{\sqrt{5}} & -\frac{2}{\sqrt{6}} \\ \frac{5}{\sqrt{30}} & 0 & \frac{1}{\sqrt{6}} \\ \frac{1}{\sqrt{30}} & -\frac{2}{\sqrt{5}} & -\frac{1}{\sqrt{6}} \end{pmatrix}\begin{pmatrix}\sqrt{6}&0\\0&1\\0&0\end{pmatrix}\begin{pmatrix}\frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}} \\ \frac{1}{\sqrt{5}} & -\frac{2}{\sqrt{5}}\end{pmatrix}$
+\end{enumerate}
+
+\begin{bsp}
+a) aus voherigem Bsp.
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item $A=(2\:2\:1)\in M_{1,3}(\mathbb{R}$ \\
+	$B=A^TA=\begin{pmatrix}4&4&2\\4&4&2\\2&2&1\end{pmatrix}$, enthalte EW $\lambda_1=2,\lambda_2=\lambda_3=0$ \\
+	EV $v_1=\frac{1}{3}\begin{pmatrix}2\\2\\1\end{pmatrix}, v_2=\frac{1}{\sqrt{2}}\begin{pmatrix}1\\-1\\0\end{pmatrix}, v_3=\frac{1}{3\sqrt{2}}\begin{pmatrix}1\\-\\-4\end{pmatrix} $ \\
+	$V\in M_3(\mathbb{R})=\begin{pmatrix}v_1&v_2&v_3\end{pmatrix} \\
+	\Sigma=(3\:0\:0) \\
+	u_1=\frac{1}{3}Av_1=\frac{1}{3}(3)=(1) \\
+	U\in M_1(\mathbb{R})=(1)$ \\
+	$A=U\Sigma V^T$ \\
+	andere Möglichkeit: \\
+	setze $\tilde A=A^T=\begin{pmatrix}2\\2\\1\end{pmatrix}$, führe alle Schritte mit $\tilde A$ durch. \\
+	$\tilde B=\tilde A^T\tilde A=(9)\in M_1(\mathbb{R})$ erhalte \\
+	EW $\lambda_1=9$ \\
+	EV $v_1=(1)$, ist bereits ONB des $\mathbb{R}^1$ \\
+	$\tilde V=(1)$ (entspricht dem $U$ vorher) \\
+	$\Sigma^\sim=\begin{pmatrix}3\\0\\0\end{pmatrix}, U^\sim$ (berechne $u_1,u_2,u_3$) sieht wie $V$ vorher aus. \\
+	$\tilde A=\tilde U\tilde\Sigma\tilde V^T$ \\
+	$A=\tilde A^T=(\tilde U\tilde\Sigma\tilde V^T)^T=\tilde V\tilde\Sigma^T\tilde U^T=U\Sigma V^T$
+\end{enumerate}
+
+\begin{definition}
+	Pseudoinverse
+\end{definition}
+Sei $A=U\Sigma\bar V^T$ eine SWZ von $A\in M_{m,n}(\mathbb{C})$. Dann heißt $A^+=V\Sigma^+\bar U^T$ die \underline{Pseudoinverse} (oder \underline{Moore-Penrose-Inverse}) von $A$, wobei $\Sigma^+\in M_{n,m}(\mathbb{R})$ aus $\Sigma\in M_{m,n}(\mathbb{R})$ entseht, indem man $\Sigma$ transponiert und die Elemente $\neq0$ invertiert, also $\Sigma^+=(s_{ij}^+)$ mit $s_{ij}^+=\left\{\begin{array}{ll}\frac{1}{\sigma_i} & \text{, für }i=j,\sigma\neq0 \\ 0 & \text{ sonst}\end{array}\right.$  \\
+(Falls $A\in M_{m,n}(\mathbb{R})\hsp A^+=V\Sigma^+U^T\in M_{n,m}(\mathbb{R})$)
+
+\begin{bem}
+\end{bem}
+Für die Pseudoinverse gilt,
+\begin{enumerate}[label=\alph*)]
+	\item $(A^+)^T=(A^T)^+$
+	\item Ist $A\in M_n(\mathbb{C})$ invertierbar so ist $A^{-1}=A^+$ 
+	\item $A$, ist $(A\:B)^+\neq B^+A^+$
+\end{enumerate}
+
+\newpage
+
+\begin{bem}
+	Pseudonormallösung
+\end{bem}
+Sei $Ax=b$ ein LGS, $A\in M_{m,n}(\mathbb{C})$. \\
+Mathe II: $m=n, A\in M_n(\mathbb{C})$ mit $A$ inv. bar $\Rightarrow\exists$ eindeutige Lösung (und zwar $x=A^{-1}b)$ \\
+andernfalls: keine Lösung oder mehrere Lösungen möglich \\
+Die \underline{Pseudonormallösung } $x^+$ des LGS ist definiert als $x^+=A^+b$, und für $x^+$ gilt:
+\begin{enumerate}[label=\arabic*)]
+	\item Die Norm des Fehlers $Ax^+-b$ ist minimal.
+	\item Die Norm von $x^+$ ist minimal.
+\end{enumerate}
+Insbesondere gilt: Ist das LGS eindeutig lösbar, so ist $x^+$ die Lösung .\\
+Ist das LGS mehrdeutig lösbar, so ist $x^+$ die Lösung mit kleinster Norm.
+
+\begin{bem}
+	Anwendungen von SWZ
+\end{bem}
+PCA, ML: recommender Systems, \\
+Bioinformatik
+
+\begin{bem}
+	 zu 3/4
+\end{bem}
+Definitheit von Matritzen \\
+geg.: quadrat. (evtl. symm.) Matrix $A\in M_n(\mathbb{R})$. \\
+Für $x\in\mathbb{R}^n$ beschreibt der Ausdruck $x^TAx$ eine sog.  \underline{quadratische Form}. (Polynom vom Grad 2 in den Variablen  $x_1,...,x_n$), z.B. $(x_1\:x_1\:x_3)\begin{pmatrix}2&-3&0\\-3&8&1\\0&1&5\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}= \\
+2x_1^2+8x_2^2+5x_3^2-3x_1x_2-3x_2x_1+1x_3x_2$ \\
+(analog für $A\in M_n(\mathbb{C})$, evtl. hermitesch, mit $\bar x^TAx)$ \\
+\underline{DEF} (definite, semidefinite, indefinite Matrix) \\
+$A\in M_n(\mathbb{R})$ symm. heißt
+\begin{enumerate}[label=\alph*)]
+	\item positiv/negativ \underline{definit}, falls $x^TAx\:>0/<0\hsp\forall x\in\mathbb{R}^n,x\neq0$
+	\item positiv/negativ \underline{semidefinit}, falls $x^TAx\:\geq0/\leq0\hsp\forall x\in\mathbb{R}^n$ gilt.
+\end{enumerate}
+Erfüllt $A$ keine dieser Eigenschaften, heißt sie \underline{indefinit}. \\
+$(x^TAx$ nimmt pos. und neg. Werte an, je nach $x$) \\ 
+(analog für $\mathbb{C},\bar x^TAx$, $A$ hermitesch) \\
+\underline{Kriterien für Definitheit:} \\
+$A\in M_n(\mathbb{R})$ symm. oder $A\in M_n(\mathbb{C})$ hermitesch, ist genau dann \\
+pos. definit wenn alle EW $> 0$ sind. \\
+neg. definit wenn alle EW $< 0$ sind. \\
+pos. semidefinit wenn alle EW $\geq 0$ sind. \\
+neg. semidefinit wenn alle EW $\leq 0$ sind. \\
+und indefinit, wenn pos. und neg. EW existieren. \\
+Andere Möglichkeit über Minoren ($\rightarrow$ Entwicklungssatz von Laplace) \\
+(Det. von kleinerer Matrix, die man durch Streichen von Zeilen/Spalten erhält)
+
+\newpage
+
+\section{Elementare Zahlentheorie}
+\begin{wdh}
+\end{wdh}
+- $b$ Teiler von $a$ \\
+- Division mit Rest, mod/div \\
+Folien
+
+\begin{bsp}
+\end{bsp}
+$a=22,\:b=5,\:22=4*5+2$ \\
+$22\div5=4,\: 22\mod5=2$ \\
+$a=-22,\:b=5,\:-22=(-5)*5+3$ \\
+$-22\div5=-5,\:-22\mod5=3$
+
+\begin{bem}
+	Eine Anwendung von 5.2
+\end{bem}
+Sind die Stellenwertsysteme zur Basis $b$ ($b\in\mathbb{N},b<1$) \\
+($b=2$: Binärsystem, $b=8$: Oktalsystem, $b=10$: Dezimalsystem, $b=16$: Hexadezimalsystem) \\
+Mittels Division mit Rest und vollständiger Induktion lässt sich zeigen: \\
+Jede natürliche Zahl $n\in\mathbb{N}$ lässt sich eindeutig darstellen in der Form $n=\sum_{i=0}^k\underbrace{xi}_{\text{Ziffern}<b}b^i$ \\
+wobei (1): $k=0$ für $n=0$ \\
+$b^k\leq n<b^{k+1}$ für $n>0$ \\
+(2) $x_i\in\mathbb{N}_o$ (Ziffern von $n$ bzgl.  $b$) \\
+$0\leq x_i\leq b-1,\hsp x_k\neq0$ für $n\neq0$ \\
+(\underline{$b$-adische Darstellung von $n$}) \\
+Schreibweise: $n=(x_n,...,x_0)_b$ (oder, falls $b$ klar, z.B. $b=10$): $n=x_k,...,x_0$
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item $b=2$ \\
+	$9=1*2^3+0*2^2+0*2^1+1*2^0$ \\
+	$(9)_{10}=(1001)_2$
+	\item Ziffern für $b=16$ \\
+	$0,1,...,9,A,B,C,D,E,F$ \\
+	$(11)_{10}=B_{16} \\
+	(29)_{10}=1*16^1+13*16^0=(1D)_{16}$
+\end{enumerate}
+
+\begin{ver}
+	zur Bestimmung der $b$-adischen Darst. von $n\in\mathbb{N}_0$
+\end{ver}
+$n_0:=n,\hsp x_0:=n_0\mod b$ \\
+$n_1:=\frac{n_0-x_0}{b},\hsp x_1:=n_1\mod b$ \\
+$n_2:=...$ \\
+$n_k:=\frac{n_{k-1}-x_{k-1}}{b},\hsp x_k:=n_k\mod b$ \\
+solange, bis $n_k<b$) \hsp (d.h. $x_k=n_k$) Dann $n=(x_k,...,x_0)_b$ 
+
+\begin{bsp}
+\end{bsp}
+$(41)_5$ im 3er-System \\
+$(41)_5=4*5^1+1*5^0=(21)_{10} \\
+21\mid 3=0 \\
+\frac{21-0}{3}=7, 7\mod3=1 \\
+\frac{7-1}{3}=2, 2<3$, fertig $\Rightarrow\:(41)_5=(210)_3$
+
+\begin{wdh}
+\end{wdh}
+- Kongruenzrelationmodulo $m,\mathbb{Z}_m$ \\
+- Rechenregeln für $\mod$ $\rightarrow$ Folien
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item Was ist $11*12*13\mod 7$? \\
+	$11*12*13=1716\equiv1(\mod7)$ oder: \\
+	$11*12*13=132*13\equiv(-1)(-1)=1\mod7$ oder: \\
+	$11*12*13=4*5*6=120\equiv1\mod7$ oder: \\
+	$11*12*13\equiv(-3)(-2)(-1)=-6\equiv1\mod7$
+	\item welchen Rest lässt \\
+	$(214\:935)^{2019}$ bei Div. durch 7? \\
+	$(214\:935)^{2019}=(210\:000+4\:900+35-1)^{2019}$ \\
+	$\equiv(-1)^{2019}\equiv-1\equiv6\bmod7$, d.h. Rest: 6
+\end{enumerate}
+
+\begin{bem}
+\end{bem}
+Es gilt \\
+$a\equiv b(\bmod m), c\in\mathbb{Z}\Rightarrow c*a=c*b(\bmod m)$ \\
+z.B. ist $2*3=2*2(\bmod 2)$ aber \\
+$3\neq2(\bmod2)$ \\
+! hier jetzt nicht teilen
+
+\begin{bsp}
+\end{bsp}
+Welche $x\in\mathbb{Z}$ erfüllen die Konguenz $2x+1\equiv5(\bmod 6)$? \\
+$2x+1\equiv5(\bmod 6)\Leftrightarrow 2x\equiv4(\bmod6)$ \hsp (\xcancel{$\Leftrightarrow$}$x\equiv2(\bmod6)$\hsp vgl. 5.9!) \\
+Welche $x\in\{0,...,5\}$ erfüllen $2x\equiv4(\bmod6)$? \\
+$x=2,x=5$ \\
+$\Rightarrow$ Lösungsmenge ist $\{2+6k\mid k\in\mathbb{Z}\}\cup\{5+6k\mid k\in\mathbb{Z}\}$
+
+\begin{definition}
+	ggT,KgV
+\end{definition}
+Seine $a_1,...,a_r\in\mathbb{Z}$
+\begin{enumerate}[label=\alph*)]
+	\item Ist mind, ein $a_i\neq0$, so ist der \underline{größte gemeinsame Teiler} $ggT(a_1,...,a_r)$ die größte nat. Zahl, die alle $a_1,...,a_r$ teilt.\hsp (engl.: gcd)
+	\item Sind alle $a_i\neq0$, so ist das \underline{kleinste gemeinsame Vielfache} $KgV(a_1,...,a_r)$ die kleinste nat. Zahl, die von allen $a_1,...,a_r$ geteilt wird.\hsp (engl.: lcm)
+	\item Ist $ggT(a_1,...,a_r)=1$, so heißen $a_1,...,a_r)$ \underline{teilerfremd}. \\
+	Ist $ggT(a_i,a_j)=1\quad\forall i,j,\quad i\neq j$, so heißen $a_1,...,a_r$ \underline{paarweise teilerfremd} \\
+	(Stärker, z.B. (6,10,15) teilerfremd, aber nicht paarweise teilerfremd)
+\end{enumerate}
+Wie berechnet man der $ggT$ zweier Zahlen? $\rightarrow$ Euklid. Alg. (365-300 v. Chr.)
+
+\newpage
+
+\begin{lemma}
+\end{lemma}
+Seien $q,v,w\in\mathbb{Z},v\neq0$ \\
+Dann gilt $t\mid v$ und $t\mid w\Leftrightarrow t\mid v$ und $t\mid q*v+w$ \\
+\\
+\underline{Beweis:} \\
+''$\Rightarrow$'' \\
+$t\mid v$, d.h. $\exists k_1\in\mathbb{Z}$ mit $tk_1=v$ \\
+$t\mid w$, d.h. $\exists k_2\in\mathbb{Z}$ mit $tk_1=w$ \\
+$\Rightarrow q*v+w=q+tk_1+tk_2=t\underbrace{(qk_1+k_2)}_{\in\mathbb{Z}}$ \\
+d.h. $t\mid qv+w$ \\ \\
+''$\Leftarrow$'' \\
+$tk_1=v$ wie oben, \\
+$t\mid qv+w\Rightarrow\exists k_2\in\mathbb{Z}$ mit $tk_2=qv+w$ \\
+$\Rightarrow w=tk_2-qv=tk_2-qtk_1=t\underbrace{(k_2-qk1)}_{\in\mathbb{Z}}$ \\
+d.h. $t\mid w$ \\
+Damit folgt: $ggT(v,w)=ggT(v,qv+w)$ \\
+Dies ist das Grundprinzip des $ggT$: \\
+\\
+Seien $a,b\in\mathbb{Z},b\neq0,b\nmid a$ \\
+Idee: Division mi Rest macht Aufgabe kleiner! \\
+Setze $a_0=a, a_1=b$, teile mit Rest: \\
+$a_0=q_1a_1+a_2$\hsp $a_2$ ist Rest \\
+$a_1=q_2a_2+a_3$ \\
+$\vdots$ \\
+$a_{n-1}=q_na_n+0$ (erstmalig Rest 0) \\
+Dann gilt: \\
+$ggT(a,b)=ggT(b,a) \\
+=ggT(a_1,a_0) \\
+=ggT(a_1,q_1a_1+a_2) \\\
+\overset{5.12}{=}ggT(a_1,a_2) \\
+=ggT(a_2,q_2a_2+a_3) \\
+\overset{5.12}{=}(a_2,a_3) \\
+\vdots \\
+=ggT(a_{n-1},a_n) \\
+=ggT(a_n,a_{n-1}) \\
+=ggT(a_n,qa_n) \\
+=a_n$ \\
+Das ist der Beweis für die Korrektheit des Eukl. Alg.
+
+\newpage
+
+\begin{definition}
+	Euklidischer Algorithmus
+\end{definition}
+\begin{algorithm}[!h]
+	\KwData{$a,b\in\mathbb{Z}$, nicht beide=0}
+	\KwResult{$y=ggT(a,b)$}
+	\caption{\texttt{Euklidischer Algorithmus}}
+	\If{$b=0$}{
+		$y:=\vert a\vert$
+	}
+	\If{$b\mid a$}{
+		$y:=\vert b\vert$
+	}
+	\If{$b\neq0\land b\nmid a$}{
+		$x:=a$ \\
+		$y:=b$ \\
+		\While{$x\bmod y\neq0$}{
+			$r:=x\bmod y$ \\
+			$x:=r$ \\
+			$y:=r$
+		}
+	}
+	\Return{$y$}
+\end{algorithm}
+
+\begin{bsp}
+\end{bsp}
+$a=48,b=-30$ \\
+\begin{tabular}{c|c|c}
+	$x$ & $y$ & $x\bmod y=r$ \\
+	\hline
+	48 & -30 & 18 \\
+	-30 & 18 & 6 \\
+	18 & 6 & 0
+\end{tabular} \\
+\\
+$\rightarrow ggT(48,-30)=6$
+
+\newpage
+
+jetzt: wichtige Darstellung des $ggT$:
+\begin{satz}
+	Bachet de Meziriac
+\end{satz}
+Seien $a,b\in\mathbb{Z}$, nicht beide = 0. \\
+$\Rightarrow\exists s,t\in\mathbb{Z}$ mit $ggT(a,b)=sa+tb$ \\
+\underline{Beweis:} \\
+\underline{$b=0$:} $ggT(a,b)=\vert a\vert=s*a+0*b,\hsp s=\left\{\begin{array}{ll}1&\text{, }a>0 \\ -1 & \text{, }a<0\end{array}\right.$ \\
+\underline{$b\neq0, b\mid a$} $ggT(a,b)=\vert b\vert=0*a+t*b,\hsp t=\left\{\begin{array}{ll}1&\text{, }b>0 \\ -1 & \text{, }b<0\end{array}\right.$ \\
+\underline{$b\neq0, b\nmid a$:} setze $a_0:=a, a_1:=b$ \\
+Euklidischer Algorithmus: \\
+$a_0=q_1a_1+a_2$ \\
+$a_1=q_2a_2+a_3$ \\
+$\vdots$ \\
+$a_{n-1}=q_na_n+0$ \\
+$a_n=ggT(a_0,a_1)\hsp(n\geq2,$ da $a_1\nmid a_0)$ \\
+zeigen mit Ind: \\
+$\exists s_j,t_j\in\mathbb{Z}$ mit $a_j=s_j*a_0+t_j*a_1\hsp j=0,...,n$ \\
+\underline{I.A.:} $j=0:$ $s_0=1, t_0=0$ \\
+$j=1:$ $s_1=0, t_1=1$ \\
+\underline{IS.:} $j-1,j-2\rightarrow j$ \\
+\underline{IV.:} Sei $j\geq2$ und es gelte $a_{j-2}=s_{j-2}a_0+t_{j-2}a_1\hsp a_{j-1}=s_{j-1}a_0+t_{j-1}a_1$ \\
+Dann $j=0,...,n$ \\
+$a_j=a_{j-2}-q_{j-1}a_{j-1} \\
+=s_{j-2}+t_{j-2}a_1-q_{j-1}(s_{j-1}a_o+t_{j-1}a_1) \\
+=\underbrace{(s_{j-2}-q_{j-1}s_{j-1})}_{:=s_j}a_0+\underbrace{(t_{j-2}-q_{j-1}t_{j-1})}_{:=t_j}a_1$ \\
+Beh. des Satzes folgt mit $s=s_n$, $t=t_n$. \\
+Der Beweis liefert Alg. zur Bestimmung von $s$ und $t$.
+
+\begin{definition}
+	Erweiterter Euklid. Alg. (EEA)
+\end{definition}
+Eingabe: $a,b\in\mathbb{Z}$ nicht beide = 0 \\
+If $b=0$ then $y:=\vert a\vert, t:=0$ \\
+\phantom{x}\hsp if $a>0$ then $s:=1$ else $s:=-1$ endif \\
+endif \\
+If $b\mid a$ then $y:=\vert b\vert, s:=0$ \\
+.\hsp if $b>0$ then $t:=1$ else $t:=-1$ endif \\
+endif \\
+If $b\neq0$ and $b\nmid a$ then $x:=a,y:=b,s_1:=1,s_2:=0,t_1:=0,t_2:=1$ \\
+\phantom{x}\hsp while $(x\mod y)\neq0$ do \\
+\phantom{x}\hsp\hsp $q:=x\div y, r:=x\mod y,s:=s_1-qs_2,t:=t_1-qt_2,s_1:=s_2,s_2:=s, \\
+\phantom{x}\hsp\hsp t_1:=t_2,t_2:=t,x:=y,y:=r$  \\
+\phantom{x}\hsp endwhile \\
+endif \\
+Ausgabe: $y=ggT(a,b),s,t$ (mit $y=sa+tb$)
+
+\newpage
+
+\begin{bsp}
+\end{bsp}
+$a=48,b=-30$ \\
+\begin{tabular}{l|c|c|c|c|c|c|c|c|c|c}
+mod & $x$ & $y$ & $s_1$ & $s_2$ & $s$ & $t_1$ & $t_2$ & $t$ & $q$ & $r$ \\
+\hline
+&48 & -30 & 1 & 0 & & 0 & 1&& \\
+$48\mod(-30)=18$ & -30 & 18 & 0 & 1 & 1 & 1 & 1 & 1 & -1 & 18 \\
+$-30\mod18=6$ & 18 & \underline{6} & 1 & 2 & 2 & 1 & 3 & 3 & -2 & 6 \\
+$18\mod6=0$ 
+\end{tabular} \\
+Also $ggT(48,-30)=6=2*48+3(-30)$ \\
+Achtung: Darstellung des $ggT(a,b)$ als $sa+tb$ ist nicht eindeutig, z.B. 6=7+48+11*(-30)
+\vspace{5mm} \\
+Bessere Methode: (Jameel): \\
+48=(-1)(-30)+18 \\
+-30=(-2)(18)+6 \\
+18=3*6+0 $\Rightarrow ggT(48,-30)=6$ \\
+6=-30+2*18 = -30+2(48-30) = $\underbrace{3}_{a}$*(-30)+$\underbrace{2}_{b}$*48
+
+\begin{anw}
+	des EEA
+\end{anw}
+vgl. Mathe II: wie findet man die multiplikative Inverse von $z\in\mathbb{Z}_m$ \\
+(d.h. $z^{-1}$ mit $z*z^{-1}=1$ in $\mathbb{Z}_m$) \\
+Dort gezeigt: $z\in\mathbb{Z}_m$ ist invertierbar $\Leftrightarrow ggT(z,m)=1$ \\
+EEA liefert dann zu $z$ und $m$ Zahlen $s,t\in\mathbb{Z}$ mit $z*s+m*t=1\hsp(ggT(z,m)$ \\
+$\Rightarrow (z*s)\mod m=1 \\
+\Rightarrow s=z^{-1}\mod m$ \\
+\underline{Bsp.:}
+$3^{-1}$ in $\mathbb{Z}_7$? \\
+EEA: 3*$\underbrace{(-2)}_{s}$+7*(1)=1 \hsp $s, -2\mod7=5=3^{-1}$ in $\mathbb{Z}_7$ \\
+$4^{-1}$ in $\mathbb{Z}_9$? (ex, da $ggT(4,9)=1$) \\
+4*$\underbrace{(-2)}_{s}$+9*(1)=1 \hsp $s, -2\mod9=7=4^{-1}$ in $\mathbb{Z}_9$ \\
+
+\begin{koro}
+\end{koro}
+$a,b\in\mathbb{Z}$, nicht beide = 0, $c\in\mathbb{Z}$ 
+\begin{enumerate}[label=\alph*)]
+	\item $a,b$ teilerfremd $\Leftrightarrow\exists s,t\in\mathbb{Z}:sa+tb=1$
+	\item $a,b$ teilerfremd $\Rightarrow$ falls $a\mid bc$, dann $a\mid c$
+\end{enumerate}
+\underline{Beweis:}
+\begin{enumerate}[label=\alph*)]
+	\item ''$\Rightarrow$'' 5.15 \\
+	''$\Leftarrow$'' sei $d=ggT(a,b)$, dann $d\mid a, d\mid b$ \\
+	$\Rightarrow d\mid \underbrace{sa+tb}_{=1}\Rightarrow d=1$
+	\item 5.15: $\exists s,t\in\mathbb{Z}$ mit $1=sa+tb$ \\
+	$\Rightarrow c=sac+tbc$ \\
+	Da $a\mid a$ und $a\mid bc=a\mid\underbrace{sca+tbc}_{=0}$
+\end{enumerate}
+
+\newpage
+
+\begin{definition}
+	Primzahl
+\end{definition}
+Eine nat.Zahl $p>1$ heißt \underline{Primzahl} (PZ), wenn sie nur 1 und $p$ als Teiler besitzt. \\
+($ggT(k,p)=1\forall k\leq k\leq p-1$)
+
+\begin{satz}
+	Lemma von Euklied
+\end{satz}
+$p$ PZ, $a_1,....,a_k\in\mathbb{Z},p\mid a_1*...*a_k\Rightarrow\exists j$ mit $p\mid a_j$ \\
+\\
+\underline{Beweis:} \\
+Induktion nach $k$ \\
+IA.: $k=1$ \\
+IS.: $k-1\rightarrow k$ (Beh. gelte für $k-1$) \\
+falls $p\mid a_k$, dann fertig \\
+falls $p\nmid a_k$, dann ist $ggT(a_k,p)=1$ da $p$ PZ \\
+Nach 5.19 b) gilt dann $p\mid \underbrace{a_1*...*a_{k-1}}_{\text{hierfür gilt I.A. d.h. \\ $p\mid a_j$, für $j\in\{1,...,k-1\}$}}$
+
+\begin{theo}
+	Fundamentalsatz der elementaren Zahlentheorie
+\end{theo}
+Zu jeder nat. Zahl $n\geq2$ gibt es endl. viele verschiedene Primzahlen $p_1,...,p_k$ und nat. Zahlen $e_1,...,e_k$ mit $n=p_1^{e_1}*...*p_k^{e_k}$ \\
+Die $p_j$ heißen \underline{Primfaktoren (Primteiler)} von $n$. \\
+Die Darstellung von $n$ als Produkt von PZ ist bis auf die Reihenfolge eindeutig. \\
+\\
+\underline{Beweis: Existenz} \\
+verschärfte Induktion nach $n$ \\
+I.A.: $n=2$ ist PZ \\
+I.S.: $2,3,...,n\rightarrow n+1$ \\
+Sei $n\geq2$ \\
+I.V.: Aussage gelte für $2,...,n$ \\
+z.z.: Aussage gilt dann auch für $n+1$ \\
+Ist $n+1$ bereits  PZ, so gilt Aussage \\
+Ist $n+1$ keine PZ, so ist $n+1=a*b$ für $a,b\in\{2,...,n\}$ \\
+Nach I.V. sind $a$ und $b$ Produkt von PZ $\Rightarrow n+1$ ist ebenfalls Prod. von PZ. \\
+\\
+\underline{Eindeutigkeit:} \\
+Sei $n=p_1^{e_1}*...*p_k^{e_k}=q_1^{f_1}*...*q_m^{f_m}$ \\
+$p_i,q_i$ PZ, $p_i$ und $q_i$ \underline{paarweise verschieden} \\
+$e,f\in\mathbb{N}$ \\
+Nach 5.21: jedes $p_i$ teilt eines der $q_j$, d.h. $p_i=q_j$, da $q_j$ PZ \\
+Ebenso umgekehrt \\
+$\Rightarrow\{p_1,...,p_k\}=\{q_1,...,q_m\}, k=m$ \\
+oBdA sei $p_i=q_i\hsp\forall i=1...k$ \\
+Gibt es ein $l$ mit $e_l\neq f_l$, so sei oBdA $e_l<f_l$. \\
+Teile beide Seiten durch $p_l^{e_l}$, erhalte $p_1^{e_1}*...*p_{l-1}^{e_{l-1}}*p_{l+1}^{e_{l+1}}*...*p_k^{e_k}=p_1^{f_1}*...*p_{l-1}^{f_{l-1}}*p_l^{f_{l-e_l}}*p_{l+1}^{f_{l+1}}*...*p_l^{f_k}$ \\
+$p_l$ teilt rechte Seite, wegen Gleichheit also auch die linke Seite, also teilt es nach 5.21 ein $p_l$, $j\neq l$. \\
+Dann gilt aber $p_l=p_j$ (da PZ) $\lightning$ (zu paarweise versch. PZ $p_j$) $\Rightarrow e_i=f_i\hsp\forall i=1,...,k$ \\
+
+\newpage
+
+\begin{koro}
+	Euklid
+\end{koro}
+Es gibt undenlich viele PZ. \\
+\underline{Beweis:} \\
+Ang., es gibt nur endlich viele PZ $p_1,...,p_n$. \\
+Bilde $a=p_1*...*p_n+1$ \\
+\underline{5.22} $\exists$ PZ $q$ mit $q\mid a$ \\
+Also gilt $q=p_i$ für ein $i$ \\
+$\Rightarrow q\mid \underbrace{a}_{q\mid a}-\underbrace{p_1*...*p_n}_{q=p_i,q\mid p_1*...*p_n}=1\hsp\lightning$
+
+\begin{satz}
+	Chinesischer Restsatz
+\end{satz}
+Seien $m_1,...,m_n\in\mathbb{N}$ paarweise teilerfremd, $M=m_1*...*m_n,\hsp a_1,...,a_n\in\mathbb{Z}$ \\
+Dann existiert ein $x$, $0\leq x<M$ mit \\
+$x=a_1(\bmod m_1) \\
+x=a_2(\bmod m_2) \\
+\vdots \\
+x=a_n(\bmod m_n)$ \\
+\\
+\underline{Beweis:} \\
+Für jedes $i\in\{1,..,n\}$ sind die Zahlen $m_i$ und $M_i=\frac{M}{m_i}$ teilerfremd. \\
+$\Rightarrow EEA$ liefert $s_i$ und $t_i\in\mathbb{Z}$ mit $t_im_i+s_iM_i=1$ \\
+setze $e_i=s_iM_i$, dann gilt: \\
+$e_i\equiv1\bmod m_i$ \\
+$e_i\equiv0\bmod m_j\hsp(j\neq i)$ \\
+Die Zahl $x:=\sum_{i=1}^na_ie_i(\bmod M)\hsp(=(a_1e_1)(\bmod M)+(a_2e_2)(\bmod M)+...)$ \\
+ist dann die Lösung der simultanen Konguenz.
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item Finde $0\leq x<60$ mit $x=\left\{\begin{array}{ll}2 & \bmod3 \\ 3 & \bmod4 \\ 2 & \bmod5\end{array}\right.$ \\
+	$M=3*4*5=60$ \\
+	$M_1=\frac{60}{3}=20,M_2=\frac{60}{4}=15,M_3=\frac{60}{5}=12$ \\
+	$EEA$ liefert $7*3+(-1)*20 e_1=-20$ \\
+	$4*4+(-1)*15=1\hsp e_2=-15$ \\
+	$5*5+(-1)*24=1\hsp e_1=-24$ \\
+	$\Rightarrow(2*(-20)+3*(-15)+2*(-24))\bmod60=47$
+	
+	\newpage
+	
+	\item Was ist $2^{1000}\bmod\underbrace{1155}_{3*5*7*11}$ \\
+	$2^{1000}\bmod3\equiv(-1)^{1000}\bmod3=1$ \\
+	$2^{1000}\bmod5=4^{500}\bmod5\equiv(-1)^{500}=1$ \\
+	$2^{1000}\bmod7=2^{3*333+1}\bmod7=8^{333}*2^1\bmod7\equiv1*2\bmod7=2$ \\
+	$2^{1000}\bmod11=2^{5*200}\bmod11=32^{200}\bmod11\equiv(-1)^{200}\bmod11=1$ \\
+	Suche $0\leq x<1155$ mit $x=\left\{\begin{array}{ll}1 & \bmod3 \\ 1 & \bmod5 \\ 2 & \bmod2 \\ 1 & \bmod11\end{array}\right.$, denn dann ist $x\equiv2^{1000}\bmod\begin{array}{l}3\\5\\7\\11\end{array}$, also auch $x\equiv2^{1000}\bmod1155$. \\
+	$\rightarrow$ chin. Restsatz liefert $x=331$. (nachrechnen!)
+\end{enumerate}
+
+\begin{definition}
+	Lösung bei chin. Restsatz ist eindeutig
+\end{definition}
+$\rightarrow$ Folien
+
+\begin{wdh}
+	Eulersche $\varphi$-Funktion
+\end{wdh}
+Für $n\in\mathbb{N}$ ist $\varphi(n):=\vert\{a\in\mathbb{N}\mid1\leq a\leq n\land ggT(a,n)=1\}\vert$ die Anzahl der zu $n$ teilerfremden Zahlen zw. 1 und $n$. \\
+z.B. $\varphi(1)=1,\varphi(2)=1,\varphi(3)=2\varphi(4)=2,\varphi(7)=6, p$ PZ $\varphi(p)=p-1$
+
+\begin{koro}
+\end{koro}
+$M=m_1*...*m_n,m_i$ paarw. teilerfremd (wie in 5.24) \\
+$\varphi(M)=\varphi(m_1)*...*\varphi(m_n)$ \\
+Insbesondere $n=p_1^{e_1}*...*p_k^{e_k}$ ($p$, PZ, paarw. verschieden, $e_i>0$) \\
+dann $\varphi(n)=\varphi(p_1-1)p_1^{e_1-1}*...*(p_k-1)p_k^{e_k-1}$ \\
+Bsp.: $\varphi(19854)==?$ \\
+$19854=3^4*5*7^2$ \\
+$\Rightarrow\varphi(19854)=2*3^3*4*5^0*6*7^1=9072$ \\
+\\
+\underline{Beweis:} Nach Bem 5.26 ist \\
+$\mathbb{Z}_M\widetilde{=}\mathbb{Z}_m\times...\times{\mathbb{Z}_m}_n$ mittels $\psi$ \\
+$\Rightarrow x$ inv.bar. im Ring $\mathbb{Z}_M\Leftrightarrow\varphi(x)=(x\bmod m_1,...,x\bmod m_n)$ inv. bar. im RIng ${\mathbb{T}_m}_1\times...\times{\mathbb{Z}_m}_n\Leftrightarrow x\bmod m_j$ inv. bar. in ${\mathbb{Z}_m}_j\hsp\forall i=1...n$ \\
+Also $\varphi(M)=\varphi(m_1)*...*\varphi(m_n)$ \\
+$a\in\mathbb{N}\hsp\varphi(p^a)=\underbrace{p^a}_{\text{\# Zahlen 1 bis $p^a$}}-\underbrace{p^{a-1}}_{=p^{a-1}*(p-1)}$ alle, die nicht teilbar zu $p^a$ sind. \\
+(Alle Vielfachen von $p$)
+
+\begin{wdhlg}
+	K[x]
+\end{wdhlg}
+$\rightarrow$ Folien \\
+($K[x],x,*,1,0$, Grad, Gradformel, inv. El., $f$ teilt $g$, DIV. mit Rest, \\
+$f\in K[x]$ durch $(x-a)$ teilbar $\Leftrightarrow f(a)=0$)
+
+\newpage
+
+\begin{definition}
+	normiert, ggT, KgV in K[x]
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+	\item $f=\sum^n_{i=0}a_ix^i$, grad$f=n$, heißt \underline{normiert}, falls $a_n=1$ 
+	\item $g,h\in K[x]$ nicht beide=0 \\
+	$f\in K[x]=ggT(g,h)$, falls $f$ \underline{normiertes} Polynom von max. Grad ist, das $g$ und $h$ teilt.
+	\item $g,h\in K[x]\setminus \{0\}$ \\
+	$f\in K[x]=KgV(g,h)$ falls $f$ norm. Poly von kleinstem $\underbrace{\text{Grad}}_{\geq0}$ ist, das von $g$ und $h$ geteilt wird.
+\end{enumerate}
+
+\begin{bem}
+\end{bem}
+$f=\sum^n_{i=0}a_ix^i,\quad a_n\neq0$, \\
+dann ist $a^{-1}_nf=x^n+...$ normiertes Polynom. \\+z.B. $f=3x^2+x+7\in\mathbb{R}[x]$, \\
+dann $\frac{1}{3}f=x^2+\frac{1}{3}x+\frac{7}{3}$ normiert. \\
+in $\mathbb{Z}_11[x]:$ \\
+$4f=x^2+4x+6$ normiert \\
+(4 ist inv. El. vin 3, denn $3*4=12\equiv1\bmod11$) \\
+Wie in $\mathbb{Z}$ lassen sich nun der euklid. Alg., der EEA und der Satz von Meziriac beweisen.
+
+\newpage
+
+\begin{satz}
+	Euklid. Alg. in K[x]
+\end{satz}
+\begin{algorithm}[!h]
+	\KwData{$g,h\in K[x]$, beide nicht 0}
+	\KwResult{$d=ggT(g,h),s,t$}
+	\caption{\texttt{Euklidischer Algorithmus in $K[x]$}}
+	\If{$h=0$}{
+		$y:= g$
+	}
+	\If{$h\mid g$}{
+		$y:=h$
+	}
+	\If{$h\neq0\land h\nmid g$}{
+		$x:=g$ \\
+		$y:=h$ \\
+		\While{$x\bmod y\neq0$}{
+			$r:=x\bmod y$ \\
+			$x:=y$ \\
+			$y:=r$
+		}
+	}
+	$d:=a^{-1}_ny$ (für $y=a_nx^n+...+a_1x+a_0$ und $a_n\neq0$, d.h. nomiere $y$) \\
+	\Return{$d$ ($=ggT(g,h))$}
+\end{algorithm}
+
+\newpage
+
+\begin{satz}
+	EEA in K[x]
+\end{satz}
+\begin{algorithm}[!h]
+	\KwData{$g,h\in K[x]$, beide nicht 0}
+	\KwResult{$d=ggT(g,h),s,t$}
+	\caption{\texttt{Erweiterter Euklidischer Algorithmus in $K[x]$}}
+	\If{$h=0$}{
+		$y:= g$ \\
+		$s:=1$ \\
+		$t:=0$
+	}
+	\If{$h\mid g$}{
+		$y:=h$ \\
+		$s:=0$ \\
+		$t:=1$
+	}
+	\If{$h\neq0\land h\nmid g$}{
+		$x:=g$ \\
+		$y:=h$ \\
+		$s_2:=1$ \\
+		$s_1:=0$ \\
+		$s:=0$ \\
+		$t_2:=0$ \\
+		$t_1:=1$ \\
+		$t:=1$
+		\While{$x\bmod y\neq0$}{
+			$q:=x$ div $y$ \\
+			$r:=x\bmod y$ \\
+			$s:=s_2-qs_1$ \\
+			$t:=t_2-qt_1$ \\
+			$s_2:=s_1$ \\
+			$s_1:=s$ \\
+			$t_2:=t_1$ \\
+			$t_1:=t$ \\
+			$x:=y$ \\
+			$y:=r$
+		}
+	}
+	$d:=a^{-1}_ny$ (für $y=a_nx^n+...+a_1x+a_0$ und $a_n\neq0$, d.h. nomiere $y$) \\
+	$s:=a^{-1}_ns$ \\
+	$t:=a^{-1}_nt$
+	\Return{$d$ ($=ggT(g,h)),s,t$ (mit $d=sg+th$)}
+\end{algorithm}
+
+\begin{satz}
+	von Bizout
+\end{satz}
+$g,h\in K[x]$, nicht beide 0 \\
+Dann ex. $s,t\in K[x]$, sodass \\
+$f=s*g+t*h$ ein $ggT$ von $g$ und $h$ ist.
+
+\newpage
+
+\begin{bsp}
+\end{bsp}
+$g=x^4+x^3+2x^2+1$ \\
+$h=x^3+2x^2+x$ \\
+$g,h\in\mathbb{Z}_3[x]$ \\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+	$x\bmod y$ & $x$ & $y$ & $s_2$ & $s_1$ & $s$ & $t_2$ & $t_1$ & $t$ & $g$ & $r$ \\
+	\hline 
+	& $g$ & $h$ & $1$ & $0$ & $0$ & $0$ & $1$ & $1$ & \\
+	$x^2+x$ & $h$ & $x^2+x$ & $0$ & $1$ & $1$ & $1$ & $(2x+1)$ & $(2x+1)$ & $(x+2)$ & $(x^2+x)$ \\
+	$2x+2$ & $(x^2+x)$ & $(2x+2)$ & $1$ & $(2x+2)$ & $(2x+2)$ & $(2x+1)$ & $x^2$ & $x^2$ & $(x+1)$ & $(2x+2)$ \\
+	0 & & & & & & & & &
+\end{tabular} \\
+\\
+$(x^4+x^3+2x^2+0x+1):(x^3+2x^2+2)=\underbrace{(x+2)}_{=q}$ \\
+$-(x^4+2x^3+2x)$ \\
+\rule{3cm}{1pt} \\
+$2x^3+2x^2+x+1$ \\
+$-(2x^3+x^2+1)$ \\
+\rule{3cm}{1pt} \\
+$\underbrace{x^2+x}_{=r}$ \\
+\\
+$s=s_2-1s_1=1-q*0=1$ \\
+$t=t_2-qt_1=0-(x+2)*1=2x+1$ \\
+$s_2=s_1=0$ \\
+$s_1=s=1$ \\
+$t_2=t_1=1$ \\
+$t_1=t=(2x+1)$ \\
+$x=y=h$ \\
+$y=r=x^2+x$ \\
+\\
+$while(x\bmod y)\neq0:x=h,y=x^2+x$ \\
+$(x^3+2x^2+0x+2):(x^2+x)=\underbrace{(x+1)}_{q}$ \\
+$-(x^3+x^2)$ \\
+\rule{3cm}{1pt} \\
+$x^2+2$ \\
+$-(x^2+x)$ \\
+\rule{3cm}{1pt} \\
+$\underbrace{2x+2}_{r}$ \\
+\\
+$s=s_2-1s_1=0-(x+1)*1=2x+2$ \\
+$t=t_2-qt_1=1-(x+1)*(2x+1)$ \\
+$=1-(2x^2+x+2x+1)$ \\
+$=1-(2x^2+1)$ \\
+$=x^2$ \\
+
+\newpage
+
+$s_2=s_1=1$ \\
+$s_1=s=2x+2$ \\
+$t_2=t_1=(2x+1)$ \\
+$t_1=t=x^2$ \\
+$x=y=x^2+x$ \\
+$y=r=2x+2$ \\
+\\
+Prüfe $x\bmod y)\neq0$? \\
+$(x^2+x):(2x+2)=2x$ \\
+$-(x^2+x)$ \\
+\rule{3cm}{1pt} \\
+0 \\
+\\
+$d=a^{-1}_ny=\underbrace{2^{-1}}_{=2}*(2x+2)$ \\
+$=x+1$ \\
+$s=2*(2x+2)=x+1$ \\
+$t=2(x^2)=x^2$ \\
+\\
+Überprüfe: $d=s*g+t*h$? \\
+$(x+1)(x^4+x^3+2x^2+1)+2x*2(x^3+2x2+2)$ \\
+$=x^5+x^4+2x^3+x+x^4+x^3+2x^2+1+2x^5+x^4+x^2$ \\
+$=x+1=d$
+
+\begin{definition}
+	irreduzible Polynome
+\end{definition}
+Ein Polynom $p\in K[x], Grad(p)\geq1$ \\
+(d.h.: $p\neq0,p$ nicht konstant, also nicht inv. bar.) \\
+heßt \underline{irreduzibel}, falls gilt: \\
+Ist $p=f*g\quad (f,g\in K[x]$) \\
+so ist $Grad(f)=0$ oder $Grad(g)=0$ \\
+(d.h. $f$ oder $g$ muss konst. Polynom sein) \\
+(Bem.: $p=a*(a^{-1}*p),\quad a\in\ K[x]\setminus\{0\}$ geht immer, es gibt also immer Teiler $\neq1$ (konst. Poly.))
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item $ax+b\quad (a\neq0)$ ist irreduzibel in $K[x]$ für jeden Körper $K$ \\
+	(Teiler sind nur konst. Polyn., keine von größerem Grad)
+	\item $x^2-x\in\mathbb{Q}[x]$ ist irreduzibel: \\
+	ang. nicht, dann $(x^2-2)=(ax+b)*(cx+d)$ mit ($a,b,c,d\in\mathbb{Q},\quad a,c\neq0$ \\
+	$(ax+b)$ hat Nullstelle $-\frac{b}{a}$, \\
+	also müsste auch $x^2-2$ Nullstelle $\underbrace{-\frac{b}{a}}_{\in\mathbb{Q}}$ haben \\
+	Nullstellen von $x^2-x$ sind aber nur $\sqrt{2}$ und $-\sqrt{2}$, beide nicht in $\mathbb{Q}$
+	\item $x^2-x\in\mathbb{R}[x]$ ist nicht irreduzibel: \\
+	$(x^2-2)=\underbrace{x+\sqrt{2}}_{\in\mathbb{R}[x]}*\underbrace{x-\sqrt{2}}_{\in\mathbb{R}[x]}$
+	\item $x^2+1\in\mathbb{R}[x]$ ist irreduzibel, \\denn $x^2+1$ hat keine Nullstelle in $\mathbb{R}$
+	\item $x^2+1\in\mathbb{Z}_5[x]$ ist nicht irreduzibel: \\
+	2 und 3 sind Nullstellen: \\
+	$(x^2+1)=(x+\underbrace{3}_{\text{Nullst. 3}})(x+2)=(x^2+\underbrace{2x+3x}_{=0}+1)$
+\end{enumerate}
+
+\begin{abem}
+\end{abem}
+\begin{enumerate}[label=\alph*)]
+	\item Irred. Polyn. in $K[x]$ entspr. den PZ in $\mathbb{Z}$. \\
+	Man kann zeigen: \\
+	$f=\sum^n{i=0}a_ix^i\in K[x],\quad a_n\neq0,n\geq1$. \\
+	Dann ex. eind. best. irred. Polyn. \\
+	$p_1,...,p_l$ und nat. Zahlen $e_1,...,e_l\in\mathbb{Z}$ mit \\
+	$f=a_n*p^{e_1}*...*p_l^{e_l}$
+	\item Geg.: PZ $p$, dann gibt es Körper mit $p$ elementen, nämlich $(\mathbb{Z},+,*)$ \\
+	Man kann zeigen: \\
+	Zu jeder PZ Potenz $p^a$ gibt es Körper mit $p^a$ El., diesen konstruiert man über irred. Polynome in $\mathbb{Z}_p[x]$
+\end{enumerate}
+
+\newpage
+
+\section{Mehr zu Gruppen}
+\begin{wdh}
+	Gruppe, Untergruppe
+\end{wdh}
+siehe Folien
+
+\begin{satz}
+	Nebenklassen von Untergruppen (UG)
+\end{satz}
+
+Sei $(G,*)$ Gruppe, $U\leq G$
+\begin{enumerate}[label=\alph*)]
+	\item Durch $x\underset{u}{\sim}y\Leftrightarrow x*y^{-1}\in U$\hsp kurz: $(x\sim y)$ \\
+	wird auf $G$ eine Äquivalenzrelation definiert. \\
+	\underline{Beweis:} \\
+	$\sim$ ist \\
+	\underline{reflexiv:}: $x\sim x$ gilt $\forall x\in G$ denn $x*x^{-1}=e\in U$ \\
+	\underline{symmetrisch:} z.z.: $x\sim y\Rightarrow y\sim x$ \\
+	Sei $x\sim y$, d.h. $xy^{-1}\in U$ dann ist $yx^{-1}=(xy^{-1})^{-1}\in U$ also ist $y\sim x$ \\
+	\underline{transitiv:} z.z. $x\sim y$ und $y\sim z\Rightarrow x\sim z$\hspÜbung!
+	\item Für $x\in G$ ist $Ux=\{ux\mid u\in U\}$ die Äquivalenzklasse von $x$ und heißt \underline{Rechtsnebenklasse} von $U$ in $G$. \\
+	Also (Eig. von Äquivalenzklassen, Mathe I) \\
+	\vspace{-6mm}
+	\begin{itemize}
+		\item $Ux=Uy\Leftrightarrow x\sim y$, also $xy^{-1}\in U$
+		\item $x,y\in G$, dann ist entweder $Ux=Uy$ oder $Ux\cap Un=\emptyset$
+	\end{itemize}
+	(Analog: Linksnebenkl.: $x\overset{u}{\sim}y\Leftrightarrow x^{-1}y\in U$ \\
+	\underline{Beweis:} \\
+	\vspace{-6mm}
+	\begin{itemize}
+		\item sei $x\sim y$, dann zeige dass $y\in Ux$. \\
+		$x\sim y\Rightarrow y\sim x\Rightarrow yx^{-1}\in U$ \\
+		$\Rightarrow y=y(x^{-1}x)=(yx^{-1})x\in Ux$ \\
+		\item sei $y\in Ux$, dann zeige, dass $x\sim y$ gilt: \\
+		$y\in Ux\Rightarrow y=ux$ für ein $u\in U$ \\
+		$\Rightarrow xy^{-1}=x(ux)^{-1}=x*(x^{-1}u^{-1})=u^{-1}\in U$, d.h. $x\sim y$
+	\end{itemize}
+\end{enumerate}
+
+\begin{bsp}
+\end{bsp}
+$G=(\mathbb{Z},+),$ $3\mathbb{Z}=\{\hdots,-3,0,3,6,9,\hdots\}$, $U=(3\mathbb{Z},+)\leq G$ (vgl. Mateh II) \\
+Inverses zu $y$ in $(\mathbb{Z},+)$ ist $-y$ \\
+$x\sim y\Leftrightarrow xy^{-1}\in U$, also \\
+$x+(-y)\in U$ \\
+$x-y\in U$ \\
+$x=0:$ $U+0=\{u+0\colon u\in U\}=\{\hdots,-3,0,3,6,9,\hdots\}=U=3\mathbb{Z}$ \\
+$x=1:$ $U+1=\{u+1\colon u\in U\}=\{\hdots,-2,1,34,7,10,\hdots\}=1+3\mathbb{Z}$ \\
+$x=2:$ $U+2=\{u+2\colon u\in U\}=\{\hdots,-1,2,5,8,11,\hdots\}=2+3\mathbb{Z}$ \\
+$x=3:$ $U+3=\{u+3\colon u\in U\}=\{\hdots,0,3,6,9,12\hdots\}=U+0=3\mathbb{Z}$ \\
+$x=4:$ $U+4=U+1$ \\
+$\vdots$ \\
+usw. \\
+
+\newpage
+
+Die Äquivalenzklassen von $3\mathbb{Z}$ in $\mathbb{Z}$ sind die Konguenzklassen vom $\bmod3$. \\
+\underline{Allg.:} \\
+$G=(\mathbb{Z},+)$ $U=(n\mathbb{Z},+),\hsp n\in\mathbb{N}$ \\
+$x\sim y\Leftrightarrow x-y\in U$ d.h. $x-y=n*k$ für ein $k\in\mathbb{Z}$ \\
+$\Leftrightarrow x\equiv y\bmod n$ \\
+$\Leftrightarrow x\bmod n=y\bmod n$
+
+\begin{lemma}
+	Mächtigkeit von Nebenklassen
+\end{lemma}
+$G$ Gruppe, $U$ endl. Ugr. von $G$, $x\in G$ \\
+Dann ist $\vert U\vert=\vert Ux\vert$ \\
+\\
+\underline{Beweis:} \\
+Abb. $\varphi\colon U\rightarrow Ux\hsp u\mapsto ux$ ist surjektiv (ganz $Ux$ wird getroffen, siehe 6.2 b)) \\
+und injektiv (falls $u_1x=u_2x$, dann ist $u_1=u_2$ (Kürzungsrgel in Gr.)), also $\varphi$ bij., also $U,Ux$ gleichmächtig.  
+
+\begin{theo}
+	Satz von Lagrange
+\end{theo}
+$G$ endl. Gr., $U\leq G$ \\
+Dann ist $\vert U\vert$ Teiler von $\vert G\vert$ und $q=\frac{\vert G\vert}{\vert U\vert}$ ist die Anzahl der Rechtsnebenklassen von $U$ in $G$. \\
+\underline{Beweis:} \\
+Seien $Ux_1,...,Ux_q$ die $q$ verschiedenen Rechtsnebenkl. von $U$ in $G$. \\
+Mathe I und 6.2 \\
+$G=\cup_{i=1}^q Ux_i$ (disj. Vereinigung der Äq. Kl.) \\
+$\Rightarrow\vert G\vert=\sum_{i=1}^q\vert Ux_i\vert\overset{6.4}{=}q*\vert U\vert$ 
+
+\begin{definition}
+	Potenzen/Vielfache von Gruppenelementen
+\end{definition}
+$(G,*,e)$ Gruppe, $a\in G$ \\
+Definiere \\
+$a^0:=e \\
+a^1:=a \\
+a^m:=a^{m-1}*a$\hsp für $m\in\mathbb{N} \\
+a^m:=(a^{-1})^{-m}\hsp m\in\mathbb{Z}^-$ \\
+(Be: Gr. mit additiver Verknüpfung $(G,+,e)$: \\
+$0*a:=e$ \\
+$1*a:=a$ \\
+$m*a:=\left\{\begin{array}{ll}(m-1)*a+a & \text{für }m\in\mathbb{N} \\ -m*(-1) & \text{für } m\in\mathbb{Z}^-\end{array}\right.$ 
+
+\newpage
+
+\begin{satz}
+\end{satz}
+$G,a$ wie in 6.6
+\begin{enumerate}[label=\alph*)]
+	\item $(a^{-1}=^m=(a^m)^{-1}=a^{-m}\hsp\forall m\in\mathbb{Z}$
+	\item $a^m*a^n=a^{m+n}\hsp\forall m\in\mathbb{Z}$
+	\item $(a^m)^n=a^{m*n}\hsp\forall m\in\mathbb{Z}$
+\end{enumerate}
+
+\underline{Beweis:} \\
+$(a^{-1})^m*a^m=\underbrace{a^{-1}*a^{-1}*\hdots*a^{-1}}_{m\text{ mal}}*\underbrace{a*a*\hdots*a}_{m\text{ mal}}=e \\
+\Rightarrow (a^{-1}=^m=(a^m)^{-1}$ \\
+nach Def. 6.6 ist $a^{-m}=(a^{-1})^m$ \\
+$\Rightarrow$ a) gilt $\forall m\in\mathbb{N}$ \\
+\begin{itemize}
+	\item\underline{$m=0$} $e=e=e$ 
+	\item\underline{$m\in\mathbb{Z}$} dann ist $-m\in\mathbb{Z}$ wende bewiesenen Teil an auf $a^{-1}$ statt $a$ und $-m$ statt $m$, Beh. folgt \\
+	b) c) per Ind. mit a)
+\end{itemize}
+
+\begin{satz}
+	Ordnung, Zyklische Gruppen
+\end{satz}
+$G$ endl. Gr.\hsp $g\in G$
+\begin{enumerate}[label=\alph*)]
+	\item Es ex. eine kleinste nat. Zahl $n$ mit $g^n=e$, diese heißt die \underline{Ordnung $o(g)$} von $g$.
+	\item Die Menge $\{g^0=a,g^1=g,g^2,\hdots,g^{n-1}\}$ ist eine Untergr. von $G$, \\
+	\underline{die von $g$ erzeugte zyklische Gruppe $<g>$.} \\
+	Es gilt $a(g)=\vert<g>\vert=n\mid\vert G\vert$.
+	\item $g^{\vert G\vert}=e$ 
+	\item Eine endl. Gr. heißt \underline{zyklisch}, falls sie von einem El. erzeugt werden kann.
+\end{enumerate}
+
+\underline{Beweis:}
+\begin{enumerate}[label=\alph*)]
+	\item $G$ endl. $\Rightarrow\exists i,j\in\mathbb{N},i>j$ mit \underline{$g^i=g^j$} \\
+	Dann ist $g^{j-j}=g^i+g^{-j}=g^i(g^j)^{-1}=g^i*(g^j)^{-1}=e$
+	\item\begin{itemize} 
+		\item Produkt zweier El. aus $<g>$ liegt wieder in $<g>$ (also abgeschl.)
+		\item neutr. El. ist $g^0=e$
+		\item inv. El. zu $g^i$ ist $(g^i)^{-1}=g^{n-1}$ \\
+		$g^i*g^{n-1}=g^{1+n-i}=g^n=e$ \\
+		$\Rightarrow <g>\leq G$
+		\item Satz von Lagrange (6.6) sagt $n=o(g)=\vert<g>\vert\mid\vert G\vert$, also ist $\vert G\vert=n*k$ für ein $k\in\mathbb{N}$. \\
+		$g^{\vert G\vert}=g^{n*k}=(g^n)^k=e^k=e$
+	\end{itemize}
+\end{enumerate}
+
+\newpage
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item $(\mathbb{Z}_3\setminus\{0\},*)=\{1,2\}$ 
+	\item In $(\mathbb{Z}_3\setminus\{0\},*)$ \\
+	$g=1\hsp<1>=\{1^0=1,1^1=1,1^2=1\}=\{1\},o(1)=1$ \\
+	$g=2\hsp<2>=\{2^0=1,2^1=2,2^2=1\}=\{1,2\},o(2)=2$ \\
+	ist $<2>=\{2^0=1,2^1=2,2^2=4,2^3\equiv3,2^4\equiv1\}=\{1,2,3,4\}=\mathbb{Z}_5\setminus\{0\},o(2)=4$ \\
+	d.h. $\mathbb{Z}_5\setminus\{0\}$ ist zykl. Gr. mit erzeugendem El. 2
+\end{enumerate}
+
+\begin{koro}
+\end{koro}
+\begin{enumerate}[label=\alph*)]
+	\item\underline{SATZ von EULER:} \\
+	Sei $n\in\mathbb{N},a\in\mathbb{Z},ggT(a,n)=1$ \\
+	Dann ist $a^{\varphi(n)}\equiv1(\bmod n)$
+	\item\underline{kleiner SATZ von FERMAT:} \\
+	Ist $p$ eine Primzahl, $a\in\mathbb{Z}, p\nmid a$, dann gilt: $a^{p-1}\equiv(\bmod p)$
+\end{enumerate}
+
+\underline{Beweis:} \\
+\begin{enumerate}[label=\alph*)]
+	\item Wir können annehmen, dass $1\leq a<n$ gilt (denn $a^{\varphi(n)}\bmod n=(a\bmod n)^{\varphi(n)})$. \\
+	Wegen $ggT(a,n)=1$ ist $a\in\mathbb{Z}_n^*$, das ist endl. Gruppe \\
+	$\overset{6.8 c)}{\Rightarrow}$ $a^{\vert\mathbb{Z}_n^*\vert}=1$ \\
+	$\Rightarrow a^{\varphi(n)}\equiv1(\bmod n)$ 
+	\item folgt aus a) \\
+	($n=p,\varphi(p)=p-1)$
+\end{enumerate}
+
+\newpage
+
+\section{Kurzer Ausflug in die Kryptologie}
+
+\begin{definition}
+	Kryptologie
+\end{definition}
+$\underbrace{\text{Krypto}}_{\text{gehiem}}\underbrace{\text{logie}}_{\text{Lehre}}$ \\
+- die Wissenschaft die sich mit Verschlüsselung befasst.
+
+\begin{definition}
+	Setting
+\end{definition}
+Personen $A$ und $B$ wollen auf geheime Weise kommunizieren \\
+Alice, Bob (Charlie oder Carol) schicken Nachrichten \\
+Eve ließt Nachrichten, kann sie aber nicht verändern \\
+Mallory verändert Nachrichten \\
+\\
+\underline{Lösung:} Kryptosystem \\
+Sender: Nachricht $m$ (plaintext/Klartext) + $Ke$ (encryption Key) = $c$ (cyphertext/Chiffrentext) \\
+Empfänger: $c$ + $Kd$ (decription Key) = $m$ \\
+
+\begin{definition}
+	Symmetrische Verfahren
+\end{definition}
+$\rightarrow$ Folien \\
+
+\underline{Problem:} \\
+Wie tauschen A und B den Schlüssel aus? \\
+\underline{Lösung:} \\
+
+\begin{definition}
+	Asymmetrische Verschlüsselung, Public Key Kryptografie
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+	\item Idee: Verschlüsselung ohne Schlüsselaustausch \\
+	1. $m$ mit Schlüssel von A verschlüsseln, und an B schicken \\
+	2. B verschlüsselt $m$ zusätzlich noch mit eigenem Schlüssel, und schickt $m$ wieder an A zurück \\
+	3. A entfernt Schloss A, und schickt $m$ wider an B zurück \\
+	4. B entfernt eigenen Schlüssel und kann $m$ lesen. \\
+	\\
+	\underline{oder einfacher:} \\
+	1. B schickt Schloss an A \\
+	2. A verschlüsselt $m$ mit Schloss von B, und schickt $m$ wieder an B \\
+	3. B kann eigenes Schloss entfernen und $m$ lesen
+	\item\underline{Public Key Verfahren:} \\
+	Bob (will Nachricht empf.) besitzt 2 Schlüssel:
+	\begin{itemize}
+		\item öffentl. Schlüssel (public key) zum verschlüsseln non Nachrichten
+		\item geheimer Schlüssel (private Key) zum entschlüsseln der Nachricht
+	\end{itemize}
+	\item Realisierung: Einwegfunktionen $\rightarrow$ Folien
+	
+	\newpage
+	
+	\item\underline{Das RSA-Verfahren} (Rivest, Shamir, Adleman, 1997) \\
+	\underline{Bob} (Schlüsselerzeugung) \\
+	1. wählt zwei große PZ, $p,q$, bildet $n=p*q$ \\
+	2. berechnet $\varphi(n)=(p-1)*(q-1)$ \\
+	3. wählt $e$ teilerfremd zu $\varphi(n)$ \\
+	4. bestimmt $0<d<\varphi(n)$ mit $ed\bmod\varphi(n)=1$ (EEA: $d$ ist Inverse zu $e\bmod\varphi(n)$) \\
+	(dann gilt: $\underbrace{ed=k*\varphi(n)+1 \text{ für ein } k\in\mathbb{Z}}_{(*)}$) \\
+	5. publickey: $(n,e)$, privatekey: $d$ \\
+	\\
+	\underline{Alice} (Verschlüsseln) \\
+	1. Nachricht $m$, gegeben als Zahl, $0\leq m<n$ (sonst in Blöcke zerlegen) \\
+	2. berechnet $c=m^e\bmod n$ \\
+	3. sendet $c$ an Bob \\
+	\\
+	\underline{Bob} (Entschlüsseln) \\
+	1. berechnet $c^d\bmod n=m$ \\
+	\\
+	\underline{Korrektheit:} \\
+	$c^d=(m^e)^d=m^{ed} \\
+	\overset{(*)}{=}m^{k\varphi(n)+1} \\
+	=m^{k\varphi(n)}+m^1 \\
+	=(m^{\varphi(n)})^k*m\equiv1\bmod n$ Satz von Euler 6.10 a) \\
+	$=m(\bmod n)$
+	\item Bsp/Übung
+	\item Sicherheit von RSA
+	\item wie findet man große PZ? (Bitlänge 500 $\widehat{=}$ 150 stellige Zahl)
+		\begin{itemize}
+		\item wähle zufällige Zahl im gewünschten Größenbereich
+		\item prüfe alle ''kleinen'' PZ $<10^6$ (Liste) als Teiler
+		\item weiter mit PZ-Test
+		\item keine PZ: starte erneut
+	Test positiv: mit hoher Wahrscheinlichkeit PZ gefunden
+	\end{itemize}
+\end{enumerate}
+Nach wie vielen Versuchen findet man so PZ? \\
+\underline{Primzahlsatz:} \\
+$\underbrace{\pi(x)}_{\text{Anz. PZ}\leq x}\sim\frac{x}{\ln x}$ \\
+d.h. Erwartung nach $\ln(10^{150})=150*\ln(10)\approx350$ vielen Versuchen trifft man auf PZ. \\
+Die meisten PZ-Tests beruhen auf dem kl. Satz von Fermat: (6.10 b)) \\
+$n\in\mathbb{N},n\geq2\quad n$ PZ $\Leftrightarrow a^{n-1}\equiv1\bmod n$ für alle $2\leq a<n$. \\ 
+D.h.: findet man einn $a$ mit $a^{n-1}\not\equiv1\bmod n$, so ist $n$ keine PZ \\
+
+\newpage
+
+\section{Mehrdimensionale Analysis}
+Bisher (Mathe I): Folgen, Fkt. auf $\mathbb{R}$ (Punkte sind reelle Zahlen) \\
+Jetzt: auf $\mathbb{R}^n$, Punkte sind Vektoren mit $n$ Einträgen \\
+\begin{definition}
+	Norm, Betrag
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+	\item Sei $x=\begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix}\in\mathbb{R}^n$, \underline{Norm/Betrag} von $x$: \\
+	$\Vert x\Vert=+\sqrt{x^Tx}=+\sqrt{x^2_1+\hdots+x^2_n}$
+	\item \underline{Abstand} von $x,y\in\mathbb{R}^n$ ist $d(x,y):=\Vert x-y\Vert$
+\end{enumerate}
+
+\begin{definition}
+	offene Mengen
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+	\item Für $x\in\mathbb{R}^n$ und $\epsilon>0$ heißt $K(x_o,\epsilon):=\{x\in\mathbb{R}^n\mid\Vert x_n-x_0\Vert<\epsilon\}$ die \underline{offene $\epsilon$-Kugel} von $x_0$. \\
+	$K(\begin{pmatrix}2\\2\end{pmatrix},1)$ Mittelpunkt ist $(2,2)$. Alle Punkte mit Abstand $<1$ liegen in Kugel. In $\mathbb{R}^2$ ist das ein Kreis, in $\mathbb{R}^3$ eine Kugel.
+	\item Eine Menge $D\subseteq\mathbb{R}^n$ heißt \underline{offen}, falls es zu jedem $x\in D$ ein $\epsilon>0$ ex. mit $K(x,\epsilon)\subseteq D$ \\
+	$\{x\in\mathbb{R}^n\mid\Vert x\Vert\leq 1\}$ nicht offen \\
+	$\{x\in\mathbb{R}^n\mid\Vert x\Vert< 1\}$ offen da Rand nicht definiert
+\end{enumerate}
+
+\begin{definition}
+	Folgen, Konvergenz
+\end{definition}
+Seien $x_k\quad (k=1,2,...)$ Punkte im $\mathbb{R}^n$ und $(x_k)_{k\in\mathbb{N}}$ Folge im $\mathbb{R}^n$ \\
+$(x_k)_{k\in\mathbb{N}}$ konvergiert gegen $a\in\mathbb{R}^n$ \\
+$(x_k\overset{k\rightarrow\infty}{\longrightarrow}$ oder $\lim_{x\rightarrow\infty} x_k=a)$ wenn gilt: \\
+$\forall\epsilon>0\quad\exists N\in\mathbb{N}$ sodass $\Vert x_k-a\Vert<\epsilon\quad\forall k> N.$ \\
+Es gilt $(x_k)_{k\in\mathbb{N}}=\left(\begin{pmatrix}x_1^{(k)}\\\vdots\\ x_n^{(k)}\end{pmatrix}\right)\longrightarrow a=\begin{pmatrix}a_n\\\vdots\\ a_n\end{pmatrix} \Leftrightarrow$ Komponenten $x_i^{(k)}\longrightarrow a_i\quad\forall i=1\hdots n$ \\
+Die aus Mathe I beka. Begriffe (Divergenz, Nullfolge, ...) und Rechenregeln für Folgen gelten analog im $\mathbb{R}^n$
+
+\begin{bsp}
+\end{bsp}
+$\begin{pmatrix}2+\frac{1}{k}\\ (1+\frac{1}{k})^k\end{pmatrix}\overset{k\rightarrow\infty}{\longrightarrow}\begin{pmatrix}2\\e\end{pmatrix}$ \\
+$\begin{pmatrix}k\\\frac{1}{k}\\3\end{pmatrix}_{k\in\mathbb{N}}$ konv. nicht
+
+\newpage
+
+\begin{definition}
+	Reelle Fkt. $\mathbb{R}^n\rightarrow\mathbb{R}^m$
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+	\item Eine \underline{reelle Funktion von mehreren Veränderlichen} $f\colon D\subseteq\mathbb{R}^n\rightarrow\mathbb{R}^m \\
+	x=\begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix}\mapsto\begin{pmatrix}f_1(x)\\\vdots\\f_m(x)\end{pmatrix}$ ordnet einem Vektor $x\in D\subseteq\mathbb{R}^n$ \\
+	einen Vektor $f(x)=f(x_1,...,x_n)=\begin{pmatrix}f_1(x)\\\vdots\\f_m(x)\end{pmatrix}\in\mathbb{R}^m$ zu. \\
+	($f$ hängt also von $n$ Veränderten/Veränderlichen ab)
+	\item Je nach Dimension von Def. und Bildberich unterscheidet man: \\
+	$m=1\quad f\colon D\subseteq\mathbb{R}^n\rightarrow\mathbb{R}$ \underline{skalare Fkt.} \\
+	Skalare Fkt. auf $\mathbb{R}^2\quad(m=2)$ lassen sich grafisch wie folgt darstellen: \\
+	Für $f\colon\mathbb{R}^2\rightarrow\mathbb{R}$ zeichne entweder
+		\begin{itemize}
+			\item den Graphen $\{\begin{pmatrix}x\\y\\z\end{pmatrix}\in\mathbb{R}^3\mid x,y\in\mathbb{R},z=f(x,y)\}$ als Fläche im $\mathbb{R}^3$
+			\item sog. \underline{Höhenlinien/Niveauflächen} $\{(x,y)\mid f(x,y)=c\}\subseteq\mathbb{R}^2$ für mehrere $c\in\mathbb{R}$ fest gewählt.
+		\end{itemize}
+	$m>1\quad f\colon D\subseteq\mathbb{R}^n\rightarrow\mathbb{R}^m$ \underline{Vektorwertige Fkt.} \\
+	$n=1\quad f\colon D\subseteq\mathbb{R}\rightarrow\mathbb{R}^m$ \underline{parametrisierte Kurve} \\
+	$(m=2$: ebene Kurve, $m=3$: Kurve im Raum)
+\end{enumerate}
+
+\begin{definition}
+	Stetigkeit
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+	\item Skalare Fkt.: $f\colon D\subseteq\mathbb{R}^n\rightarrow\mathbb{R}$ heißt \underline{stetig in $a_0\in D$, } wenn für alle Folgen $(a_k)_{k\in\mathbb{N}}$ in $D$ mit $\lim_{k\rightarrow\infty}a_k=a_0$ gilt: $\lim_{k\rightarrow\infty}f(a_k)=f(a_0)$ \\
+	$f$ heißt \underline{stetig auf $D$}, falls $f$ stetig $\forall a_0\in D$ ist.
+	\item Vektorwertige Fkt.: $f\colon D\subseteq\mathbb{R}1n\rightarrow\mathbb{R}^m,\quad x\mapsto\begin{pmatrix}f_1(x)\\\vdots\\f_m(x)\end{pmatrix}$ heißt \underline{stetig in $a_0$/stetig auf $D$} wenn alle $f_i\colon D\rightarrow\mathbb{R}\quad(1\leq i\leq m, f_i$ sind stetige Fkt.) in $a_0$/auf $D$ stetig sind.
+	\item ''*'' wie in Mathe I gilt: Summen, Produkte, Quotienten, Kompositionen stetiger Funktionen sind stetig. \\
+\end{enumerate}
+
+\newpage
+ 
+ \begin{bsp}
+ \end{bsp}
+ \begin{enumerate}[label=\alph*)]
+ 	\item $f\colon\mathbb{R}^n\to\mathbb{R}\quad f(x_1,...,x_n)=x_i$ ist stetig in $a_0$ (gilt für alle $a_0\in\mathbb{R}^n$ \\
+	Sei $(a_k)_{k\in\mathbb{N}}$ Folge im $\mathbb{R}^n$ mit $a_k:=\begin{pmatrix}a_1^{(k)}\\\vdots\\a_n^{(k)}\end{pmatrix}\overset{k\to\infty}{\longrightarrow}a_0=\begin{pmatrix}a_1^{(0)}\\\vdots\\a_n^{(0)}\end{pmatrix}$ \\
+	Dann ist $\lim_{k\to\infty}f(a_k)=\lim_{k\to\infty}f(a_1^{(k)},...,a_n^{(k)})=\lim_{k\to\infty}a_i^{(k)}=a_j^{(0)}$ \\
+	und $f(a_0)=f(a_1^{(0)},...,a_n^{(0)})=a_i^{(0)}$
+	wegen ''*'' sind dann auch alle Polynomfkt. stetig (z.B. $f(x,y)=3x^2y^2+4xy^2+7x-3$)
+	\item $f\colon\mathbb{R}^2\to\mathbb{R}$ \\
+	$f(x,y)=\left\{\begin{array}{ll}\frac{(x+y)^2}{xy}&\text{, falls }(x,y)\neq(0,0) \\ 0 & \text{, falls }(x,y)=(0,0)\end{array}\right.$ \\
+	ist stetig im $\mathbb{R}^2\setminus\{\begin{pmatrix}0\\0\end{pmatrix}\}$ (wegen $a$ und ''*'') \\
+	Verhalten in $\begin{pmatrix}0\\0\end{pmatrix}$? \\
+	Betrachte Folge $(a_k)_{k\in\mathbb{N}}$ mit $a_k=\begin{pmatrix}\frac{1}{k}\\\frac{1}{k}\end{pmatrix}\overset{k\to\infty}{\longrightarrow}\begin{pmatrix}0\\0\end{pmatrix}$ \\
+	$f(a_k)=f(\frac{1}{k},\frac{1}{k})=\frac{(\frac{1}{k}+\frac{1}{k})^2}{\frac{1}{k}*\frac{1}{k}}=\frac{(\frac{2}{k})^2}{\frac{1}{k^2}}=\frac{4}{k^2}*\frac{k^2}{1}=4$ also $\lim_{k\to\infty}f(a_k)=4$ \\
+	aber $f(a_0)=f(0,0)=0$ also $f$ nicht stetig in $\begin{pmatrix}0\\0\end{pmatrix}$ \\
+	(auch die Def. $f(0,0)=4$ hätte $f$ nicht stetig gemacht, betrachte darum z.B. die Folge $(a_k)=\begin{pmatrix}\frac{1}{k}\\\frac{1}{k}\end{pmatrix}\to\begin{pmatrix}0\\0\end{pmatrix}$ dann ist $f(a_k)=4.5\neq f(a_0)=4)$
+\end{enumerate}
+
+\begin{definition}
+	partielle Ableitung
+\end{definition}
+Sei $D\subseteq \mathbb{R}^n$ offen, $f\colon D\to\mathbb{R}^m,a=(a_1,...,a_n)^T\in D$
+\begin{enumerate}[label=\alph*)]
+ 	\item $f(x_1,...,x_n)=\begin{pmatrix}f_1(x_1,...,x_n)\\f_m(x_1,...,x_n)\end{pmatrix}$ \\
+	heißt \underline{an der Stelle $a$ partiell nach $x_j$} $(j\in\{1,...,n\}$ \underline{differenzierbar}, falls für jede Fkt. $f\colon\mathbb{R}^n\to\mathbb{R}$ gilt: \\
+	Die skalare Fkt. $f_i(a_1,...,a_{j-1},x_j,a_{j+1},...,a_n)$ linear Veränderlichen (''partielle Fkt.'', alle $x_k$ bis $x_j$ durch entsprechendes $a_k$ ersetzt.) ist an der Stelle $a_j$ diff.bar, d.h. \\
+	$\lim_{h\to\infty}\frac{f_i(a_1,...,a_{j-1},a_j+h,a_{j+1},...,a_n)-f(a_1,...,a_n)}{h}$ \\
+	ex. für alle $1\leq i\leq m$.
+	\item Dieser Grenzwert heißt dann \underline{partielle Ableitung} fon $f_i$ nach $x_j$ an der Stelle $a,\frac{\partial f_i}{\partial x_j}(a)$
+	\item Sind alle $f_i$ nach allen $x_j$ part. diff. in $a$, so heißt \underline{$f$ partiell diffbar} und man definiert die \underline{Jacobimatrix} von $f$ an der Stelle $a$ durch $f^\prime(a):=\begin{pmatrix}\frac{\partial f_1}{\partial x_1}(a) & \hdots & \frac{\partial f_1}{\partial x_n}(a) \\ \vdots & \ddots & \vdots \\ \frac{\partial f_m}{\partial x_1}(a) & \hdots & \frac{\partial f_m}{\partial x_n}(a)\end{pmatrix}\in M_{m,n}(\mathbb{R})$
+	\item Für skalare Fkt. $(m=1)$ besteht $f^\prime(a)$ nur aus einer Zeile. Man bez. dann den Vektor \\
+	$f^\prime(a)^T=\begin{pmatrix}\frac{\partial f}{\partial x_1}(a) \\ \vdots \\ \frac{\partial f}{\partial x_n}(a)\end{pmatrix}=\nabla f(a)=\text{Grad}f(a)\in\mathbb{R}^n$ als \underline{Gradient von $f$} im Punkt $a$.
+\end{enumerate}
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item $f\colon\mathbb{R}^2\to\mathbb{R},\quad f(x,y)=3xy+4y$ \\
+	$\frac{\partial f}{\partial x}(x,y)=\lim_{h\to0}\frac{f((x+h),y)-f(x,y)}{h}=\lim_{h\to0}\frac{3(x+h)y+4y-(3xy+4y)}{h}=\lim_{h\to0}\frac{3hy}{h}=3y$ \\
+	kurz: sehe $y$ als Konstante an, leite nach $x$ ab! \\
+	$\frac{\partial f}{\partial y}(x,y)=3x+4$
+	\item $f\colon\mathbb{R}^3\to\mathbb{R},\quad f(x,y,z)=e^x+y^2+xz$ \\
+	$\frac{\partial f}{\partial x}(x,y,z)=e^x+0+z$ \\
+	$\frac{\partial f}{\partial y}(x,y,z)=0+2y+0$ \\
+	$\frac{\partial f}{\partial z}(x,y,z)=0+0+x$ \\
+	$f^\prime(x,y,z)=\begin{pmatrix}e^x+z & 2y & x\end{pmatrix}$ \\
+	$f^\prime(0,0,0)=\begin{pmatrix}1 & 0 & 0\end{pmatrix}$ \\
+	$\nabla f(x,y,z)=\begin{pmatrix}e^x+z \\ 2y \\ x\end{pmatrix}$
+	\item $f\colon\mathbb{R}^3\to\mathbb{R}^2$ \\
+	$f(x,y,z)=\begin{pmatrix}x+y \\ xyz\end{pmatrix}$ \\
+	$f^\prime(x,y,z)=\begin{pmatrix}1 & 1 & 0 \\ yz & xz & xy\end{pmatrix}$ \\
+	$f^\prime(0,0,1)=\begin{pmatrix}1 & 1 & 0 \\ 0 & 0 & 0\end{pmatrix}$
+	\item \underline{Bild:}
+\end{enumerate}
+
+\begin{bem}
+\end{bem}
+\begin{enumerate}[label=\alph*)]
+	\item Der Gradient zeigt in der Richtung des steilsten Anstiegs einer Fkt. in einem gegebenen Punkt. \\
+	Er steht senkrecht auf den Höhenlinien.
+	\item Ex. für $f$ alle part. Abl. (d.h. Tangenten in Richtung $x_j$ ex. $\forall j$), so muss $f$ nicht stetig sein! \\
+	Mathe I: $f$ diffbar. $\Rightarrow$ $f$ stetig. \\
+	Mathe III: $f$ diffbar. $\not\Rightarrow$ $f$ stetig. \\
+	(Ü: am Bsp.: 8.7 b) ausprobieren)
+\end{enumerate}
+
+\newpage
+
+\begin{definition}
+	totale Differenzierbarkeit
+\end{definition}
+Sei $D\subseteq\mathbb{R}^n$ offen, $a\in D$ \\
+$f\colon D\to\mathbb{R}^m$ heißt in $a$ \underline{(total) differenzierbar}, wenn $f$ in $a$ partiell diffbar ist und geschrieben werden kann als \\
+''*'' $\underbrace{f(x)}_{f(x_1,...,x_n)\in\mathbb{R}^m}=\underbrace{f(a)}_{\in\mathbb{R}^m}\underbrace{f\prime(a)}_{\in M_{m,n}(\mathbb{R})}\underbrace{(x-a)}_{\in\mathbb{R}^n}+\underbrace{R(x)}_{\in\mathbb{R}^m}$, \\
+wobei $R\colon D\to\mathbb{R}^m$ Abb. mit $\lim_{x\to a}\frac{\Vert R(x)\Vert}{\Vert x-a\Vert}=0$ gilt. \\
+$f$ heißt (total) diffbar, wenn $f$ in jedem Punkt von $D$ diffbar ist. \\
+(Für $n=1,m=1$ ist Def. 8.11 die Def. der Differenzierbarkeit aus Mathe I, denn \\
+$f(x)=f(a)+f^\prime(a)(x-a)+R(x)$ \\
+$\Leftrightarrow\frac{f(x)-f(a)}{x-a}=f^\prime(a)+\underbrace{\frac{R(x)}{x-a}}_{\to0\text{ für }x\to a}$ \\
+''*'' bedeutet: man kann $f$ in der Nähe von $a$ (da $(R(x)$ nahe $a$ klein wird) durch \\
+$g(x)=f(a)+f^\prime(a)(x-a)$ ersetzen. \\
+$g$ heißt die lineare Approximation / \underline{Tangentialebene} von $f$ in $a$.
+
+\begin{bsp}
+	Gleichung der Tangentialebene
+\end{bsp}
+an $f\colon\mathbb{R}^2\to\mathbb{R},\quad f(x,y)=x^2+y^2$ in $a=\begin{pmatrix}1\\2\end{pmatrix}$ \\
+$g(x)=f(a)+f^\prime(a)(x-a)$ \\
+$g(x)=5+(2\:\:4)\begin{pmatrix}x-1\\y-2\end{pmatrix}$ \hspace{40mm} $f^\prime(x,y)=(2x\:\:2y)\Rightarrow f^\prime(1,2)=(2\:\:4)$ \\
+$g(x,y)=5+2(x-1)+4(y-2)$ \\
+$=5+2x-2+4y-8 \\
+=2x+4y-5$
+
+\begin{satz}
+	Diffbar / Stetigkeit
+\end{satz}
+Ist $f\colon D\subseteq\mathbb{R}^n\to\mathbb{R}^m$ diffbar in $a\in D$, so ist $f$ auch stetig in $a$. \\
+\underline{Beweis:} \\
+$\lim_{x\to a}f(x)\overset{\text{diffbar}}{=}\lim_{x\to a}(f(a)+\underbrace{f^\prime(a)(x-a)}_{\text{beschr }\to0}+\underbrace{R(x)}_{\to0})=f(a)$, also $f$ stetig.
+
+\begin{bem}
+\end{bem}
+Für part. Abb. gilt: \\
+wenn alle part. Abb. von $f\colon D\subseteq\mathbb{R}^n\to\mathbb{R}^m$ ex. und stetig sind, dann ist $f$ diffbar. \\
+Also: part. Abl. ex. und stetig $\overset{8.14}{\Rightarrow}f$ diffbar $\overset{8.13}{\Rightarrow}f$ stetig
+
+\newpage
+
+\begin{bem}
+	Ableitungsregeln
+\end{bem}
+Die aus Mathe I bekannten Ableitungsregel gelten weiterhin: \\
+Sei $D\subseteq\mathbb{R}^n$ offen, $f,g\colon D\to\mathbb{R}^m$ in $a\in D$ differenzierbar, sei $\lambda\in\mathbb{R}$. Dann sind auch $f+g,\lambda f,f^Tg$ in $a$ diffbar und es gilt.
+\begin{enumerate}[label=\alph*)]
+	\item $(f+g)^\prime(a)=f^\prime(a)+g^\prime(a)$
+	\item $(\lambda f)^\prime(a)=\lambda f^\prime(a)$ 
+	\item $(f^Tg)^\prime(a)=f(a)^Tg^\prime(a)+g(a)^Tf^\prime(a)$
+\end{enumerate}
+Weiter gilt auch die Kettenregel: \\
+Seien $D_1\subseteq\mathbb{R}^n,D_2\subseteq\mathbb{R}^d$ offen, $g\colon D_1\to D_2$ diffbar in $a\in D_1, f\colon D_2\to\mathbb{R}^m$ diffbar in $g(a)\in D_2$. \\
+Dann ist $f\circ g\colon D_1\to\mathbb{R}^m$ diffbar in $a$ mit $(f\circ g)^\prime(a)=f^\prime(g(a))*g^\prime(a)$
+
+\begin{bsp}
+\end{bsp}
+$f\colon\mathbb{R}^2\to\mathbb{R},\quad f(x,y)=x^2+3y$ \\
+$h\colon\mathbb{R}\to\mathbb{R}^2,\quad h(t)=\begin{pmatrix}\cos t \\ t\end{pmatrix}$ \\
+$f\circ h\colon\mathbb{R}\to\mathbb{R}$ \\
+$(f\circ h)(t)=f(h(t))=f\begin{pmatrix}\cos t\\ t\end{pmatrix}=\cos^2t+3t$ \\
+$(f\circ h)^\prime(t)=$ (direkt Mathe I) $=2*\cos t(-\sin t)+3$ \\
+oder Kettenregel: $(f\circ h)^\prime(t)=f^\prime(g(t))*h^\prime(t)$ \\
+$=(2\cos t\:\:3)*\begin{pmatrix}-\sin t\\1\end{pmatrix}$ \\
+$=-2\cos t\sin t+3$ \\
+\\
+$f^\prime(x,y)=(2x\:\:3)$ \\
+$h^\prime(t)=\begin{pmatrix}-\sin t\\1\end{pmatrix}$
+
+\begin{definition}
+	Richtungsableitung
+\end{definition}
+Sei $f\colon D\subseteq\mathbb{R}^n\to\mathbb{R},\quad a\in D,\quad v\in\mathbb{R}^n$ mit $\vert v\Vert=1$ \\
+$f$ heißt \underline{in $a$ diffbar in Richtung $v$}, wenn $\lim_{n\to0}\frac{f(a+h*v)-f(a)}{h}$ ex. \\
+Der GW heißt dann die \underline{Richtungsableitung von  von $f$ in Richtung $v$ im Punkt $a$}, \\
+$\frac{\partial f}{\partial v}(a)$ ($\widehat{=}$ Anstieg von $f$ an Stelle $a$ in Richtung $v$) \\
+Für diffbare Fkt. ex. alle Richtungsbaleitungen und es gilt $\frac{\partial f}{\partial v}(a)=f^\prime(a)*v$ \\
+$=\Vert f^\prime(a)\Vert*\Vert v\Vert*\cos\alpha$ \\
+$\Rightarrow\frac{\partial f}{\partial v}(a)$ wird am größten, wenn $\cos\alpha=1$, also $\alpha=0$ ist. \\
+D.h., wenn $v$ in Richtung des Gradienten zeigt $(f^\prime(a)^T=\nabla f(a))$ \\
+$\Rightarrow$ Der Gradient zeigt also immer in die Richtung des steilsten Anstiegs der Fkt.! (vgl. 8.10)
+
+\newpage
+
+\begin{definition}
+	Stetig differenzierbare Funktionen
+\end{definition}
+Sei $D\subseteq\mathbb{R}^n$ offen, $f\colon D\to\mathbb{R}$ 
+\begin{enumerate}[label=\alph*)]
+	\item $f$ heißt \underline{stetig differenzierbar}, wenn $f$ überall in $D$ partiell differenzierbar ist und die partiellen Ableitungen $\frac{\partial f}{\partial x_j}(j=1,...,n)$ alle in $D$ stetig sind.
+	\item $f$ heißt \underline{2-mal stetig differenzierbar}, wenn $f$ stetif diffbar und außerdem auch alle partiellen Ableitungen $\frac{\partial f}{\partial x_j}(j=1,...,n)$ stetig differenzierbar sind. \\
+	Die partielle Ableitung $\frac{\partial f}{\partial x_j}$ nach $x_k$ wird mit $\frac{\partial^2 f}{\partial x_k\partial x_j}$ bezeichnet. \\
+	Statt $\frac{\partial^2 f}{\partial x_j\partial x_j}$ schreibt man auch $\frac{\partial^2}{(\partial x_j)^2}$
+	\item Analog s-\underline{mal stetig differenzierbar} $\frac{\partial^s f}{\partial x_{js}...\partial x_{j1}}$ 
+\end{enumerate}
+
+\begin{bsp}
+\end{bsp}
+$f\colon\mathbb{R}^2\to\mathbb{R},\quad f(x,y)=3y+xy^2$ \\
+$\frac{\partial f}{\partial x}(x,y)=y^2\hsp\frac{\partial f}{\partial y}(x,y)=3+2xy$ \\
+$\frac{\partial^2 f}{\partial x\partial x}(x,y)=0\hsp\frac{\partial^2 f}{\partial y\partial x}=2y\hsp\frac{\partial^2 f}{\partial x\partial y}=2y\hsp\frac{\partial^2 f}{\partial y\partial y}=2x$
+
+\begin{satz}
+	Satz von Schwarz
+\end{satz}
+Sei $D\subseteq\mathbb{R}^n$ offen, $f\colon D\to\mathbb{R}$ s-mal stetig differenzierbar. \\
+Dann ist $\frac{\partial^2 f}{\partial x_k\partial x_j}=\frac{\partial^2 f}{\partial x_j\partial x_k}$ für alle $j,k\in\{1,...,n\}$ \\
+(D.h.: Die Reihenfolge spielt beim mehrfachen partiellen Ableiten keine Role!) \\
+Beweis mit dem 1. Mittelwertsatz der Differentialrechnung.
+
+\begin{definition}
+	Hessematrix
+\end{definition}
+Sei $D\subseteq\mathbb{R}^n$ offen, $f\colon D\to\mathbb{R}$ 2-mal stetig differenzierbar, $a\in D$. \\
+Dann heißt $H_f(a):=(\frac{\partial^2 f}{\partial x_j\partial x_k}(a))_{\substack{i=1,...,n\\ k=1,..,n}}$\\
+$=\begin{pmatrix}\frac{\partial^2}{\partial x_1\partial x_1}(a) & \frac{\partial^2}{\partial x_1\partial x_2}(a) & \cdots & \frac{\partial^2}{\partial x_1\partial x_n}(a) \\ \frac{\partial^2}{\partial x_2\partial x_1}(a) & \frac{\partial^2}{\partial x_2\partial x_2}(a) & \cdots & \frac{\partial^2}{\partial x_2\partial x_n}(a) \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial^2}{\partial x_n\partial x_1}(a) & \frac{\partial^2}{\partial x_n\partial x_2}(a) & \cdots & \frac{\partial^2}{\partial x_n\partial x_n}(a)\end{pmatrix}$ \\ \\
+die \underline{Hessematrix} von $f$ an der stelle $a$. \\
+Nach dem Satz von Schwarz (8.20) ist $H_f(a)$ symmetrisch!
+
+\begin{bsp}
+\end{bsp}
+$f\colon\mathbb{R}^2\to\mathbb{R},\quad f(x,y)=e^x+xy,\quad a=\begin{pmatrix}0\\0\end{pmatrix}$ \\
+$\frac{\partial f}{\partial x}=e^x+y\quad\frac{\partial f}{\partial y}=x$ \\
+$\frac{\partial^2f}{\partial y\partial x}=e^x\quad\frac{\partial^2f}{\partial y\partial y}=1=\frac{\partial^2f}{\partial x\partial y}\quad\frac{\partial f}{\partial y\partial y}=0$ \\
+$H_f(x,y)=\begin{pmatrix}e^x&1\\1&0\end{pmatrix},\quad H_f(a)=\begin{pmatrix}1&1\\1&0\end{pmatrix}$
+
+\newpage
+
+\begin{definition}
+	lokale Extrema
+\end{definition}
+Sei $D\subseteq\mathbb{R}^1,\quad f\colon D\to\mathbb{R},\quad a\in D$ $a$ heißt \underline{Stelle eines lokalen Minimums (Maximums)}, wenn ein $\epsilon>0$ ex. mit $f(n)\leq f(x)\quad\forall x\in K(a,\epsilon)\cap D$ \\
+$(f(a)\geq f(x))$
+
+\begin{satz}
+	Notwendige Bedingung für lokale Extremstellen
+\end{satz}
+Sei $f$ wie oben, $D$ offen. Wenn $a\in D$ Stelle eines lokalen Extremums ist und in $a$ die part. Abl. ex., dann ist \\
+$\nabla f(a)=(\overset{\rightarrow}{0}=$ Nullindex $\begin{pmatrix}0\\0\end{pmatrix}$ \\
+$(f(a=^T=(0...0)=0^T)$ \\
+\underline{Beweis:} \\
+Sei $a$ lok. Extremstelle von $f$. \\
+Betrachte $K(a,\epsilon)\leq D$ \\
+Die Fkt. $\varphi\colon(-\epsilon,\epsilon)\to\mathbb{R}$ \\
+$\varphi(t)=f(a+t*e_K)\quad K=\{1,...,n\}$ \\
+besitzt bei $t=0$ ein lokales Extremum. \\
+$(\varphi(0)=f(a)$, kleiner oder größer als die Pkt. Werte drumrum) \\
+$\overset{\text{Mathe I}}{\Rightarrow}\underbrace{\varphi(0)=0}_{\lim_{n\to\infty\frac{f(a+h*e_K)+f(a)}{h}=\frac{\partial f}{\partial x_K}(a)}}$ 
+
+\begin{satz}
+	Hinreichende Bedingung für lokale Extremstellen
+\end{satz}
+Sei $f$ wie oben, 2-mal stetig diffbar. $a\in D$ \\
+und $\nabla f(a)=\overset{\rightarrow}{0}$ (mam sagt $a$ ist kritischer Punkt von $f$) \\
+Dann gilt:
+\begin{enumerate}[label=\alph*)]
+	\item $H_f(a)$ pos. definit \hspace{15mm}$\Rightarrow$ $a$ ist Stelle eines lokalen Minimums \\
+	(alle EW von $H_f(a)\geq0$)
+	\item $H_f(a)$ neg. definit \hspace{15mm}$\Rightarrow$ $a$ ist Stelle eines lokalen Maximums \\
+	(alle EW von $H_f(a)<0$)
+	\item $H_f(a)$ indefinit \hspace{35mm}$\Rightarrow$ $a$ ist Sattelpunkt \\
+	(Sowohl pos. als auch neg. EW)\hspace{13mm}(keine Extremstelle)
+\end{enumerate}
+(Hat $H_f(a)$ nur EW$\geq0$ oder nur $\leq0$ und kommt 0 als EW vor, so ist (noch) keine Aussage möglich) \\
+\underline{Beweis:} \\
+$H_f(a)$ ist pos. definit $\Rightarrow H_f(x)$ pos. definit für alle $x\in K(a,\xi)$ \\
+Für diese $x$ gilt (mehrdim. Satz von Taylor ($\rightarrow$ Folien)) \\
+$\exists\xi\in(0,1)$ mit $f(x)=f(a)+\underbrace{f^\prime(a)*(x-a)+\frac{1}{2}(x-a)^T*H_f(a+\xi(x-a))*(x-a)}_{0,\text{ da }H_f(x)\text{ pos. definit}\quad y^TH_f(a)>0}$ \\
+$\geq f(a)$, also ist $a$ Stelle eins der Min. \\
+(Max. analog) 
+
+\newpage
+
+\begin{bsp}
+\end{bsp}
+$f\colon\mathbb{R}^2\to\mathbb{R}$
+\begin{enumerate}[label=\alph*)]
+	\item $f(x,y)=x^2+y^2$ \\
+	$f^\prime(x,y)=(2x\quad 2y)...=(0\quad0)\Rightarrow x=0,y=0$ der kritische Punkt $(0,0)^T$\\
+	$H_f(x,y)=\begin{pmatrix}2&0\\0&2\end{pmatrix},H_f(0,0)=\begin{pmatrix}2&0\\0&2\end{pmatrix}$ \\
+	EW: $2>0\overset{8.25}{\Rightarrow}$ lok. Minimum bei $(0,0)^T$
+\end{enumerate}
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item ... 7.26
+	\item $f\colon\mathbb{R}^2\to\mathbb{R},\quad f(x,y)=x^2+y^2$ \\
+	$f^\prime(x,y)=(2x\quad -2y)=(0\quad0)$ \\
+	$\Rightarrow x=y=0$, krit Punkt $\begin{pmatrix}0\\0\end{pmatrix}$ \\
+	$H_f(x,y)=\begin{pmatrix}2&0\\0&-2\end{pmatrix},\quad H_f(0,0)=\begin{pmatrix}2&0\\0&-2\end{pmatrix}$ \\
+	EW: $2,-2\Rightarrow$ Sattelpunkt in $\begin{pmatrix}0\\0\end{pmatrix}$
+	\item $f(x,y)=x^2+y^4+2x$ ergibt krit. Punkt $\begin{pmatrix}-1\\0\end{pmatrix}$ \\
+	$H_f(-1,0)=\begin{pmatrix}2&0\\0&-0\end{pmatrix}$, EW: $2,0$ \\
+	$\Rightarrow$ keine Aussage möglich
+	\item $f(x,y=3xy-x^3-y^3$ ergibt krit. Punkte: $\underbrace{\begin{pmatrix}0\\0\end{pmatrix}}_{\text{Sattelp.}}$ und $\underbrace{\begin{pmatrix}1\\1\end{pmatrix}}_{\text{lok. Max. stelle}}$ \\
+	$f(1,1)=3-1-1=1$
+\end{enumerate}
+
+\begin{bsp}
+	Extrema unter Nebenbedingungen (NB)
+\end{bsp}
+Lösen von Extremwertaufgaben wenn es zusätzliche Bedingungen gibt.
+\begin{enumerate}[label=\alph*)]
+	\item Geg. $U\in\mathbb{R}$, welches Rechteck (Seiten $x,y$) mit Umfang $U$ hat max. Fläche? \\
+	d.h. Max. stekke der Fkt. $f(x,y)=x*y$ (Fläche) \\
+	unter der NB dass $2x+2y=U$ (constraints) \\
+	d.h. finde Max. stelle von $f\colon\mathbb{R}^2\to\mathbb{R}$ auf der Menge \\
+	$A:=\{(x,y)\in\mathbb{R}^2\mid 2x+2y=U,\quad x,y\geq0\}$ ($\widehat{=}$ Gerade in $\mathbb{R}$)
+	\item Post: Paket, $L+B+H\leq200$ cm will Volumen maximieren
+	\item Milchmädchenproblem
+\end{enumerate}
+
+\begin{definition}
+	lok. Extr. bzgl. A
+\end{definition}
+Seien $D,A\subseteq\mathbb{R}^n,\quad D\to\mathbb{R},\quad a\in D\cap A$ \\
+Dann heißt $a$ \underline{Stelle eines lokalen Maximums (Min.) von $f$ bzgl. $A$} wenn es ein $\epsilon>0$ gibt mit $f(a)\geq f(x)\quad\forall x\in K(a,\epsilon)\cup A$
+
+\begin{bsp}
+\end{bsp}
+Welcher Punkt auf der Hyperbel $xy=3$ ist dem Nullpunkt am nächsten? \\
+D.h. Minimieren $f(x,y)=\sqrt{x^2+y^2}$ (Abstanf von $\begin{pmatrix}0\\0\end{pmatrix}$ unter der NB $x*y=3$ \\
+$\rightarrow$ Applet, Knet,...
+
+\begin{satz}
+	Lagrangesche Multiplikationsregel
+\end{satz}
+Sei $D\subseteq\mathbb{R}^n$ offen, $\quad f\colon D\to\mathbb{R},\quad g\colon D\to\mathbb{R}^d\quad (d<n)$ stetig diffbar \\
+Sei $A:=\{x\in D\mid g(x))\overset{\rightarrow}{0}\}$ Nebenbedingung \\
+Sei weiter $a\in D$ mit $Rang(g^\prime(a))=d$ (Jacobimatrix von $g$ in $a$ hat Rang $d$, d.h. alle Zeilen sind l.u.) \\
+Ist $a$ Stelle eines lok. Extremums von $f$ bzgl. $A$ (unter der NB von $A$), dann ex. $\lambda_1,...,\lambda_d\in\mathbb{R}$, so dass für die Fkt. \\
+$F\colon D\to\mathbb{R},\quad F(x)=f(x)+\lambda_a,...,\lambda_d)*g(x)$ gilt: \\
+$F^\prime(a)=\overset{\rightarrow}{0}^T\hsp(\nabla F(a)=0)$ \\
+$\lambda_1,...,\lambda_d$ heißen \underline{Lagrange Multiplikatoren.} \\
+Ist die NB skalar, d.h. $g\colon D\to\mathbb{R}\quad(d=1)$, so lautet der Satz: \\
+Ist $a$ lok. Extr. st. von $f$ unter der NB $g(x)=0$ dann gilt: \\
+$(F(x)=f(x)+\lambda*g(x),\quad \underbrace{F^\prime(a)}_{f^\prime(x)+\lambda*g^\prime(x)=\overset{\rightarrow}{0}^T}=\overset{\rightarrow}{0}^T$ \\
+$\nabla f(a)+\lambda*\nabla g(a)=\overset{\rightarrow}{0}$ \\
+für ein $\lambda\in\mathbb{R}$, d.h. $\nabla f,\nabla g$ sind parallel
+
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+	\item $f\colon\mathbb{R}\to\mathbb{R},\quad f(x,y)=3x+2y$ \\
+	$A=\{\begin{pmatrix}x\\y\end{pmatrix}\mid x^2+y^2=1\}$ \\
+	d.h. $f\colon\mathbb{R}^2\to\mathbb{R},\quad g(x,y)=1+x^2-y^2\quad(=0)$ \\
+	$F(x,y)=3x+2y+\lambda(1-x^2-y^2)$ \\
+	$\frac{\partial F}{\partial x}F(x,y) =3-2\lambda x\overset{!}{=}0$ I \\
+	$\frac{\partial F}{\partial y}F(x,y)=2-2\lambda y\overset{!}{=}0$ II \\
+	NB: III: $1-x^2-y^2=0$ \\
+	löse 3 Gl. erhalte $\lambda^2=\frac{13}{4},\quad y=\pm\frac{2}{\sqrt{13}},\quad\lambda=\pm\frac{3}{\sqrt{13}}$ \\
+	mögl. Extr. stl sind also $a_1=(\frac{3}{\sqrt{13}},\frac{2}{\sqrt{13}})^T,\quad a_2=(-\frac{3}{\sqrt{13}},-\frac{2}{\sqrt{13}})^T$ \\
+	$f(a_1)=\sqrt{13},\quad f(a_2)=-\sqrt{13}\hsp\leftarrow$ Extremwerte
+	\item $\rightarrow$ Skript 
+\end{enumerate}
+
+\end{document}
+

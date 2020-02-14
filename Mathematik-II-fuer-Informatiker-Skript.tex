@@ -1,0 +1,1831 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{satz}[definition]{Satz}
+\newtheorem{bsp}[definition]{Beispiel}
+\newtheorem{bem}[definition]{Bemerkung}
+\newtheorem{vorue}[definition]{Vorüberlegung}
+\newtheorem{koro}[definition]{Korollar}
+\newtheorem{erinn}[definition]{Erinnerung (Schule) Vorwissen}
+\newtheorem{quest}[definition]{Fragen}
+\newtheorem{anw}[definition]{Anwendungen}
+
+\setlength{\parindent}{0px}
+\usepackage[left=25mm,right=25mm,top=30mm,bottom=30mm]{geometry}
+
+\setcounter{page}{1}
+
+\begin{document}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+	\centering
+	{\scshape\LARGE Eberhard Karls Universität Tübingen \par}
+	\vspace{2.5cm}
+	{\huge Mathematik für Informatiker II\par}
+	\vspace{1.5cm}
+	{\Large Sommersemester 2019\par}
+	\vspace{1.5cm}
+	{\Large Dr. Britta Dorn\par}
+	\vspace{4cm}
+	{\Large\itshape \par}
+	Mitschrieb von\par
+	Felix Pfeiffer
+	\vfill
+
+% Bottom of the page
+	{\large \today\par}
+\end{titlepage}
+
+\newpage
+\pagenumbering{roman}
+
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+\section{Kurze Wiederholung}
+\subsection{Mengen}
+\begin{definition}
+Eine Menge ist eine Zusammenfassung von bestimmten, wohlunterscheidbaren Objekten (Elementen) unserer Anschauung oder unseres Denkens zu einem Ganzen.
+\end{definition}
+Seien $A$, $B$ Mengen
+\begin{enumerate}[label=\alph*)]
+	\item $x \in A$ : $x$ ist Element der Menge $A$ \\
+	$x \notin A$ : $x$ ist nicht Element der Menge $A$
+	\item \makebox[4mm][l]{$A$} \makebox[4mm][l]{=} $\{a, b, c\} : A$ besteht aus den Elementen $a, b, c$\\
+	\makebox[4mm][l]{} \makebox[4mm][l]{=} $\{c, a, b\}$, d.h. Reihenfolge spielt keine Rolle,  Achtung: keine Wiederholungen\\
+	\makebox[4mm][l]{$B$}  \makebox[4mm][l]{=} $\{A, \{1, 2\}, 3\}$\\
+	\makebox[4mm][l]{$\mathbb{N}$} \makebox[4mm][l]{=} $\{1, 2, 3, ...\}$ Menge der natürlichen Zahlen\\
+	\makebox[4mm][l]{$\mathbb{N}_{0}$} \makebox[4mm][l]{=} $\{0, 1, 2, 3, ...\}$ Menge der natürlichen Zahlen mit der Null\\
+	\makebox[4mm][l]{$\mathbb{Z}$} \makebox[4mm][l]{=} $\{0, -1, 1, -2, 2, ...\}$ Menge der ganzen Zahlen
+	\item $\makebox[4mm][l]{A} := \{x \mid x \mbox{ besitzt die Eigenschaft } E\} A$ besteht aus allen Elementen die $E$ erfüllen\\
+	$\makebox[4mm][l]{} = \{2, 4, 6, ...\} \\
+	\makebox[4mm][l]{} = \{x \in \mathbb{N} \mid \exists k \in \mathbb{N} \mbox{ mit } x = 2*k\}$ \\
+	\makebox[4mm][l]{$\mathbb{Q}$} $ = \{\frac{a}{b} \mid a, b \in \mathbb{Z}, b \neq 0\}$ Menge Rationaler Zahlen
+	\item $\emptyset$ Menge ohne Elemente, leere Menge
+	\item $\vert A \vert $ Anzahl der Elemente von $A$ (Kardinalität, Mächtigkeit von $A$) \\
+	z.B. $ \vert \{a, 1, 3\} \vert = 3, \vert \emptyset \vert = 0$
+	\item $A$ Teilmenge von $B$ ($A \subseteq B)$, falls gilt $x \in A \Rightarrow x \in B$ \\
+	in Worten: jedes Element von $A$ ist auch Element von $B$ $(\forall x \in A : x \in B)$ \\
+	Dasselbe bedeutet die Notation $B \supseteq A$ ($B$ Obermenge von $A$) \\
+	Bsp.: $\emptyset \subseteq \{1, 2\} \subseteq \mathbb{N} \subseteq \mathbb{N}_0 \subseteq \mathbb{Z} \subseteq \mathbb{R}$ \\
+	Es gilt $\emptyset \subseteq A$ für jede Menge $A$
+	\item $A, B$ gleich $(A = B)$, falls gilt $A \subseteq B$ und $B \subseteq A$
+	\item $A, B := \{(a, b) \mid a \in A, b \in B\}$, die Menge aller geordneten Paare, heißt kartesisches Produkt von $A$ mit $B$ \\
+	Dabei legen wir fest, $(a, b) = (a', b')$ (mit $a, a' \in A, b, b' \in B) \\
+	\Leftrightarrow a = a'$ und $b = b'$ \\
+	Allgemein für Mengen $A_1, ..., A_n (n \in \mathbb{N}): \\
+	A_1 \times A_2 \times ... \times A_n := \{(a_1, a_2, ..., a_n) \mid a_i \in A_i; \forall i = 1, ..., n\}$ \\
+	die Mengen aller geordneten n-Tupel \\
+	Statt $A \times A$ schreiben wir auch $A^2$, und statt $A \times ... \times A$ auch $A^n$ \\
+	\\
+	Beispiel: \\
+	$A = \{1, 2, 3\},  B = \{3, 4\} \\
+	(1, 3) \in A \times B \\
+	(3, 1) \notin A \times B, (3, 1) \in B \times A \\
+	(3, 3) \in A \times B \in B \times A \in A \times A \\
+	A \times B = \{(1, 3), (1, 4), (2, 3), ...\}$ \\
+	\newpage
+	\item $A \cap B$
+	\item $A \cup B$
+	\item disjunkte Mengen
+	\item$A \setminus B$
+	\item $\bar{A}_X$
+	\item $\mathcal{P}(A)$
+\end{enumerate}
+i) - n) in Extratutorium besprochen
+
+\subsection{Logik}
+\begin{definition}
+Eine logische Aussage ist ein Satz, mit dem eindeutig einer der Wahrheitswerte \glq wahr\grq (1) oder \glq falsch\grq (0) zugeordnet werden kann.
+\end{definition}
+Beispiele:
+\begin{itemize}
+\item 2 ist eine ungerade Zahl. \textbf{0}
+\item 2 ist eine Primzahl. \textbf{1}
+\item Ist 2 eine gerade Zahl? \textbf{keine Aussage}
+\item 2. \textbf{keine Aussage}
+\item Es gibt unendlich viele Primzahlen. \textbf{1}
+\item Es gibt unendlich viele Primzahlzwillinge. \\
+(Primzahlzwillinge: Primzahlen mit Abstand 2, z.B. 5 und 7; 11 und 13) \textbf{Aussage, Wahrheitswert unbekannt.}
+\end{itemize}
+Aus einfachen Aussagen kann man durch logische Junktoren (Verknüpfungen wie \glq und\grq, \glq oder\grq) kompliziertere bilden (Ausdrücke): Durch Wahrheitstafeln gibt man an, wie der Wahrheitswert der zusammengesetzten Aussage durch die Werte der Teilaussagen bedingt ist. \\~\\
+Beispiel: Negation, $\lnot$ \\
+Sei $A$ eine Aussage.  Die Verneinung von $A$ ist $\lnot A$ (\glqq nicht $A$ \grqq) und ist die Aussage, die genau dann wahr ist, wenn $A$ falsch ist. \\
+\begin{tabular}{l|r}
+$A$ & $\lnot A$ \\
+\hline 
+1 & 0 \\
+0 & 1
+\end{tabular} \\~\\
+Beispiele:
+\begin{itemize}
+\item $A$: 6 ist durch 3 teilbar. (1) \\
+$\lnot A$: 6 ist nicht durch 3 teilbar. (0)
+\item $B$: 2,5 ist eine gerade Zahl. (0) \\
+$\lnot B$ 2,5 ist keine gerade Zahl. (1)
+\end{itemize}
+\newpage
+Weitere Junktoren:
+\begin{itemize}
+\item \textbf{und}, $A \land B$: genau dann wahr, wenn $A$ und $B$ gleichzeitig wahr sind,
+\item \textbf{oder}, $A \lor B$: sobald mindestens eine der beiden Aussagen wahr ist, ist die Gesamtaussage wahr.
+\item \textbf{Implikation}, $A \Rightarrow B$: aus $A$ folgt $B$.
+\item \textbf{Äquivalenz}, $A \Leftrightarrow B$: $A$ ist äquivalent zu $B$.
+\end{itemize}
+Zwei logische Ausdrücke heißen logisch äquivalent ($\equiv$), wenn sie dieselben Wahrheitstafeln haben. \\
+So kann man zeigen, dass beispielsweise \\
+\makebox[20mm][l]{ }$A \Rightarrow B$ logisch äquivalent zu $\lnot B \Rightarrow \lnot A$ ist. \\
+Statt $A \Rightarrow B$ zu beweisen, kann mal also auch $\lnot B \Rightarrow \lnot A$ (die Kontraposition) zeigen. \\~\\
+Beispiel:
+\begin{itemize}
+\item Pit ist ein Dackel $\Rightarrow$ Pit ist ein Hund. ($A\Rightarrow B$)
+\item Pit ist ein Hund $\Rightarrow$ Pit ist ein Dackel. ($B \Rightarrow A$, nicht logisch äquivalent zur ersten Aussage)
+\item Pit ist kein Dackel $\Rightarrow$ Pit ist kein Hund. ($\lnot A \Rightarrow \lnot B$, nicht logisch äquivalent zur ersten Aussage)
+\item Pit ist kein Hund $\Rightarrow$ Pit ist kein Dackel. ($\lnot B\Rightarrow \lnot A$, logisch äquivalent)
+\end{itemize}
+Achtung bei der Verneinung von Aussagen: \\
+Gesetze von de Morgan \\
+$\lnot (A \lor B) \equiv (\lnot A \land \lnot B) \\
+\lnot (A \land B) \equiv (\lnot A \lor \lnot B)$ \\~\\
+Verneinung von Aussagen mit Quantoren: \\
+$\lnot(\forall x\in X : x \text{ hat Eigenschaft } E) \equiv (\exists x \in X : x \text{ hat \textbf{nicht} Eigenschaft } E)$ \\
+Bsp.: $\lnot$ (Alle Schafe sind weiß) $\equiv$ Nicht alle Schafe sind weiß (Es gibt (mindestens) ein Schaf, dass nicht weiß ist) \\
+$\lnot(\exists x \in X : x \text{ hat Eigenschaft }E) \equiv (\forall x \in X : x \text{ hat \textbf{nicht} Eigenschaft} E)$
+
+\subsection{Vollständige Induktion}
+\begin{bsp}
+Kleiner Gauß \\
+$1+2+3+...+100=?$ \\
+\begin{tabular}{cl}
+&$1+2+3+...+50$ \\
+$+$&$100+99+98+...+51$ \\ \hline
+&$101+101+101+...+101$  \\
+&$= 50*101=5050$ \\
+&$=\frac{100}{2}*101$
+\end{tabular}
+\end{bsp}
+Allgemein für $n\in\mathbb{N}\: 1+2+...+n=\sum_{k=1}^nk=\frac{n(n+1)}{2}$ \\
+\newpage
+\underline{Prinzip der vollständigen Induktion} \\
+Sei $n_o\in\mathbb{N}$ vorgegeben (oft: $n_0=1$) \\
+für $n\geq n_0, n\in\mathbb{N}$, Sei $A(n)$ eine Aussage, die von $n$ abhängt. \\
+Es gelte
+\begin{enumerate}[label=(\arabic*)]
+\item $A(n_0)$ ist wahr (\glqq Induktionsanfang\grqq) \\
+\item $\forall n\in\mathbb{N}$, $n\geq n_0:$ \\
+Ist $A(n)$ wahr, so ist $A(n+1)$ wahr (\glqq Induktionsschritt\grqq) \\
+Dann ist die Aussage $A(n)$ für alle $n\geq n_0$ wahr.
+\end{enumerate}
+\begin{bsp}
+Kleiner Gauß
+\end{bsp}
+zu zeigen: $1+2+...+n=\frac{n(n+1)}{2} \: \forall n\in\mathbb{N}$
+\begin{itemize}
+\item \underline{Induktionsanfang:} zeige $A(1)$ gilt \\
+$(n=1) \: 1=\frac{1(1+1)}{2}$ ist wahr.
+\item \underline{Induktionsvoraussetzung} Die Aussage gilt für ein beliebiges aber festes $n\in\mathbb{N}$.
+\item \underline{Indunktionsschritt} \\
+Induktionsvoraussetzung: sei $n\geq 1$ \\
+Es gelte $A(n)$, d.h. $1+...+n=\frac{n(n+1)}{n}$ \\
+Induktionsbehauptung: Es gilt $A(n+1)$ d.h. $1+...+n+(n+1)=\frac{(n+1)(n+2)}{2}$ \\
+Beweis: \\
+\begin{flalign*}
+1+2+...+n+(n+1) &\overset{I.V.}{=} \frac{n(n+1)}{2}+(n+1) \\
+&=\frac{n^2+n+2n+2}{2} \\
+&=\frac{(n+1)(n+2)}{2}&&
+\end{flalign*}
+\end{itemize}
+\begin{bsp}
+$A(n): 2^n\geq n \: \forall n\in\mathbb{N} \rightarrow$ Übungsaufgabe
+\end{bsp}
+\newpage
+\begin{bem}
+Für Formeln wie im vorgegebenen Bsp. benutzen wir das Summenzeichen $\sum$ (Sigma, großes griechisches S)
+\end{bem}
+\begin{flalign*}
+&\sum_{k=1}^nk = \frac{n(n+1)}{2} \: \forall n\in\mathbb{N} \\
+&\underset{k=1}{1}+\underset{k=2}{2}+\underset{k=3}{3}+...+\underset{k=n}{n} \\
+&\mbox{weitere Bsp.:} \\
+&\sum_{k=1}^n2k=2*1+2*2+...+2*n \\
+&\sum_{k=4}^n2k=2*4+2*5+...+2*n \\
+&\sum_{k=1}^37=7+7+7 \\
+&allg. \sum_{k=m}^na_k=a_m+a_{m+1}+...+a_n \; (a_m,...,a_n \in\mathbb{R} \\
+&k \: \mbox{heißt Summationsindex} \\
+&\sum_{k=m}^na_k=\sum_{i_m}^na_i \mbox{usw.} \\
+&\mbox{Schreibweisen:} \sum_{k=m}^na_k, \sum_{k\in\mathbb{N}}a_k, \sum_{k=1, k\neq 2}^4a_k=a_1+a_3+a_4 \\
+&\mbox{für} \: n<m \: \mbox{setzt man} \\
+&\sum_{k=m}^na_k=0 \mbox{(\glqq leere Summe\grqq), z.B.} \sum_{k=7}^3k=0 &&
+\end{flalign*}
+\underline{Produktzeichen $\prod$ (Pi, großes P)}
+\begin{flalign*}
+&\prod_{k=m}^na_k=a_m*a_{m+1}*...*a_n \\
+&\mbox{für} \: n<m \: \mbox{setze} \prod_{k=m}^na_k=1 \: \mbox{(\glqq leeres Produkt\grqq )} &&
+\end{flalign*}
+\newpage
+\subsection{Abbildungen}
+\begin{definition}
+Eine Abbildung (oder Funktion) \\
+$f\colon A\rightarrow B$ besteht aus
+\begin{itemize}
+\item zwei Mengen
+\begin{itemize}
+\item A, dem Definitionsbereich von f
+\item B, dem Bildbereich von f
+\end{itemize}
+\item und einer Zuordnungschrift, die jedem Element $a\in A$ genau ein Element $b\in B$, zuordnet.
+\end{itemize}
+\end{definition}
+Wir schreiben dann $b=f(a)$, wenn $b$ das Bild oder den Funktionswert von $a$ (unter $f$), und $a$ (ein) Urbild von $b$ (unter $f$).
+\begin{flalign*}
+\mbox{Notation:} \: f\colon &A\rightarrow B \\
+&a\mapsto f(a) &&
+\end{flalign*}
+\begin{bsp}
+$A=\{a,b,c\}, B=\{\alpha,\beta,\gamma\} \\
+f\colon A\rightarrow B, a\mapsto\alpha, b\mapsto\beta, c\mapsto\gamma$
+\end{bsp}
+\begin{tikzpicture}
+\draw (0,0) ellipse (10pt and 20pt) node at (0,0.3) {$a$} node at (0,0) {$b$} node at (0,-0.3) {$c$};
+\draw (2,0) ellipse (10pt and 20pt) node at (2,0.3) {$\alpha$} node at (2,0) {$\beta$} node at (2,-0.3) {$\gamma$};
+\draw[->] (0.2,0.3) -- (1.8,0.3);
+\draw[->] (0.2,0) -- (1.8,0);
+\draw[->] (0.2,-0.3) -- (1.8,-0.3);
+\end{tikzpicture} \\
+ist eine Funktion \\
+$a$ besitzt das Bild $\alpha$ \\
+$\beta$ besitzt das (einzige) Urbild $b$ \\
+\\
+\begin{tikzpicture}
+\draw (0,0) ellipse (10pt and 20pt) node at (0,0.3) {$a$} node at (0,0) {$b$} node at (0,-0.3) {$c$};
+\draw (2,0) ellipse (10pt and 20pt) node at (2,0.3) {$\alpha$} node at (2,0) {$\beta$} node at (2,-0.3) {$\gamma$};
+\draw[->] (0.2,0.3) -- (1.8,0.3);
+\draw[->] (0.2,0.3) -- (1.8,0);
+\draw[->] (0.2,0) -- (1.8,0);
+\draw[->] (0.2,-0.3) -- (1.8,-0.3);
+\end{tikzpicture} \\
+keine Funktion! \\
+Zuordnung von $a$ nicht eindeutig \\
+\\
+\begin{tikzpicture}
+\draw (0,0) ellipse (10pt and 20pt) node at (0,0.3) {$a$} node at (0,0) {$b$} node at (0,-0.3) {$c$};
+\draw (2,0) ellipse (10pt and 20pt) node at (2,0.3) {$\alpha$} node at (2,0) {$\beta$};
+\draw[->] (0.2,0.3) -- (1.8,0.3);
+\draw[->] (0.2,0) -- (1.8,0);
+\end{tikzpicture} \\
+keine Funktion \\
+$c\in A$ wird nichts zugeordnet. \\
+\\
+\begin{tikzpicture}
+\draw (0,0) ellipse (10pt and 20pt) node at (0,0.3) {$a$} node at (0,0) {$b$} node at (0,-0.3) {$c$};
+\draw (2,0) ellipse (10pt and 20pt) node at (2,0.3) {$\alpha$} node at (2,0) {$\beta$};
+\draw[->] (0.2,0.3) -- (1.8,0.3);
+\draw[->] (0.2,0) -- (1.8,0.3);
+\draw[->] (0.2,-0.3) -- (1.8,0);
+\end{tikzpicture} \\
+Funktion in unserem Sinne. \\
+Bild von $a$ unter $f$ ist $\alpha$. \\
+$\alpha\in B$ besitzt Urbilder: $a$ und $b$. \\
+\newpage
+\begin{tikzpicture}
+\draw (0,0) ellipse (10pt and 20pt) node at (0,0.3) {$a$} node at (0,0) {$b$};
+\draw (2,0) ellipse (10pt and 20pt) node at (2,0.3) {$\alpha$} node at (2,0) {$\beta$} node at (2,-0.3) {$\gamma$};
+\draw[->] (0.2,0.3) -- (1.8,0.3);
+\draw[->] (0.2,0) -- (1.8,0);
+\end{tikzpicture} \\
+ist eine Funktion \\
+$\gamma\in B$ besitzt unter $f$ kein Urbild.
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $A$ Menge \\
+$id_A \colon A\rightarrow A \\
+x\mapsto x$
+\item $f\colon\mathbb{R}\rightarrow\mathbb{R} \\
+x\mapsto x^2$
+\item \grqq +\glqq \: kann als Abb. aufgefasst werden. \\
++: $\mathbb{R}\times\mathbb{R}\rightarrow\mathbb{R}\\
+(a,b)\mapsto a+b$
+\end{enumerate}
+\begin{definition}
+\end{definition}
+Sei $f\colon A\rightarrow B$ \\
+$A_1 \subseteq A, B_1 \subseteq B$ Teilmengen, dann heißt
+\begin{enumerate}[label=\alph*)]
+\item $f(A_1) := \{f(a)\mid a\in A_1\} \subseteq B$ \\
+das Bild von $A_1$ (unter $f$) \\
+Bsp.: $f\colon\mathbb{N}\rightarrow\mathbb{N}, x\mapsto 2x \hspace{5mm} A_1=\{1,3\} \hspace{5mm} f(A_1)=f(1),f(3)=2,6$
+\item $f^{-1}(B_1)=\{a\in A\mid f(a)\in B_1\} \subseteq A$ \\
+das Urbild von $B_1$ (unter $f$) \\
+Bsp.: oben: $B_1=\{8,14,100\} \Rightarrow f^(-1)(b_1)=\{4,7,50\}$
+\item $f$ surjektiv, falls gilt: $f(A)=B$ \\
+(alle Elemente von $B$ werden getroffen)
+\item $f$ injektiv, falls gilt: $a_1, a_2 \in A$ mit $a_1 \neq a_2 \Rightarrow f(a_1) = f(a_2)$ \\
+(kein Element von $B$ wird doppelt getroffen)
+\item $f$ bijektiv falls $f$ injektiv und surjektiv ist. \\
+(jedes Element wird genau einmal getroffen)
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+$A=\{a,b,c\}, B=\{\alpha,\beta,\gamma\} \\
+f\colon A\rightarrow B, a\mapsto\alpha, b\mapsto\beta, c\mapsto\gamma$ \\
+\begin{tikzpicture}
+\draw (0,0) ellipse (10pt and 20pt) node at (0,0.3) {$a$} node at (0,0) {$b$} node at (0,-0.3) {$c$};
+\draw (2,0) ellipse (10pt and 20pt) node at (2,0.3) {$\alpha$} node at (2,0) {$\beta$};
+\draw[->] (0.2,0.3) -- (1.8,0.3);
+\draw[->] (0.2,0) -- (1.8,0.3);
+\draw[->] (0.2,-0.3) -- (1.8,0);
+\end{tikzpicture} \\
+Funktion in unserem Sinne. \\
+Bild von $a$ unter $f$ ist $\alpha$. \\
+\newpage
+Die Simpsons gehen ins Kino. Jedem Familienmitglied wird einer der 100 Kinosessel zugeordnet. \\
+$f\colon$ Simpsons $\rightarrow$ Kinosessel \\
+$f$ ist injektiv. \\
+\\
+Die Simpsons verteilen eine Schachtel Donuts (20 Stück) unter allen Familienmitgliedern. Jeder bekommt mindestens einen Donut, und am Ende sind alle Donuts verteilt.
+$f\colon$ Simpsons $\rightarrow$ Donuts \\
+$f$ ist surjektiv. \\
+\\
+Die Simpsons verteilen eine Schachtel Donuts unter allen Familienmitgliedern. Alle Donuts werden verteilt, aber Maggie bekommt keinen. \\
+$f\colon$ Simpsons $\rightarrow$ Donuts \\
+$f$ ist weder injektiv noch surjektiv. \\
+\\
+Die Simpsons verteile eine Schachtel Donuts unter allen Familienmitgliedern. Jeder bekommt mindestens einen Donut. Den Spinatdonut will aber niemand essen. \\
+$f\colon$ Simpsons $\rightarrow$ Donuts \\
+$f$ ist keine Funktion.
+\begin{definition}
+\end{definition}
+Sei $f\colon A\rightarrow B$ bijektiv \\
+Dann definieren wird die Umkehrfunktion \\
+$f^{-1}\colon B\rightarrow A$, indem wir jeden $b\in B$ dasjenige $a\in A$ zuordnen für das $f(a)=b$ gilt. \\
+Bsp.: \\
+\begin{tikzpicture}
+\draw (0,0) ellipse (10pt and 20pt) node at (0,0.3) {$a$} node at (0,0) {$b$} node at (0,-0.3) {$c$};
+\draw (2,0) ellipse (10pt and 20pt) node at (2,0.3) {$\alpha$} node at (2,0) {$\beta$} node at (2,-0.3) {$\gamma$};
+\draw[->] (0.2,0.3) -- (1.8,0);
+\draw[->] (0.2,0) -- (1.8,-0.3);
+\draw[->] (0.2,-0.3) -- (1.8,0.3);
+\end{tikzpicture} \\
+\begin{flalign*}
+f\colon &A\rightarrow B \\
+&a\mapsto\beta \\
+&b\mapsto\gamma \\
+&c\mapsto\alpha &&
+\end{flalign*}
+\begin{flalign*}
+f^{-1}\colon &B\rightarrow A \\
+&\alpha\mapsto c \\
+&\beta\mapsto a \\
+&\gamma\mapsto b &&
+\end{flalign*}
+\begin{definition}
+\end{definition}
+Seien $g\colon A\rightarrow B \hspace{5mm} f\colon B\rightarrow C$ Abbildungen. Dann heißt die Abbildung \\
+$f\circ g\colon A\rightarrow C$ \\
+$x\mapsto (f\circ g)(x) = f(g(x)) \hspace{5mm} \forall x\in A$ \\
+die Hindereinanderausführung oder Komposition von $f$ und $g$ ($f$ nach $g$) \\
+$\overset{\xrightarrow{\makebox[15mm]{$f\circ g$}}}{A\overset{g}{\rightarrow}B\overset{f}{\rightarrow}C}$
+\newpage
+Bsp.:
+\begin{flalign*}
+f\colon&\mathbb{R}\rightarrow\mathbb{R} \\
+&x\mapsto x+1 &&
+\end{flalign*}
+\begin{flalign*}
+g\colon&\mathbb{R}\rightarrow\mathbb{R} \\
+&x\mapsto 2x &&
+\end{flalign*}
+$(f\circ g)(x) = f(g(x)) = f(2x) = 2x+1 \\
+(g\circ f)(x) = g(f(x)) = g(x+1) = 2x+2 \\
+\Rightarrow f\circ g \neq g\circ f$
+\newpage
+
+\section{Gruppen}
+\begin{definition}
+Verknüpfung, Abgeschlossenheit
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+\item Seien $X,Y$ nichtleere Mengen. \\
+Eine Verknüpfung von "'$\cdot$"' (oder abstrakte Multiplikation) auf $X$ ist eine Abbildung. \\
+$\cdot\colon X\times X\rightarrow Y \hspace{5mm} (a,b)\mapsto a\cdot b$ \\
+$a\cdot b$ (oft auch $ab$) heißt Produkt von $a$ und $b$, muss aber nichts mit der übliche Multiplikation von Zahlen zu tun haben. \\
+Beschreibung bei endlichen Mengen oft durch Multiplikationstafeln. siehe Bsp. 2.2a
+\item Eine Menge $X\neq\emptyset$ heißt abgeschlossen bezüglich einer Verknüpfung "'$\cdot$"' falls gilt \\
+$a\cdot b\in X\hspace{5mm}\forall a,b\in X$
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $X=\{a,b\} \\
+X\times X\rightarrow X \\
+(a,b)\mapsto a\cdot b$ \\
+\\
+\begin{tabular}{c|cc}
+$\cdot$ & $a$ & $b$ \\
+\hline
+$a$ & $b$ & $b$ \\
+$b$ & $a$ & $a$
+\end{tabular}
+\begin{flalign*}
+\text{d.h. } &a\cdot a = b \\
+&a\cdot b = b \\
+&...&&
+\end{flalign*}
+$\underline{(a\cdot a)}\cdot a = \underline{b}\cdot a = a \\
+a\cdot\underline{(a\cdot a)} = a\cdot\underline{b} = b$
+\item $X=\{0,1\}$ ist abgeschlossen bezüglich der üblichen Multiplikation auf $\mathbb{Z}$. \\
+$(0*0=0\in X, \hspace{5mm}0*1=0\in X, \hspace{5mm} 1*0=0\in X, \hspace{5mm} 1*1=1\in X $ \\
+nicht abgeschlossen bezüglich der üblichen Addition "'$+$"' \\
+$0+0=0\in X, \hspace{5mm}0+1=1\in X, \hspace{5mm} 1+1=2\notin X$ \\
+$X=\{1,2\}$ ist nicht abgeschlossen bezüglich Multiplikation und Addition.
+\end{enumerate}
+\begin{definition}
+Gruppe
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+\item Eine Gruppe ist ein Paar $(G,\cdot)$ mit einer Menge $G\neq\emptyset$ und einer Verknüpfung $\cdot\colon G\times G\rightarrow G$ (d.h. $a.b\in G\hspace{5mm}\forall a,b\in G$ d.h. abgeschlossen) die folgende Axiome erfüllt
+\begin{enumerate}[label=(\arabic*)]
+\item $(a\cdot b)\cdot c = a\cdot(b\cdot c)\hspace{5mm}\forall a,b\in G$\hspace{5mm}(Assoziativgesetz)
+\item $\exists e\in G$ mit $a\cdot e = e\cdot a = a\hspace{5mm}\forall a\in G$\hspace{5mm}(neutrales Element / Einselement)
+\item $\forall a\in G\hspace{5mm}\exists a^{-1}\in G$ mit $a\cdot a^{-1}=a^{-1}\cdot a = e$\hspace{5mm}(inverses Element / Inverse)
+\end{enumerate}
+\item Gilt zusätzlich
+\begin{enumerate}[label=(\arabic*),start=4]
+\item $a\cdot b = b\cdot a\hspace{5mm}\forall a,b\in G$\hspace{5mm}(Kommutativgesetz) \\
+so heißt $G$ kommutative oder abelsche Gruppe.
+\end{enumerate}
+\item Ist $G$ eine edliche Menge, so heißt die Anzahl der Elemente in $G$ die Ordnung von $G$, $\vert G\vert$.
+\item $(G,\cdot)$ heißt Halbgruppe, falls (1) erfüllt ist.
+\end{enumerate}
+\newpage
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $(G=\{1\},\cdot)$ ist abelsche Gruppe $(e=1, 1^{-1}=1)$
+\item $(\mathbb{Z}, +)$ ist abelsche Gruppe
+\begin{enumerate}[label=(\arabic*)]
+\item $a+b)+c=a+(b+c)\hspace{5mm}\forall a,b,c\in\mathbb{Z}$
+\item hier ist $e=0\hspace{5mm}a+0+0+a\hspace{5mm}\forall a\in\mathbb{Z}$
+\item Inverse zu $a$ ist $-a\hspace{5mm}\forall a\in\mathbb{Z}\hspace{5mm}a+(-a)=0$
+\item $a+b=b+a\hspace{5mm}\forall a,b\in\mathbb{Z}$
+\end{enumerate}
+\item ebenso sind $(\mathbb{Q},+), (\mathbb{R}, +)$ abelsche Gruppen
+\item $(\mathbb{Z},\cdot)$ ist keine Gruppe \\
+$e=1$ ist neutrales Element, aber es gibt kein inverses Element aber (kommutative) Halbgruppe (die auch (2) erfüllt)
+\item $G=2\mathbb{Z}:=\{2k\mid k\in\mathbb{Z}\}$ (Menge aller geraden Zahlen) \\
+ist bezüglich + abelsche Gruppe und bezüglich * Halbgruppe
+\item $G=2\mathbb{Z}+1:=\{2k+1\mid k\in\mathbb{Z}\}$ (Menge der ungeraden Zahlen) \\
+$(G,+)$: keine Gruppe, nicht abgeschlossen bezüglich + \\
+$(G,\cdot)$: Halbgruppe
+\item weitere Gruppen später
+\end{enumerate}
+\begin{satz}
+Eigenschaften von Gruppen
+\end{satz}
+Sei $(G,\cdot)$ eine Gruppe, dann gilt
+\begin{enumerate}[label=\alph*)]
+\item Das neutrale Element von $G$ ist eindeutig 
+\item Für jedes $a\in G$ gibt es eine eindeutige Inverse
+\item Für alle $a,b\in G$ gilt $(a\cdot b)^{-1}=b^{-1}\cdot a^{-1}$
+\end{enumerate}
+Beweis
+\begin{enumerate}[label=\alph*)]
+\item Angenommen, $e_1$ und $e_2$ sind neutrale Elemente.\\
+Dann gilt $e_1=e_1\cdot e_2=e_2$ und $a=a\cdot e$
+\item Angenommen $a\in G$ besitzt zwei Inversen $x$ und $y$.\\
+Dann ist $x \overset{2.3(2)(3)}{=}x\underbrace{(ay)}_{e}\overset{2.3(1)}{=}\underbrace{(xa)}_{e}y\overset{2.3(2)}{=}y$\hspace{5mm}(also $x=y$)
+\item wir zeigen: Produkt ist $e$ \\
+$(a\cdot b)^{-1}\cdot(a\cdot b) = (b^{-1}\cdot a^{-1})(a\cdot b)\overset{2.3(1)}{=}b^{-1}\underbrace{(a^{-1}a)}_{e}b\overset{2.3(2)}{=}b^{-1}b\overset{2.3(2)}{=}e$ \\
+$(a\cdot b)\cdot(a\cdot b)^{-1}=...=e$ (analog)
+\end{enumerate}
+\newpage
+\begin{satz}
+Gleichungen lösen in Gruppen
+\end{satz}
+Sei $(G,\cdot)$ Gruppe $a,b\in G$
+\begin{enumerate}[label=\alph*)]
+\item $\underbrace{\text{Es gibt genau ein }}_{\exists!} x\in G$ mit $ax=b$\hspace{5mm}(nämlich $x=a^{-1}b)$
+\item Es gibt genau ein $y\in G$ mit $ya=b$\hspace{5mm}(nämlich $y=ba^{-1})$
+\item Ist $ax = bx$ für ein $x\in G$ dann gilt $a=b$\hspace{5mm}(Kürzungsregel)
+\end{enumerate}
+Beweis:
+\begin{enumerate}[label=\alph*)]
+\item Existenz $x=a^{-1}b$ ist Lösung (d.h. zeige, dass $ax=b$ gilt) \\
+$a\underbrace{a^{-1}b}_{x}\overset{2.3(1)}{=}(aa^{-1})b\overset{2.3(2)}{=}e\cdot b=b$ \\
+\\
+\underline{Eindeutigkeit} \\
+Es gelte $ax=b$ \\
+$\Rightarrow x\overset{2.3(2)}{=}e\cdot x\overset{2.3(3)}{=}(a^{-1}a)x\overset{2.3(1)}{=}a^{-1}(ax)=a^{-1}b$
+\item analog (Lösung)
+\item Multipliziere von rechts mit $x^{-1}$, gleiches mit $y^{-1}$
+\end{enumerate}
+\begin{vorue}
+\end{vorue}
+Sei $X=\{a,b,c\}$ Wir betrechten Anordnungen der Elemente von $X$ \\
+z.B.: $abc$ oder $bca$ \\
+Wie viele unterschiedliche Anordnungen gibt es? 6 \\
+Jede Anordnung lässt sich als bijektive Abbildung $\sigma\colon X\rightarrow X$ auffassen.
+\begin{definition}
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+\item Eine Permutation ist eine bijektive Abbildung einer endlichen Menge auf sich selbst. Im Allgemeinen verwendet man die Menge $\{1,...,n\}\rightarrow\{1,...,n\} \hspace{5mm}i\mapsto\sigma(i)$ \\
+als Wertetabelle in der Form $\sigma = \begin{pmatrix}1, &2, &...,&n \\ \sigma(1),&\sigma(2),&...,&\sigma(3)\end{pmatrix}$
+\item Mit $S_n$ bezeichnen wir die Menge aller Permutationen von $\{1,...,n\}$
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $x=\{1,2,3,4\}$ \\
+$\sigma = \begin{pmatrix}1&2&3&4 \\ 1&2&3&4\end{pmatrix}, \tau = \begin{pmatrix}1&2&3&4 \\ 4&3&2&1\end{pmatrix}\in S_4$
+\item indentische Abbildung auf $\{1,...,n\}$ ist $\sigma=\begin{pmatrix}1,&2,&...,&n \\ 1,&2,&...,&n \end{pmatrix} (1\mapsto 1, 2\mapsto 2)$
+\item $S_1=\{\begin{pmatrix}1\\1\end{pmatrix}\}, S_2=\{\begin{pmatrix}1&2\\1&2\end{pmatrix},\begin{pmatrix}1&2\\2&1\end{pmatrix}\} \\
+S_3=\{\begin{pmatrix}1&2&3\\1&2&3\end{pmatrix},\begin{pmatrix}1&2&3\\1&3&2\end{pmatrix},\begin{pmatrix}1&2&3\\2&1&3\end{pmatrix},\begin{pmatrix}1&2&3\\2&3&1\end{pmatrix},\begin{pmatrix}1&2&3\\3&1&2\end{pmatrix},\begin{pmatrix}1&2&3\\3&2&1\end{pmatrix}\}$
+\end{enumerate}
+\newpage
+\begin{bem}
+\end{bem}
+Es gilt $\vert S_n\vert=n!=n*(n-1)+(n-2)+...*2*1$ (Beweis durch vollständige Induktion, siehe Übungsblatt 3)
+\begin{definition}
+Produkt von Permutationen
+\end{definition}
+Wir definieren auf $S_n$ eine Verknüpfung $\circ$ über die Hintereinanderausführung / Komposition: \\
+für $\sigma,\tau\in S_n$ sei $(\sigma\circ\tau)(i)=\sigma(\tau(i))$ für $i\in\{1,...,n\}$
+\begin{bem}
+\end{bem}
+$\circ$ ist auf $S_n$ abgeschlossen: Die Verknüpfung zweier Permutationen, ergibt wieder eine Permutation. Das liegt daran dass die komposition bijektiver Abbildungen wieder bijektiv ist \\
+(Mathe 1)
+\begin{bsp}
+\end{bsp}
+$\sigma=\begin{pmatrix}1&2&3\\3&2&1\end{pmatrix}, \tau=\begin{pmatrix}1&2&3\\1&3&2\end{pmatrix}\in S_3$ \\
+$\Rightarrow\sigma\circ\tau=\begin{pmatrix}1&2&3\\3&2&1\end{pmatrix}, \tau\circ\sigma=\begin{pmatrix}1&2&3\\1&3&2\end{pmatrix}$ \\
+$\sigma\circ\tau\neq\tau\circ\sigma$ (Kommutativgesetz nicht erfüllt)
+\begin{satz}
+\end{satz}
+$(S_n,\circ)$ ist für jedes $n\in\mathbb{N}$ eine Gruppe (die sogenannte "'symmetrische Gruppe"') \\
+Diese ist für $n\geq 3$ nicht abelsch. \\
+Beweis: \\
+\begin{itemize}
+\item Assoziativgesetz gilt für die Komposition von Abbildungen \\
+$((\sigma\circ\tau)\pi)(i)=\sigma(\tau(\pi(i))=\sigma\circ(\tau\circ\pi)(i)$
+\item neutrales Element ist die identitäts Abbildung $\epsilon\begin{pmatrix}1,&2,&...,&n\\1,&2,&...,&n\end{pmatrix}$\\
+(also $\epsilon(i)=i\hspace{5mm}\forall i\in\{1,...,n\})$ \\
+$(\sigma\circ\epsilon)(i)=\underbrace{\sigma(\epsilon(i))}_{i}=\sigma(i)$ \\
+und $(\epsilon\circ\sigma)(i)=\epsilon(\sigma(i))=\sigma(i)\hspace{5mm}\forall i\in\{1,...,n\}$
+\item inverses Element $\sigma=\begin{pmatrix}1,&...,&n\\\sigma(1),&...,&\sigma(n)\end{pmatrix}\in S_n$ \\
+ist $\sigma^{-1}\hspace{5mm}\sigma(1)\mapsto 1\hspace{3mm}...\hspace{3mm}\sigma(n)\mapsto n$\\
+Dann gilt $\sigma\circ\sigma^{-1}=\sigma^{-1}\circ\sigma=\epsilon$
+\item Kommutativgesetz ist nicht erfüllt, siehe Bsp. 2.13
+\end{itemize}
+\newpage
+\begin{bsp}
+\end{bsp}
+$\sigma=\begin{pmatrix}1&2&3&4\\4&1&2&3\end{pmatrix}, \tau=\begin{pmatrix}1&2&3&4\\2&4&1&3\end{pmatrix}\in S_4 \\
+\sigma\circ\tau=\begin{pmatrix}1&2&3&4\\1&3&4&2\end{pmatrix}\hspace{5mm}\tau\circ\sigma=\begin{pmatrix}1&2&3&4\\3&2&4&1\end{pmatrix}\hspace{5mm}\sigma^{-1}=\begin{pmatrix}1&2&3&4\\2&3&4&1\end{pmatrix}\hspace{5mm}\tau^{-1}=\begin{pmatrix}1&2&3&4\\3&1&4&2\end{pmatrix}\hspace{2mm}\leftarrow $("'3 komm von 1"') \\
+$\sigma^{-1}\circ\sigma=\begin{pmatrix}1&2&3&4\\1&2&2&4\end{pmatrix}=\epsilon\hspace{5mm}\sigma\circ\epsilon=\sigma$ \\
+Für welche Permutation $x\in S_4$ gilt $\sigma\circ x=\tau$ mit Satz 2.6(a) gilt $x=\sigma^{-1}\circ\tau=\begin{pmatrix}1&2&3&4\\3&1&2&4\end{pmatrix}$ ebenso löse $x\circ\sigma=\tau$ Satz 2.6(b) $x=\tau\circ\sigma^{-1}=\begin{pmatrix}1&2&3&4\\4&1&3&2\end{pmatrix}$
+\begin{erinn}
+\end{erinn}
+$25:7=3$ Rest 4, dh. \\
+$25 =3*7+4$ (für Rest gilt: $0\leq$ Rest $< 7$) \\
+Allgemein kann man zeigen (z.B. mit Induktion) zu gegebenen $n\in\mathbb{N}$ und $m\in\mathbb{N}$ gibt es eindeutig bestimmte Zahlen $q\in\mathbb{Z}$ (Ouotient) und $r\in\{0,...,m-1\}$ (Rest) mit $n=q*m+r$
+\begin{definition}
+Konguenz, modulo m
+\end{definition}
+Seien $n,q\in\mathbb{Z}, m\in\mathbb{N}m r\in\{0,...,m-1\}$ wie eben
+\begin{enumerate}[label=\alph*)]
+\item $r$ heißt Rest bon $n$ modulo $m$, kurz $n\mod m$, $m$ heißt Modul
+\item Im Falle $r=0$ sagen wir auch: $n$ ist durch $m$ teilbar ($m$ teilt $n$), und schreiben $m\mid n$
+\item Gilt für $n_1, n_2\in\mathbb{Z}\colon n_1\mod m=n_2\mod m$ (d.h. bei Division durch $m$ lassen $n_1,n_2$ denselben Rest), so sagen wir $n_1$ ist konguent $n_2$ modulo $m$ und schreiben $n_1\equiv n_2\mod m$
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+\begin{flalign*}
+7&\mod 3=1\hspace{5mm}(\text{denn } 7=2*3+1) \\
+37&\mod 7=2 \\
+42&\mod 7=0\hspace{5mm}(\text{d.h. } 7\mid 42)\\
+-6&\mod5 = 4\hspace{5mm}(\text{denn } -6=(-2)5+4\rightarrow \text{ Rest muss } 0\leq \text{ Rest } <5 \text{ sein!}) \\
+7&\equiv 1\mod 3 \\
+37&\equiv 2\mod 7 \\
+-13&\equiv 1\mod 7&&
+\end{flalign*}
+\begin{bem}
+\end{bem}
+\begin{enumerate}[label=\alph*)]
+\item$n_1\equiv n_2\mod m\Leftrightarrow\exists q_1,q_2\in\mathbb{Z} \\
+\null\hspace{34mm}r\in\{0,...,m-1\} \\
+\null\hspace{34mm}\text{mit }n_1=q_1m+r \\
+\null\hspace{34mm}n_2=q_2m+r \\
+\Leftrightarrow n_1-n_2=(q_1-q_2)m$ \\
+d.h. $m$ teilt $(n_1-n_2)$ \\
+Also: $n_1\equiv n_2\mod m\Leftrightarrow (n_1-n_2)$ ist durch $m$ teilbar
+\item Ist ein Modul $m\in\mathbb{N}$ fest vorgegeben, so ist auf $\mathbb{Z}$ durch $n_1\sim n_2\colon\Leftrightarrow n_1\equiv n_2\mod m$ eine Äquivalenzrelation definiert (Mathe 1) \\
+Die Zahlen $0,...,m-1$ bilden dafür ein vollständiges Repräsentationssystem.
+\end{enumerate}
+\newpage
+\begin{definition}
+\end{definition}
+Gegeben sei ein fester Modul $m\in\mathbb{N}$. Auf den Resten $\mathbb{Z}_m=\{0,1,...,m-1\}$ definieren wir Verknüpfungen \textcircled{$+$} und \textcircled{$*$} wie folgt: \\
+$r_1$ \textcircled{$+$} $r_2=(r_1+r_2)$ \\
+$r_1$ \textcircled{$*$} $r_2=(r_1*r_2)$ \\
+(Ist der Kontext klar, so benutzen wir auch $+,*$)
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $\mathbb{Z}=\{0,1,2,3,4\}$ \\
+$2$ \textcircled{$+$} $1=3$\hspace{10mm}$2$ \textcircled{$*$} $0=0$ \\
+$2$ \textcircled{$+$} $2=4$\hspace{10mm}$2$ \textcircled{$*$} $1=0$ \\
+$2$ \textcircled{$+$} $3=0$\hspace{10mm}$2$ \textcircled{$*$} $2=0$ \\
+$2$ \textcircled{$+$} $4=1$\hspace{10mm}$2$ \textcircled{$*$} $3=0$ \\
+\null\hspace{27.35mm}$2$ \textcircled{$*$} $0=0$ \\
+Bezüglich \textcircled{$+$} besitzt jedes Element in Inverses: \\
+Wir bezeichnen das additiv Inverse zu $x\in\mathbb{Z}_m$ mit $-x$ (das mult. Inverse zu $x$ mit $x^{-1}$ wie bisher) \\
+$-0=0 \\
+-1=4 \\
+-2=3 \\
+-3=2 \\
+-4=1$ \\
+(denn $1$ \textcircled{$+$} $4=0$, $2$ \textcircled{$+$} $3=0$ \\
+Bezüglich \textcircled{$*$} besitzt jedes Element (außer 0) ein Inverses: \\
+$1^{-1}=1 \\
+2^{-1}=3 \\
+3^{-1}=2 \\
+4^{-1}=4$
+\item $\mathbb{Z}_4=\{0,1,2,3\}$ \\
+\begin{tabular}{ll}
+Inverse bzl. \textcircled{$+$}:&Inverse bzl. \textcircled{$*$}: \\
+$-0=0$&$1^{-1}=1$ \\
+$-1=3$&$2^{-1}=$ existiert nicht \\
+$-2=2$&$3^{-1}=3$ \\
+$-3=1$&
+\end{tabular}
+\end{enumerate}
+\begin{bem}
+\end{bem}
+$\text{Beachte den Unterschied zwischen }a\mod m\text{ und }a\equiv b\mod m\text{ bei festem }m\text{ ist }a\mapsto a\mod\text{ Abbildung.} \\
+\mathbb{Z}\rightarrow\mathbb{Z}=\{0,...,m-1\}$
+$\equiv\mod m$ ist (Äquivalenz) Relation auf $\mathbb{Z}$
+\newpage
+\begin{satz}
+Rechenregel für mod
+\end{satz}
+\begin{enumerate}[label=\alph*)]
+\item Seien $a\equiv a^\prime\mod m$ und $b\mod\equiv b^\prime\mod m\hspace{5mm}(a,a^\prime,b,b^\prime\in\mathbb{Z}, m\in\mathbb{N})$ \\
+Dann gilt $a\pm b\equiv(a^\prime\pm b^\prime)\mod m$ und $a* b\equiv(a^\prime* b^\prime)\mod m$
+\item Es gilt \\
+$(a\pm b)\mod m=((a\mod m)\pm(b\mod m))\mod m \\
+(a* b)\mod m=((a\mod m)*(b\mod m))\mod m$ \\
+(für Beweis a) nutzen)
+\end{enumerate}
+Nutzen vom Bem. 2.2.3: \\
+Gilt eine Gleichung mit $*,+$ in $\mathbb{Z}$, dann auch in $\mathbb{Z}_m$ mit \textcircled{$*$}, \textcircled{$+$} \\
+(Achtung nicht mit Division!)
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item Was ist $11*12*13\mod 7$ ? \\
+$11*12*13=1716\equiv 1\mod 7$ \\
+d.h. $11*12*13\mod 7=1$ \\
+oder $11*12*13=132*13\equiv(-1)*(-1)=1\mod 7$ \\
+oder $11*12*13\equiv 4*5*6=120\equiv 1\mod 7$ \\
+oder $11*12*13\equiv (-3)*(-2)*(-1)=-6\equiv 1\mod 7$
+\item Welchen Rest lässt $(214\:934)^{57\:891}$ bei division durch 7? \\
+$(214\:934)^{57\:891} =(210\:000+49\:000+35+1)^{57\:891}\equiv (-1)^{57\:891}=-1\equiv 6\mod 7$\\
+d.h. Rest ist 6
+\end{enumerate}
+\begin{definition}
+ggT (größter gemeinsamer Teiler), teilerfremd
+\end{definition}
+Seien $a_1,...,a_n\in\mathbb{Z}$
+\begin{enumerate}[label=\alph*)]
+\item Ist mindestens ein $a_i\neq0$, so ist der größte gemeinsame Teiler $ggT (a_1,...,a_n)$ die größte natürliche Zahl, die alle $a_1,...a_n$ teilt. 
+\item Ist $ggT(a_1,...,a_n)=1$ so heißen $a_1,...a_n$ teilerfremd \\
+(Bsp.: $ggT(20,24)=4,\hspace{5mm}ggT(20,23)=1))$ \\
+Berchnung des $ggT$ zweier Zahlen mittels (Erweitertem) Euklidischen Algorithmus liefert zusätzlich zu $a,b\in\mathbb{Z}$ ganze Zahlen $s,t$ mit $ggT(a,b)=s*a+t*b\rightarrow$ Mathe I
+\end{enumerate}
+\newpage
+\begin{satz}
+\end{satz}
+Sei $m\in\mathbb{N}$
+\begin{enumerate}[label=\alph*)]
+\item $(\mathbb{Z}_m, $\textcircled{$+$}) ist abelsche Gruppe
+\item $(\mathbb{Z}_m, $\textcircled{$*$}) ist i.A. keine Gruppe \\
+\\
+Beweis:
+\begin{enumerate}[label=\alph*)]
+\item\begin{itemize}
+\item Abgeschlossenheit gilt nach Definition von \textcircled{$+$}
+\item Assoziativität/Kommutativität gilt nach Bemerkung 2.23
+\item neutrales Element ist 0: \\
+$a$ \textcircled{$+$} $0=(a+0)\mod m=a\hspace{5mm}\forall a\in\mathbb{Z}_m$ \\
+$0$ \textcircled{$+$} $a$ ebenso 
+\item Inverses Element (vgl. Bsp. 2.21) zu $a\in\mathbb{Z}_m$ ist $m-a$, falls $a\neq 0$ und falls $a=0$ denn dann gilt $a$ \textcircled{$+$} $(m-a) = (a+(m-a))\mod m \\
+= m\mod m \\
+= 0$ \\
+(finde die Zahl, die addiert zu $a$ das Modul $m$ ergibt) $\mathbb{Z}_9\colon -3=6$
+\end{itemize}
+\item\begin{itemize}
+\item Abgeschlossenheit gilt wie bei a)
+\item Assoziativität/Kommutativität gilt wie bei a)
+\item neutrales Element ist 1 da $(1*a)\mod m = (a*1)\mod m \\
+=a\mod m=a\hspace{5mm}\forall a\in\mathbb{Z}$
+\item Inverses Element: \\
+0 besitzt keine Inverse (das wäre ein $a\in\mathbb{Z}$ mit $a*0\mod m =1\rightarrow$ existiert nicht) \\
+welche Elemente aus $\mathbb{Z}_m$ sind invertierbar? bzgl. \textcircled{$+$} (vgl. Bsp. 2.21 b)) \\
+$x\in\mathbb{Z}_m$ invertierbar $\Leftrightarrow\exists y\in\mathbb{Z}_m$
+\end{itemize}
+\end{enumerate}
+\begin{flalign*}
+x\in\mathbb{Z}_m\text{ invertierbar } &\Leftrightarrow\exists y\in\mathbb{Z}_m\colon x\textcircled{$\cdot$}y=1 \\
+&\Leftrightarrow\exists y\in\mathbb{Z}_m\colon(xy)\mod m=1 \\
+&\Leftrightarrow\exists y,q\in\mathbb{Z}\colon xy=q*m+1\text{ Rest} \\
+&\Leftrightarrow\exists y,q\in\mathbb{Z}\colon xy+(-q)m=1 \\
+&\Leftrightarrow ggT(x,m)=1&&
+\end{flalign*}
+\end{enumerate}
+Also nur die zu $m$ teilerfremden Elemente sind invertierbar \\
+(vgl. Bsp. 2.21 a) alle in $\mathbb{Z}_5$ (außer 0) b) in $\mathbb{Z}_4$ nur 1 und 3)
+\begin{bem}
+$\mathbb{Z}_m^*,\:\phi(m)$
+\end{bem}
+$\mathbb{Z}_m^*\colon=\{x\in\mathbb{Z}^\mid ggT(x,m)=1\}$ ist eine Gruppe bzl. \textcircled{*} \\
+$\vert\mathbb{Z}_m^*\vert=\phi(m)\hspace{5mm}$(Phi von $m$, Eulersche $\phi$-Funktion) \\
+Anzahl der zu $m$ teilerfremden Zahlen zwischen 1 und $m\hspace{5mm}(1\geq z\geq m)$
+\newpage
+\begin{definition}
+Untergruppen
+\end{definition}
+$(G,*)$ Gruppe, $\emptyset\neq U\subseteq G$ Teilmege \\
+$U$ heißt Untergruppe von $G (U\leq G)$ falls $U$ bezüglich $*$ selbst eine Gruppe ist. \\
+Insbesondere gilt dann $\forall u,v\in U$ ist $uv\in U, e$ von $G$ ist auch neutrales Element von $U$, Inversen in $U$ sind die gleichen von $G$. \\
+angenommen: $e$ neutrales Element in $G$ aber $F$ neutrales Element in $U, f^{-1}$ Inverse von $f$ in $G$. Dann ist $f^{-1}f=ff^{-1}=e$ auserdem $ff=f$ (da $f$ neutrales Element) $\Rightarrow f=e*f=(f^{-1}f)f \\
+=f^{-1}(ff) \\
+=f^{-1}f \\
+=e$
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $(\mathbb{Z},\:+)\leq(\mathbb{Q},\:+)\leq(\mathbb{R},\:+)$
+\item $(\{-1,1\},\:*)\leq(\mathbb{Q}\backslash\{0\},\:*)\leq(\mathbb{R}\backslash\{0\},\:*)$
+\item $(\{e\},\:*)$ ist Untergruppe jeder beliebigen Gruppe mit Verknüpfung * und neutralem Element $e$
+\item $\pi=\begin{pmatrix}1&2&3\\2&1&3\end{pmatrix}\in S_3\hspace{5mm}\pi=\pi*\pi^{-1} \\
+=\pi*\pi^{-1}=\begin{pmatrix}1&2&3\\1&2&3\end{pmatrix}=\epsilon \\
+\Rightarrow\{\pi,\:\epsilon\}\leq S_3$
+\end{enumerate}
+\newpage
+\section{Ringe und Körper}
+\begin{definition}
+Ring
+\end{definition}
+Sei $\mathbb{R}\neq\emptyset$ Menge mit zwei Verknüpfungen $+,\:*$
+\begin{enumerate}[label=\alph*)]
+\item $(\mathbb{R},\:+,\:*)$ heißt Ring falls gilt
+\begin{enumerate}[label=(\arabic*)]
+\item $(R,\:+)$ ist abelsche Gruppe \\
+Das neutrale Element bezeichen wir hier mit 0, das zu $a\in\mathbb{R}$ inverse Element mit $-a$ \\
+(schreibe auch $a-b$ für $a+(-b))$
+\item $(R,\:*)$ ist Halbgruppe (abgeschlossen, Assoziativ)
+\item Es gelten die Distributivgesetze \\
+$a*(b+c)=(a*b)+(a*c)=ab+ac$ \\
+$(a+b)*c=(a*c)+(b*c)=ac+bc$
+\end{enumerate}
+\item $(R,\:+,\:*)$ heißt kommutativ, falls $*$ ebenfalls kommutativ ist, allg $a*b=b*a\hspace{5mm}\forall a,b\in R$
+\item $(R,\:+,\:*)$ heißt Ring mit Eins, falls $(R,\:*)$ eine Halbgruppe ist, in der ein neutrales Element $1\neq 0$ existiert mit $a*1=1*a=1\hspace{5mm}\forall a\in R$
+\item Ist $(R,\:+,\:*)$ Ring mit Eins, so heißen die bezüglich $*$ invertierbaren Elemente Einheiten. Das zu $a$ bezüglich $*$ inverse Element bezeichnen wir mit $a^{-1}$. \\
+$R^*$ = Menge der Einheiten in $R$.
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $(\mathbb{Z},\:+,\:*)$ Kommutativer Ring mit Eins (1) \\
+$\mathbb{Z}^*=\{-1,1\}$ \\
+$(\mathbb{Q},\:+,\:*),\:(\mathbb{Z},\:+,\:*)$ ebenso \\
+$\mathbb{Q}^*=\mathbb{Q}\backslash\{0\},\:\mathbb{R}^*=\mathbb{R}\backslash\{0\}$
+\item $(\mathbb{Z},\:+,\:*)$ kommutativer Ring ohne Eins
+\item trivialer Ring $(\{0\},\:+,\:*)$
+\item $m\in\mathbb{Z},\:m\geq 2$ \\
+(alles klar, neu Distributivgesetz folgt aus Bemerkung 2.23)
+\item $(\mathbb{R}^n,\:+,\:*)$ \\
+Allgemein: $R_1,...,R_n$ Ringe, denn in $R_1\times...\times R_n$ Ring
+\end{enumerate}
+\newpage
+\begin{satz}
+Rechnen in Ringen
+\end{satz}
+Sei $(\mathbb{R},\:+,\:*)$ Ring, $a,b\in R$ Dann gilt
+\begin{enumerate}[label=\alph*)]
+\item $a*0=o*a=0$
+\item $(-a)*b=a*(-b)=-(a*b)$
+\item $(-a)*(-b)=a*b$ \\
+\\
+Beweis
+\begin{enumerate}[label=\alph*)]
+\item Es gilz $a*0=a*(0+0)\overset{3.1(3)}{=}a*0+a*0$ \\
+Alternative $-a*0$ (Beweis von $0*a$) auf beiden Seiten \\
+erhalte $0*a=0$
+\item Es gilt $8-a)*b+a*b\overset{3.1(3)}{=}(-a+a)*b=0*b\overset{b)}{=}0$ \\
+Also ist $(-a)*b$ Inverse von $a*b$ \\
+$\Rightarrow (-a)*b=-(a*b)$ \\
+\hspace*{5.5mm}Analog $a*(-b)=-(a*b)$
+\item$\begin{aligned}[t]
+(-a)*(-b)&\overset{b)}{=}(-a*(-b)) \\
+&\overset{b)}{=}-(-a*b) \\
+&\overset{b)}{=}a*b&&
+\end{aligned}$
+\end{enumerate}
+\end{enumerate}
+\begin{bem}
+\end{bem}
+\begin{enumerate}[label=\alph*)]
+\item In jedem Ring mit Eins sind 1 und -1 Einheiten. \\
+(denn (-1)(-1)=1, d.h. -1 ist eigenes Inverse nach 3.3 c)) \\
+Es kann mer geben, es kann auch 1=-1 gelten z.B. in $(\mathbb{Z}_2,\:$\textcircled{$+$}$,\:$\textcircled{$*$}) 
+\item 0 kann nach 3.3 a) nie Einheit sein (da $1\neq 0$)
+\item In einem kommutativen Ring $R$ gilt der Binomenialsatz $(a+b)^n=\sum^n_{i=0}\binom{n}{i}a^ib^{n-i} \\
+n\in\mathbb{N}, a,b\in R)$
+\end{enumerate}
+\begin{definition}
+Körper
+\end{definition}
+Ein kommutativer Ring $(K,\:+,\:*)$ mit Eins heißt Körper (engl. field) wenn jedes Element \\ 
+$0\neq x\in K$ eine Einheit ist, d.h. wenn $K^*=K\backslash\{0\}$ gilt.
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $(\mathbb{Q},\:+,\:*),\:(\mathbb{R},\:+,\:*)$ Körper \\
+$(\mathbb{Z},\:+,\:*)$ kein Körper
+\item $\mathbb{Z}^*_m=\{x\in\mathbb{Z}_m\mid ggT(x,m)=1\}$ ist Gruppe bezüglich \textcircled{$*$} (vgl. 2.27) \\
+$\Rightarrow (\mathbb{Z}_m,\:$\textcircled{$+$}$,\:$\textcircled{$*$}) ist genau dann ein Körper wenn $m$ eine Primzahl ist.
+\end{enumerate}
+\begin{satz}
+Rechnen in Körpern, Nullteilerfreiheit
+\end{satz}
+Sei $(K,\:+,\:*)$ ein Körper, $a,b\in K$. Dann gilt $a*b=0\Rightarrow a=0$ oder $b=0$ \\
+Beweis: \\
+"'$\Leftarrow$"' klar $(0*b=0$ oder $a*0=0$, Satz 3.3a)) \\
+"'$\Rightarrow$"' Sei $a*b=0$, Angenommen $a\neq 0$ (d.h. $a$ besitzt Inverses) \\
+Dann ist $b=1*b=(a^{-1}*a)*b=a^{-1}*\underbrace{(a*b)}_{0}=0\Rightarrow b$ muss 0 sein \\
+(Gegenbeispiel zum Satz. $(\mathbb{Z}_6,\:$\textcircled{$+$}$,\:$\textcircled{$*$}) kein Körper. Hier gilt 2\textcircled{$*$}3=0 aber weder 2=0 noch 3=0)
+\newpage
+\begin{definition}
+Polynome über K
+\end{definition}
+Sei $K$ ein Körper mit 0 und 1
+\begin{enumerate}[label=\alph*)]
+\item Ein Polynom über $K$ ist ein Ausdruck $f=\underbrace{a_0x^0}_{a_0}+\underbrace{a_1x^1*1}_{a_1x}+a_nx^n$ \\
+$n\in\mathbb{N}, a_i\in K$ Koeffizienten von $f$ (auch $f(x)$ statt $f$) \\
+Ist $a_i=0$, so kann man  $0*x^i$ bei der Beschreibung weglassen.
+\item $K[x]$ = Menge aller Polynome über $K$
+\item $f,g\in K[x]$ sind gleich wenn gilt $f=0$ und $g=0$ oder \\
+$f=a_0+a_1x+...+a_nx^n$ \\
+$g=b_0+b_1x+...+b_nx^n$ \\
+mit $a_n\neq 0, b_m\neq 0 \\
+\Rightarrow n=m$ und $a_i=b_i\hspace{5mm}\forall i\in\{0,..,n\}$
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $f(x)=3x^2+\frac{2}{3}x-1\hspace{5mm}\in\mathbb{Q}[x], \in\mathbb{R}[x]$
+\item $g(x)=x^7+x^2+1\hspace{5mm}\in\mathbb{Z}[x]$ (Koeffizienten sind 0 oder 1)
+\end{enumerate}
+Wir wollen in $K[x]$ wie in einem Ring rechen können. Brauche dazu $+$ und $*$ für Polynome.
+\begin{definition}
+Polynomring K[x]
+\end{definition}
+$K$ Körper, dann wird $K[x]$ zu einem kommutativen Ring mit Eins durch folgende Verknüpfungen: \\
+für $f=\sum^n_{i=0}a_ix^i, g=\sum^m_{j=0}b_jx^j$ ist $f+g:= \sum^{max(m,n)}_{i=0}(a_i+b_j)x^i$ \\
+$f*g:=(a_0+a_1x+...+a_nx^n)(b_0+b_1x+...+b_mx^m) \\
+= \underbrace{a_0*b_0}_{c_0}+\underbrace{(a_0b_1+a_1b_0)x}_{c_1}+...+\underbrace{(...)x^{n+m}}_{c_{n+m}} \\
+= \sum^{n+m}_{i=0}c_ix^i$ \\
+mit $c_i=a_0b_i+a_1b_{i-1}+...+a_ib_0 \\
+= \sum^i_{j=0}a_jb_{j-1}$ (Faltungsprodukt) \\
+(setzt $a_i$ mit $i>n$ bzw. $b_j$ mit $j>m$ gleich 0)
+\begin{itemize}
+\item Einselement: $f=1 (a_0=1,a_i=0\hspace{5mm}\forall i\leq 1)$
+\item Nullelement: $f=0$
+\end{itemize}
+\begin{bem}
+\end{bem}
+$a_0x,a_2x^2,...,a_nx^n$ heißen Monome, $a_nx^n$ heißen Literale von $f=a_0+a_1x+...+a_nx^n (a_n\neq 0)$
+\newpage
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item in $\mathbb{Q}[x], \mathbb{R}[x]\colon$ Addition/Multiplikation bekannt
+\item in $\mathbb{Z}[x]\colon f=2x^3+1(=2x^3+0x^2+x^1+1x^0) \\
+g=x+2 \\
+(\widehat{=}(x-1)$ da $-1\equiv2\mod 3)$ \\
+$f+g=2x^3+x+\underbrace{(2+1)}_{=\:0 \mod 3}=2x^3+x$ \\
+$f*g=2x^4+\underbrace{(2*2)}_{\equiv 1 \mod 3}x^3+x+2. \\
+=2x^4+x^3+x+2$
+\item in $\mathbb{Z}_2[x]\colon f=x^2+1, g=x+1 \\
+f+f=0 \\
+g+g=(x+1)(x+1)=x^2+x+x+1=x^2+1$
+\end{enumerate}
+\begin{definition}
+Grad
+\end{definition}
+Sei $f\neq 0\in K[x]\hspace{5mm}f=a_0+a_1x+...+a_nx^n$ mit $a_n\neq 0$ \\
+Dann heißt $n$ der Grad von $f, grad(f)=n$ \\
+$grad(0):=-\infty$ \\
+$grad(g)=0$, falls $g$ konstantes Polynom$\neq0$ (z.B. $g=1$)
+\begin{satz}
+Gradformel
+\end{satz}
+$K$ Körper $f,g\in K[x]$ \\
+Dann ist $grad(f+g)=grad(f)+grad(g)$ \\
+(Konvention: $-\infty +(-\infty)=-\infty+n=-\infty)$ \\
+\\
+Beweis: \\
+\begin{itemize}
+\vspace{-5mm}
+\item stimmt für $f=0$ oder $g=0$
+\item angenommen, die Leitterme von $f$ bzw. $g$ sind $a_nx^n$ bzw. $b_mx^m (a_n,b_m\neq 0)$ dann ist $grad(f)=n, grad(g)=m$, und $\underbrace{a_n*a_m}_{\neq 0 \text{ (3.7 K Körper nullteilerfrei)}}x^{n+m}$ ist Leitterm von $f*g$
+$\Rightarrow grad(f*g)=n*m$
+\end{itemize}
+\begin{koro}
+\end{koro}
+$K$ Körper, dann gilt dass $K^*[x]=\{f\in K[x]\mid grad(f^{-1}=0\}$ \\
+d.h. nur die konst. Polynom $\neq0$ sind invertierbar \\
+\\
+Beweis: \\
+Inverse zu $f\in K[x]$ sei $f^{-1}$ dann gilt $1=ff^{-1}$ \\
+$0=grad(1)=f\hspace{5mm}grad(ff^{-1})\overset{\text{Satz 3.14}}{=}grad(f)+grad(f^{-1})\hspace{5mm}$ d.h. für $f$ konstantes Polynom weiteres Beispiel für Körper (vgl. Mathe 1)
+\newpage
+\begin{bsp}
+$\mathbb{C}$
+\end{bsp}
+Eine komplexe zahl $z$ ist von der Form $z=a+ib$ mit $a,b\in\mathbb{R}$ und einer "'Zahl"' $i$ mit $i^2=-1$ (imaginäre Einheit) \\
+$a$= heißt Realteil von $z (a=Re(z))$ \\
+$b$ heißt Imaginärteil von $z (b=Im(z))$ \\
+$\mathbb{C}=$ Menge aller komplexen Zahlen \\
+Für $z=a+ib\in\mathbb{C}\hspace{5mm}\vert z\vert=\sqrt{a^2+b^2}$ Betrag von $z\hspace{5mm}\overline{z}=a-ib$ die zu $z$ Konjugierte \\
+Verknüpfung $+$ und $*$: für $z=a+ib, w=a^{\prime}+ib^{\prime}\in\mathbb{C}$ \\
+$z+w:=(a+a^{\prime})+i(b+b^{\prime}) \\
+z*w:=(aa^{\prime}-bb^{\prime})+i(ab^{\prime}+ba^{\prime})$ \\
+Damit ist $\mathbb{C}$ Körper \\
+\begin{itemize}
+\vspace{-5mm}
+\item AG, KG, DG nachrechnen
+\item $0=0+i0$
+\item additiv Inverse $-z=-a-ib=-a+i(-b)$
+\item $1=1+i0$
+\item multiplikativ Inverse $z^{-1}=\frac{1}{z}=\frac{1}{a+ib}=\frac{1}{a+ib}*\frac{a-ib}{a-ib}=\frac{a-ib}{a^2+b^2}=\underbrace{\frac{a}{a^2+b^2}}_{\in\mathbb{R}}+i\underbrace{\frac{b}{a^2+b^2}}_{\in\mathbb{R}}$
+\end{itemize}
+$z=2+3i=2+i*3,\hspace{3mm}Re(z)=2,\hspace{3mm}Im(z)=3,\hspace{3mm}\overline{z}=2-3i,\hspace{3mm}\vert z\vert=\sqrt{2^2+3^2}=\sqrt{13}$ \\
+$z*\overline{z}=(2+3i)(2-3i)=2^2+6i-6i-9i^2=2+9=13$
+\begin{bem}
+\end{bem}
+Man kann $\mathbb{C}$ veranschaulichen in der "'Gaußschen Zahlenebene"' \\
+Betrachte $z=a+ib\in\mathbb{C}$ als Punkt $(a\mid b)$ im $\mathbb{R}^2$
+\newpage
+\section{Vektorräume}
+\begin{definition}
+K-Vektorräume
+\end{definition}
+Gegeben sei eine Menge $V=\emptyset$, dessen Elemente wir Vektoren nennen (bez. mit kleinen lateinischen Buchstaben: $u, v, w, x, y, ...)$ ein Körper $K$, dessen Elemente wir Skalare nennen (bez. mit kleinen griechischen Buchstaben: $\alpha, \beta, \lambda, \mu, ...$) \\
+eine Verknüpfung $+: V\times V\rightarrow V$ (Vektoraddition) \\
+und eine Abbildung $*: K\times V\rightarrow V$ (Skalare Multiplikation) \\
+$V$ mit $K,+,*$ heißt K-Vektorraum (auch Vektorraum über $K$), wenn gilt: \\
+\begin{enumerate}[label=(\arabic*)]
+\vspace{-5mm}
+\item $(V,+)$ ist abelsche Gruppe \\
+(neutrales Element heißt Nullvektor, bezeichnet mit $\overset{\rightarrow}{0}$, Inverse zu $v\in V$ bezeichnen wir mit $-v\hspace{5mm}(v+(-v)=\overset{\rightarrow}{0}\hspace{5mm}\forall v\in V$
+\item Für $*$ gilt für alle $\lambda, \mu\in K, v,w\in V$:
+\begin{enumerate}[label=(2.\arabic*)]
+\item $(\lambda \overset{\text{Mult. in $K$}}{*} \mu)\overset{Skalare Mult.}{*}v = \lambda\overset{Skalare Mult.}{*}(\mu \overset{Skalare Mult.}{*}v)$ (Assoziativgesetz)
+\item $(\lambda\overset{\text{Add. in $K$}}{+}\mu)v=\lambda v\overset{\text{Vektoradd.}}{+}\mu v$ (1. Distributivgesetz)
+\item $\lambda(v+w)=\lambda v+\lambda w$ (2. Distributivgesetz)
+\item $\overset{\text{Einsel. von $K$}}{1}*v=v$ (oft: $K=\mathbb{R}$, reeller Vektorraum)
+\end{enumerate}
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+$K$ beliebiger Körper \\
+$V=K^n:=\{\begin{pmatrix}v_1 \\ \vdots \\ v_n\end{pmatrix}\mid v_1,...,v_n\in K\}$ (Raum der Spaltenvektoren der Länge $n$ über $K$) \\
+$\overset{\rightarrow}{0}=\begin{pmatrix}0\\ \vdots \\0\end{pmatrix},$ für $\lambda\in K, v=\begin{pmatrix}v_1\\ \vdots \\v_n\end{pmatrix}, w=\begin{pmatrix}w_1\\ \vdots \\w_n\end{pmatrix}\in V$ ist $\lambda v =\begin{pmatrix}\lambda v_1\\\vdots\\\lambda v_n\end{pmatrix}, \\
+v+w=\begin{pmatrix}v_1+w_1\\\vdots\\v_n+v_n\end{pmatrix}, -v=\begin{pmatrix}-v_1\\\vdots\\-v_n\end{pmatrix}$ \\
+$\lambda v$ geomatrisch \\
+\begin{enumerate}[label=\alph*)]
+\vspace{-5mm}
+\item bekannt aus Schule: $\mathbb{R}^2, \mathbb{R}^3$
+\item $k=\mathbb{Z}_2, V=\mathbb{Z}^2_2=\{\begin{pmatrix}x_1\\x_2\end{pmatrix}\mid x_1,x_2\in\mathbb{Z}_2\}$ \\
+$V_1$ hat 4 Elemente $\begin{pmatrix}0\\0\end{pmatrix}=\overset{\rightarrow}{0}, \begin{pmatrix}0\\1\end{pmatrix},\begin{pmatrix}1\\0\end{pmatrix},\begin{pmatrix}1\\1\end{pmatrix}$ \\
+$\begin{pmatrix}0\\1\end{pmatrix}+\begin{pmatrix}0\\1\end{pmatrix}=\begin{pmatrix}0\\0\end{pmatrix} ($d.h.$-\begin{pmatrix}0\\1\end{pmatrix}=\begin{pmatrix}0\\1\end{pmatrix}$) \\
+$\begin{pmatrix}1\\0\end{pmatrix}+\begin{pmatrix}0\\1\end{pmatrix}=\begin{pmatrix}1\\1\end{pmatrix}, \begin{pmatrix}0\\1\end{pmatrix}+\begin{pmatrix}1\\1\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}, \overset{\rightarrow}{0}+v=\begin{pmatrix}0\\0\end{pmatrix}=\overset{\rightarrow}{0}\hspace{5mm}1*v=v\hspace{5mm}\forall v\in V$
+\item $K=\mathbb{Z}_5, V_2=\mathbb{Z}^3_5=\{\begin{pmatrix}k_1\\k_2\\k_3\end{pmatrix}\mid x_1,x_2,x_3\in\mathbb{Z}_5\}\hspace{5mm}v=\begin{pmatrix}0\\1\\2\end{pmatrix}, w=\begin{pmatrix}3\\2\\4\end{pmatrix}\in V_2 \\
+-v=\begin{pmatrix}0\\4\\3\end{pmatrix}, -w=\begin{pmatrix}2\\3\\1\end{pmatrix}, v+w=v=\begin{pmatrix}3\\3\\1\end{pmatrix} \\
+1*w=w, 2*w=\begin{pmatrix}1\\4\\3\end{pmatrix}, 3*w=... \\
+\vert v\vert=5*5*5=5^3=125$
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item trivialer Verktorraum (Nullraum) \\
+$K$ beliebig, $V=\{0\}$ \\
+$\overset{\rightarrow}{0}+\overset{\rightarrow}{0}=\overset{\rightarrow}{0}, \lambda\overset{\rightarrow}{0}=\overset{\rightarrow}{0}$
+\item $\mathbb{R}$ ist ein $\mathbb{R}$-Vektorraum \\
+Vektoren: reelle Zahlen \\
+Skalare: reelle Zahlen
+\item Funktionenraum \\
+$M\neq\emptyset$ Menge, $V=\mathscr{F}(M,K)=\{f\mid f\colon M\rightarrow K\}$ Menge der auf $M$ definierten Funktionen mit Werten in $K$. (oft: $K=\mathbb{R},f\colon M\rightarrow\mathbb{R}$, reelle Funktion) \\
+Für $f,g\in V,\hspace{5mm}\lambda\in K$ sei $f+g\colon M\rightarrow K, (f+g)(x)=(f(x)+g(x)\hspace{5mm}\forall x\in M$ \\
+$\lambda*f\colon M\rightarrow K,\hspace{5mm}(\lambda f)(x)=\lambda*f(x),\hspace{5mm}\forall x\in M$ \\
+Dann ist $V$ mit $K,+,*$ ein Vektorraum. Nullvektor $\overset{\rightarrow}{0}$ ist $f=0\colon M\rightarrow K, f(x)=0\\
+\hspace{5mm}\forall x\in M$ (Nullfunktion: $f=0$)
+\end{enumerate}
+\begin{satz}
+Rechnen in Vektorräumen
+\end{satz}
+Sei $V$ ein K-Vektorraum, $v\in V, \lambda\in K$ Dann:
+\begin{enumerate}[label=\alph*)]
+\vspace{-3mm}
+\item $0*v=\overset{\rightarrow}{0}$
+\item $\lambda*\overset{\rightarrow}{0}=\overset{\rightarrow}{0}$
+\item $(-1)+v=-v$
+\end{enumerate}
+Beweis: \\
+\begin{enumerate}[label=\alph*)]
+\item (für $\overset{\rightarrow}{0}$ gilt: $v+(-v)=\overset{\rightarrow}{0}\hspace{5mm}\forall v\in V\hspace{5mm}(4.1(1))$ \\
+jetzt mit $0v$ statt $v$
+\begin{flalign*}
+\overset{\rightarrow}{0}&=0*v+(-0v)) \\
+&=(0+0)v+(-(0v)) \\
+&\overset{4.1(2.2)}{=}0*v+0*v+(-(0v)) \\
+&\overset{4.1(1)}{=}0*v+(0v+(-(0v)) \\
+&=0*v+0 \\
+&\overset{4.1(1)}{=}0*v&&
+\end{flalign*}
+\vspace{-5mm}
+\item wie a) starte mit $\overset{\rightarrow}{0}=\lambda*\overset{\rightarrow}{0}+(-\lambda\overset{\rightarrow}{0}))$
+\item $v+(-1)*v\overset{4.1(2.4)}{=}1*v+(-1)*v\overset{4.1(2.2)}{=}(1+(-1))*v\overset{\text{Körper}}{=}0*v\overset{\text{a)}}{=}\overset{\rightarrow}{0}$ damit folgt c)
+\end{enumerate}
+\begin{definition}
+Untervektorraum
+\end{definition}
+Sei $V$ mit $K,+,*$ ein Vektorraum. Eine Teilmenge $U\subseteq V, U\neq\emptyset$ heißt Unter(vektor)raum von $V$, falls $U$ mit $K,+,*$ selbst ein Vektorraum ist. \\ (Bemerkung: insbesondere muss dann auch $\overset{\rightarrow}{0}\in U$ gelten)
+\begin{bsp}
+\end{bsp}
+$V=\mathbb{R}^2,\hspace{3mm} U=\{\begin{pmatrix}\lambda\\0\end{pmatrix}\mid\lambda\in\mathbb{R}\}$ ist Unterraum von $V$.
+\begin{definition}
+Untervektorraum (Klausurrelevant)
+\end{definition}
+Sei $V$ ein K-Vektorraum. $U\subseteq V$ ist Unterraum von $V$
+\begin{enumerate}[label=(\arabic*)]
+\vspace{-2mm}
+\item $\overset{\rightarrow}{0}\in U$
+\item $u\in U, \lambda\in K\Rightarrow\lambda u\in U$
+\item $u,v\in U\Rightarrow u+v\in U$
+\end{enumerate}
+Beweis: \\
+"'$\Rightarrow$"' $U$ ist laut Definition selbst Vektorraum, damit gelten (1), (2), (3) \\
+"'$\Leftarrow$"' rechne Vektorraum-Eigenschaften aus Definition 4.1 nach.
+\begin{bsp}
+(Klausurrelevant)
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $V$ ein K-Vektorraum, $\overset{\rightarrow}{0}\neq u,v\in V\hspace{5mm}(u\neq v)$ \\
+Dann ist $G=\{\lambda*v\mid\lambda\in K\}$ ein Unterraum (für $v=0:$ Nullraum, auch ok.) \\
+$V=\mathbb{R}^2,\mathbb{R}^3\colon G$ ist Gerade durch Nullpunkt aber $G^{\prime}=\{u+\lambda*v\mid\lambda\in K\}$ kein Unterraum, für $w\neq\mu v\hspace{5mm}(\mu\in K)\hspace{5mm}(\overset{\rightarrow}{0}\notin G^{\prime})$ \\
+$E=\{\lambda u+\mu v\mid\lambda,\mu\in K\}$ ist Unterraum (Ebene durch $\overset{\rightarrow}{0}$)
+\item $V=\mathbb{R}^3\hspace{5mm}U_1=\{\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}\in\mathbb{R}^3\mid x_1+x_2+x_3=0\}$ ist Unterraum: (benutze 4.7)
+\begin{enumerate}[label=(\arabic*)]
+\vspace{-5mm}
+\item $\overset{\rightarrow}{0}\in U$, denn 0+0-0=0
+\item sei $\lambda\in\mathbb{R}, v=\begin{pmatrix}v_1\\v_2\\v_3\end{pmatrix}\in U_1$ d.h. $v_1+v_2-v_3=0$ \\
+prüfe: gilt $\lambda v\in U_1$ ? \\
+$\lambda v=\begin{pmatrix}\lambda v_1\\\lambda v_2\\\lambda v_3\end{pmatrix}, \lambda v_1+\lambda v_2-\lambda v_3=\lambda\underbrace{(v_1+v_2-v_3)}_{0}$ also $\lambda v\in U_1$
+\newpage
+\item Seien $u=\begin{pmatrix}u_1\\u_2\\u_3\end{pmatrix}, v=\begin{pmatrix}v_1\\v_2\\v_3\end{pmatrix}\in U_1$ \\
+d.h. $u_1+u_2-u_3=0, v-1+v_2-v_3=0$ prüfe: gilt auch $u+v\in U_1$? \\
+$u+v=\begin{pmatrix}u_1+v_1\\u_2+v_2\\u_3+v_3\end{pmatrix}, (u_1+v_1)+(u_2+v_2)-(u_3+v_3)=0 \\
+=\underbrace{(u_1+u_2-u_3)}_{0}+\underbrace{(v_1+v_2-v_3)}_{0}=0$ also ist $u+v\in U_1$
+\end{enumerate}
+geometrische Interpretation von $U_1$: \\
+$U_1=\{\begin{pmatrix}x_1\\x_2\\x_1+x_2\end{pmatrix}\mid x_1,x_2\in\mathbb{R}\}=\{x_1\begin{pmatrix}0\\1\\1\end{pmatrix}+x_2\begin{pmatrix}0\\1\\1\end{pmatrix}\mid x_1+x_2\in\mathbb{R}\}$ \\
+d.h. $U_1$ ist die Ebene durch $\overset{\rightarrow}{0}$ mit Richtungsvektoren $\begin{pmatrix}1\\0\\-3\end{pmatrix}$ und $\begin{pmatrix}0\\1\\1\end{pmatrix}$
+\item $U_2=\{\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}\in\mathbb{R}^3\mid x_1+x_2-x_3=1\}$ ist kein Unterraum\hspace{5mm}$\overset{\rightarrow}{0}\notin U_2\hspace{5mm}0+0-0\neq1$
+\item $U_3=\{\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}\in\mathbb{R}^3\mid x_1^2+x_2^2+x_3^2\leq1\}$ kein Unterraum: $\overset{\rightarrow}{0}\in U_3$, aber: \\
+z.B. $\begin{pmatrix}1\\0\\0\end{pmatrix}\in U_3$, aber $2*\begin{pmatrix}1\\0\\0\end{pmatrix}=\begin{pmatrix}2\\0\\0\end{pmatrix}\notin U_3\hspace{5mm}(2^2+0^2+0^2\nleq1)\hspace{5mm}$ (d.h. 4.7(2) ist verletzt)
+\end{enumerate}
+geometrische Interpretation: \\
+$U_3$ ist eine Kugel um 0 mit Radius 1
+\begin{enumerate}[label=\alph*), start=5]
+\item $I\subseteq\mathbb{R}$ Intervall, Mwnge $C(I)$ der stetigen Funktionen auf $I$ ist Unterraum von $\mathscr{F}(I,\mathbb{R})$
+\end{enumerate}
+Im Folgenden sei $V$ mit $K,+,*$ ein Vektorraum.
+\begin{definition}
+Linearkombination, lineare Unabhänigkeit
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+\item Seien $v_1,...,v_m\in V$ ein Vektor $v\in V$ heißt Linearkombination (LK) von $v_1,...,v_m$, wenn es Skalare $\lambda_1,...,\lambda_m$ gibt mit $v=\lambda_1*v_1+...+\lambda_m*v_m\in K\hspace{5mm}(\sum^m_{i=0}\lambda_iv_i)$
+\item $v_1,...,v_m\in V$ heißen linear abhänig (l.a.) wenn es $\lambda_1,..,\lambda_m\in K$ gibt, nicht alle gleich 0 so dass $\lambda_1v_1+...+\lambda_mv_m=\overset{\rightarrow}{0}$ gilt.
+\item analog nennt man die Menge $\{v_1,...,v_m\}$ l.a./l.u. \\
+$\emptyset$ definieren wir als l.u.
+\end{enumerate}
+\begin{bem}
+\end{bem}
+$v_1,...,v_m\in V$ sind also l.u. wenn aus $\sum^m_{i=0}=\overset{\rightarrow}{0}$ folgt dass $\lambda_1=...=\lambda_m=0$ gilt. (d.h. $\overset{\rightarrow}{0}$ lässt sich nur auf triviale Weise $0*v_1+...+0*v_m$ als LK darstellen)
+\newpage
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $V=K^n$, jedes $v\in V$ ist LK von $e_1,...,e_n$ ("'kanonische Einheitsvektoren"'), wobei \\
+$e_i=\begin{pmatrix}0\\0\\1\\0\\0\end{pmatrix}\leftarrow i$ \hspace{5mm}z.B.$\begin{pmatrix}3\\7\\-1\end{pmatrix}=3*\underbrace{\begin{pmatrix}1\\0\\0\end{pmatrix}}_{e_1}+7*\underbrace{\begin{pmatrix}0\\1\\0\end{pmatrix}}_{e_2}-1*\underbrace{\begin{pmatrix}0\\0\\1\end{pmatrix}}_{e_3}$ \\
+$e_1,...,e_n$ sind l.u.\hspace{5mm}$\lambda_1*\begin{pmatrix}1\\0\\\vdots\\0\end{pmatrix}+\lambda_2*\begin{pmatrix}0\\1\\\vdots\\0\end{pmatrix}+\lambda_n*\begin{pmatrix}0\\0\\\vdots\\n\end{pmatrix}=\begin{pmatrix}0\\0\\\vdots\\0\end{pmatrix}$ \\
+$\Leftrightarrow\begin{pmatrix}\lambda_1\\\lambda_2\\\vdots\\\lambda_n\end{pmatrix}=\begin{pmatrix}0\\0\\\vdots\\0\end{pmatrix}$ d.h. $\lambda_1=0,\lambda_2=0,\lambda_n=0$
+\item $V=\mathbb{R}^2$ über $\mathbb{R}\colon v_1=\begin{pmatrix}1\\1\end{pmatrix}, v_2=\begin{pmatrix}1\\2\end{pmatrix}$ sind l.u. \\
+Seien $\lambda_1,\lambda_2\in\mathbb{R}$ mit $\lambda_1v_1+\lambda_2v_2=\begin{pmatrix}0\\0\end{pmatrix}\Leftrightarrow\begin{pmatrix}\lambda_1\\\lambda_2\end{pmatrix}+\begin{pmatrix}\lambda_1\\2\lambda_2\end{pmatrix}=\begin{pmatrix}0\\0\end{pmatrix}\Leftrightarrow\begin{pmatrix}\lambda_1+\lambda_2\\\lambda_1+2\lambda_2\end{pmatrix}=\begin{pmatrix}0\\0\end{pmatrix}$ \\
+aus \textcircled{I} $\lambda_1=-\lambda_2$ \\
+in \textcircled{II} $-\lambda_2+2\lambda_2=0\Rightarrow\lambda_2=0$\hspace{5mm} in \textcircled{I}$\Rightarrow\lambda_1=0$
+\item $\begin{pmatrix}0\\1\\3\end{pmatrix},\begin{pmatrix}0\\2\\1\end{pmatrix}$ sind l.a. in $\mathbb{Z}^3_5$, denn $1*\begin{pmatrix}0\\1\\3\end{pmatrix}+2*\begin{pmatrix}0\\2\\1\end{pmatrix}=\begin{pmatrix}0\\0\\0\end{pmatrix}$ \\
+(sehen, oder nachrechnen wie in b)) \\
+$2*\begin{pmatrix}0\\1\\3\end{pmatrix}=\begin{pmatrix}0\\2\\1\end{pmatrix}$
+\end{enumerate}
+\begin{bem}
+\end{bem}
+\begin{enumerate}[label=\alph*)]
+\item $\overset{\rightarrow}{0}$ ist linear abhänig, wähle beliebiges $\lambda\in K$, dann $\lambda*\overset{\rightarrow}{0}=\overset{\rightarrow}{0}$
+\item Ist von den Vektoren $v_1,...,v_m\in V$ einer $\overset{\rightarrow}{0}$, so sind $v_1,...,v_m$ l.a. \\
+(z.B. $v_1=\overset{\rightarrow}{0}$, dann ist $1*\overset{\rightarrow}{0}+0*v_2+...+0*v_m=\overset{\rightarrow}{0})$
+\item ein einzelner Vektor $V\neq\overset{\rightarrow}{0},v\in V$ ist l.u. \\
+angenommen es gibt $\lambda\neq0\in K$ mit $\lambda v=\overset{\rightarrow}{0}$ dann ist \\
+$v\overset{4.1(2.1)}{=}1v\overset{\text{Körper}\hspace{2mm}\lambda\neq0}{=}(\frac{1}{\lambda}\lambda)v\overset{4.1(2.1)}{=}\frac{1}{\lambda}(\lambda v)=\frac{\lambda}{\lambda}\overset{\rightarrow}{0}\overset{\text{Satz 4.1b}}{=}\overset{\rightarrow}{0}$
+\end{enumerate}
+\newpage
+\begin{bsp}
+\end{bsp}
+$V=\mathscr{F}(\mathbb{R},\mathbb{R})$
+\begin{enumerate}[label=\alph*)]
+\item $f,g\colon\mathbb{R}\rightarrow\mathbb{R}$ mit $f(x)=x, g(x)x^2\hspace{5mm}\forall x\in\mathbb{R}$ sind l.u. denn: \\
+Seien $\lambda_1,\lambda_2\in\mathbb{R}$ mit $\lambda_1f+\lambda_2f\equiv0$\hspace{5mm}(Nullfunktion) \\
+$\Rightarrow\lambda_1x+\lambda_2x^2=0\hspace{5mm}\forall x\in\mathbb{R}$ also auch für z.B. $x=1$, d.h. $\lambda_1+\lambda_2=0$ und für $x=-1$, d.h. $-\lambda_1+\lambda_2=0\Rightarrow\lambda_1=\lambda_2=0$
+\item $f(x)=sin^2x, g(x)=cos^2x, h(x)=3$ sind l.a. denn \\
+$1*f(x)+1*g(x)-\frac{1}{3}h(x)\overset{\rightarrow}{0}$ \\
+$sin^2x+cos^2x-1=0\hspace{5mm}\forall x\in\mathbb{R}$
+\end{enumerate}
+\begin{bem}
+\end{bem}
+Unendlich viele Vektoren aus $V$ heißen l.u., wenn es endlich viele (verschiedene) von ihnen l.u. sind. \\
+Bsp.: in $\mathscr{F}(\mathbb{R},\mathbb{R})$ sind die Monome $1,x,x^2,x^3,...$ l.u. denn sei $x^{k1}, x^{k2},...,x^{kr}$ eine endliche Auswahl dieser Vektoren $(k_i\in\mathbb{N}_0$ alle verschieden) mit $\sum^r_{j=0}\lambda_jx^{kj}\equiv0$\\
+(d.h.: 0\hspace{5mm}$\forall x\in\mathbb{R})\Rightarrow\lambda_1=...=\lambda_r=0$ \\
+(da ein reelles Polynom $p(x)$ nur endlich viele Nullstellen besitzt, es se denn $p(x)\equiv0$)
+\begin{definition}
+Dimension
+\end{definition}
+Sei $n\in\mathbb{N}$
+\begin{enumerate}[label=\alph*)]
+\item Falls es in $V\hspace{3mm}n$ l.u. Vektoren gibt, aber je $n+1$ Vektoren aus $V$ l.u. sind, so heißt $n$ die Dimension von $V$ ($dim\:V=n$)\\
+Für den Nullraum $V=\{\overset{\rightarrow}{0}\}$ setzen wir $dim\:V=0$
+\item Gibt es in $V$ zu jedem $m\in\mathbb{N}$ (mindestens) $m$ l.u. Vektoren, so heißt $V$ unendlich dimensional (denn $V=\infty$) \\
+$(dim\:V$ ist also die maximalzahl l.u. Vektoren in $V$)
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+$dim\mathscr{F}(\mathbb{R},\mathbb{R})=\infty$, denn für jedes $m\in\mathbb{N}$ sind $1,x,x^2,...,x^m$ l.u. (Bem./Bsp. 4.14)
+\begin{definition}
+Basis
+\end{definition}
+Die Vektoren $v_1,...v_m\in V$ (oder auch die Menge $B=\{v_1,...,v_m\}\in V$) heißen Basis von $V$, falls sich jeder Vektor $w\in V$ eindeutig als LK von $v_1,...,v_m$ darstellen lässt, also
+\begin{enumerate}[label=(\arabic*)]
+\item $\forall w\in V\hspace{5mm}\exists\lambda_1,...,\lambda_m\in K$ mit $\sum^m_{i=1}\lambda_iv_i$
+\item gilt zusätzlich $w=\sum^m_{i=1}\mu_iv_i$ mit $\mu_i,...,\mu_m\in K$, so folgt $\mu_1=\lambda_1,...,\mu_m=\lambda_m$
+\end{enumerate}
+\newpage
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $e_1,...,e_n$ Basis von $\mathbb{R}^n(K^n)$ "'Kanonische Basis"'
+\item $v_1=\begin{pmatrix}1\\1\end{pmatrix}, v_2=\begin{pmatrix}0\\1\end{pmatrix}$ bilden Basis von $\mathbb{R}^2$\hspace{5mm}z.B. ist $\begin{pmatrix}5\\7\end{pmatrix}=5*\begin{pmatrix}1\\1\end{pmatrix}+2*\begin{pmatrix}0\\1\end{pmatrix}$, allgemein: \\
+sei $w=\begin{pmatrix}w_1\\w_2\end{pmatrix}\in\mathbb{R}^2$ beliebig
+\begin{enumerate}[label=(\arabic*)]
+\item $w=\underbrace{w_1}_{=\lambda_1}\begin{pmatrix}1\\1\end{pmatrix}+\underbrace{w_2-w_1}_{=\lambda_2}\begin{pmatrix}0\\1\end{pmatrix}$ (darstellbar)
+\item sei $w=\mu_1\begin{pmatrix}1\\1\end{pmatrix}+\mu_2\begin{pmatrix}0\\1\end{pmatrix}$, d.h. $\begin{pmatrix}w_1=\mu_1+\mu_2*0\\w_2=\mu_1+\mu_2\end{pmatrix}\Rightarrow\mu_1=w_1=\lambda_1,\mu_2=w_2-\mu_1=w_2-w_1=\lambda_2$ (Eindeutigkeit)
+\end{enumerate}
+\end{enumerate}
+\begin{bem}
+Koordinaten, geordnete Basis
+\end{bem}
+Sei $B=\{v_1,...,v_n\}$ eine Basis von $V$, $w\in V$. Seien $\lambda_1,...,\lambda_n$ die (eindeutig bestimmten!) Skalare mit $w=\lambda_1v_1+...+\lambda_nv_n$. Dann ordnen wir $w$ den Vektor $\begin{pmatrix}\lambda_1\\\vdots\\\lambda_n\end{pmatrix}\in K^n$ zu. \\
+(Koordinatenvektor von $w$ bezüglich $\tilde{B}$, mit $\tilde{B}=(v_1,...,v_n)$ geordnete Basis von $V\hspace{2mm}\lambda_1,...,\lambda_n$ Koordinaten von $w$) \\
+Im Bsp. 4.18 b) ist $\begin{pmatrix}w_1\\w_2-w_1\end{pmatrix}$ der Koordinatenvektor von $w$ bezüglich $\tilde{B}=\begin{pmatrix}\begin{pmatrix}1\\1\end{pmatrix}, \begin{pmatrix}0\\1\end{pmatrix}\end{pmatrix}$ \\
+Beachte: Hier spielt die Reihenfolge, in der die Basisvektoren aufgelistet werden, eine Rolle! \\
+$\rightarrow$ geordnete Basis, Schreibweise als Tupel $(...,...,...)$ statt Menge $\{...,...,...\}$ speziell von $V=K^n$ für die kanonische Basis $\tilde{B}=(e_1,...,e_n)$ spricht man von kartesischen Koordinaten. \\
+z.B. Koordinaten $v=\begin{pmatrix}7\\-3\\0\end{pmatrix}$ bezüglich $\tilde{B}$ sind $\begin{pmatrix}7\\-3\\0\end{pmatrix}$
+\begin{satz}
+1. Zusammenhang Dimension / Basis
+\end{satz}
+Gegeben sei $V$ mit $dmi\:V=n\in\mathbb{N}\hspace{5mm}v_1,...,v_n$ l.u. (existiert nach Definition von $dim\:V$) \\
+$\Rightarrow\{v_1,...,v_n\}$ Basis \\
+Beweis: \\
+\begin{enumerate}[label=(\arabic*)]
+\vspace{-5mm}
+\item $w\in V$ beliebig $\Rightarrow v_1,...,v_n,w$ sind $n+1$ Vektoren, also l.a. nach Definition 4.15 \\
+$\Rightarrow\exists\lambda_1,...,\lambda_n,\lambda\in K$, nicht alle gleich 0, mit $\lambda_1v_1+...+\lambda_n,v_n+\lambda_w=\overset{\rightarrow}{0}$ \\
+Nun ist $\lambda\neq 0$ (sonst $\lambda_1v_1+...+\lambda_nv_n=0$, nicht alle $\lambda_i=0$, also $v$ l.a) \\
+$\Rightarrow w\frac{-\lambda_1v_1}{\lambda}-...-\frac{\lambda_nv_n}{\lambda}$ d.h. $w$ ist LK von $v_1,...,v_n$
+\item Sei $w=\sum^n_{i=0}\underbrace{(\lambda_i-\mu_i)v_i}_{=0\:\forall i\text{ da } v_1 \text{ l.a.}}\Rightarrow\lambda_i=\mu_i\hspace{3mm}\forall i$
+\end{enumerate}
+\begin{satz}
+\end{satz}
+Gegeben seien $m$ Vektoren $v_1,...,v_m$. Dann sind je $m+1$ LK von $v_1,...,v_m$ l.a. \\
+Beweis: Vollständige Induktion nach $m$
+\newpage
+\begin{bsp}
+Bsp. 4.18 a) genauer
+\end{bsp}
+$V=K^n$ über $K\colon e_1,...,e_n$ sind l.u. (Bsp. 4.11 a)) jeder Vektor $v\in V$ ist LK \\
+von $e_1,..,e_n$ (4.11 a)) \\
+$n+1$ Vektoren aus $V$ sind also $n+1$ LK von $e_1,...,e_n\overset{4.21}{\Rightarrow}$ l.a. $\Rightarrow dim\:V=n$ und (Satz 4.20) $e_1,...,e_n$ bilden Basis $K^n$
+\begin{satz}
+2. Zusammenhang Dimension / Basis
+\end{satz}
+Sei $B=\{v_1,...,v_n\}$ Basis von $V\Rightarrow v_1,...,v_n$ l.u. und $dim\:V=n$ \\
+Beweis:
+\begin{enumerate}[label=(\arabic*)]
+\item jedes $v\in V$, also auch $\overset{\rightarrow}{0}$ (lässt sich eindeutig als LK von $v_1,...,v_n$ schreiben (Definition Basis) \\
+$\Rightarrow$ triviale Darstellung $\overset{\rightarrow}{0}=0+v_1+...+0*v_n$ einzig mögliche \\
+$\Rightarrow v_1,...,v_n$ l.u.
+\item nach (1) gibt es $n$ l.u. Vektoren in $V$, je $n+1$ Vektoren sind $n+1$ LK von $v_1,...,v_n$ nach 4.21 l.a. \\
+$\Rightarrow dim\:V=n$
+\end{enumerate}
+\begin{koro}
+\end{koro}
+Je zwei Basen eines n-dimensionalen Vektorraums bestehen aus gleich vielen, nämlich $n$ Vektoren.
+\begin{satz}
+Austauschlemma
+\end{satz}
+Sei $B=\{v_1,...,v_n\}$ Basis von $V$, sei $\overset{\rightarrow}{0}\neq w\in V,w=\sum^n_{i=0}\lambda_iv_i$. Ist $\lambda_j\neq0$ für ein $j\in\{1,...,n\}$, so bilden die Vektoren $v_1$ bis $v_{j-1}, w, v_{j+1},...,v_n$ ebenfalls eine Basis von $V$. \\
+(d.h. kann $v_j$ gegen $w$ austauschen wenn $\lambda_j\neq 0$ in LK von $w$) \\
+Beweis: \\
+Sei o.B.d.A. (ohne Beschränkung der Allgemeinheit) $\lambda_1\neq0$ \\
+wir zeigen: $w_1,v_1,...,v_n$ sind l.u. (das genügt nach Satz 4.20 und 4.23) \\
+Sei dazu $\mu_1w+\mu_2v_2+...+\mu_nv_0=\overset{\rightarrow}{0}\hspace{5mm}(\mu_i\in K)$ \\
+$\Rightarrow \underbrace{\mu_1\lambda_1v_1}_{=0}+(\underbrace{\mu_1\lambda_2v_2}_{=0})v_2+...+(\mu_1\lambda_n+\mu_n)v_n=\overset{\rightarrow}{0}$ \\
+$\Rightarrow \mu_1=0\Rightarrow\lambda_1\neq0\hspace{5mm}\mu_2=\mu_3=...=\mu_n=0\Rightarrow$ Beh.
+\begin{satz}
+Steinitz'scher Austauschsatz
+\end{satz}
+$v_1,...,v_n$ Basis von $V$. Sei $w_1,...,w_m\in V$ l.u. $(\Rightarrow m\leq n)$ \\
+Dann kann man aus den $n$ Vektoren $v_1,...,v_n n-m$ Stück auswählen, die zusammen mit $w_1,...,w_m$ eine Basis von $V$ bilden. \\
+Beweis: wende Satz 4.25 sukzessive an: 
+\begin{enumerate}[label=\arabic*)]
+\item $w_1\in V$, d.h. $w_1=\sum^n_{j=1}\lambda_jv_j$, wären alle $\lambda_j=0$, so wäre $w_1=\overset{\rightarrow}{0}$, dann aber (Bem 4.12) $w_1,...,w_m$ nicht l.u. Also mindestens ein $\lambda_j$ ist $\neq0$, o.B.d.A. $\lambda_1\neq0$ \\
+$\Rightarrow$ kann $v_1$ austauschen, 4.25 $w_1,v_2,...,v_n$ Basis von $V$.
+\item $w_2\in V$, d.h. $w_2=\sum^n_{j=2}\mu_jv_j$ wären $\mu_2=...=\mu_n=0$, so wäre $w_2=\mu_1*w_1$, also $w_1,w_2$ l.a Also: mindestens ein $\mu_j (j=\{2,...,n\}\neq0$, o.B.d.A. $\mu_2\neq0$. \\
+$\Rightarrow$ kann $v_2$ austauschen, 4.25 $w_1,w_2,v_3,...,v_n$ Basis von $V$
+\item usw.
+\end{enumerate}
+\newpage
+\begin{koro}
+Basisergänzungssatz
+\end{koro}
+$V$ endl. $dim$ VR. Jede l.u. Teilmenge von $V$ lässt sich zur Basis von $V$ ergänzen. \\
+Beweis: wähle bel. Basis von $V$ und tausche mittels Satz 4.26 aus.
+\begin{bsp}
+\end{bsp}
+$V=\mathbb{R}^4$ \\
+$u_1=\begin{pmatrix}1\\2\\0\\1\end{pmatrix}, u_2=\begin{pmatrix}0\\2\\1\\0\end{pmatrix}\in\mathbb{R}^4$ \\
+$u_1,u_2$ sind l.u. \\
+Wie kann man $u_1,u_2$ zu einer Basis von $\mathbb{R}^4$ ergänzen? \\
+Austauschsatz (4.24/4.26/4.27) \\
+$\{e_1,e_2,e_3,e_4\}$ Kanonische basis von $V$\hspace{5mm}$u_1=1*e_1+2*e_2+0*e_3+1*e_4$ \\
+$\Rightarrow \{u_1,e_2,e_3,e_4\}$ Basis von $V$ ($e_1$ gegen $u_1$ getauscht) \\
+$u_2=0*v_1+2*e_2+1*e_3+0*e_4$ \\
+$\Rightarrow \{u_1,e_2,u_2,e_4\}$ Basis von $V$ ($e_3$ gegen $u_2$ getauscht)
+\begin{definition}
+erzeugter UR
+\end{definition}
+Sei $V$ K-VR, $M\subseteq V$
+\begin{enumerate}[label=\alph*)]
+\item Der vom $M$ erzeugte oder aufgespannte Unterraum $<M>_K$ (oder nur $<M>$) ist die Menge aller endl. LK, die man mit Vektoren aus $M$ bilden kann, \\
+also $<M>_K:=\{\sum^m_{j=1}\lambda_iv_i\mid\lambda_i\in K, v\in M, n\in\mathbb{N}\}$ \\
+$<\emptyset>_K:=\{\overset{\rightarrow}{0}\}$ für $M=\{v_1,...,v_n\}$ schreiben wir auch $<v_1,...,v_n>_K$
+\item Ist $V=<M>_K$ so heißt $M$ ein Erzeugendensystem von $V$.
+\end{enumerate}
+\begin{bem}
+\end{bem}
+\begin{enumerate}[label=\alph*)]
+\item $<M>_K$ ist tatsächlich ein UR (wegen 4.7), und zwar der kleinste, der $M$ enthält:\\
+$M\subseteq<M>_K$ gilt, und $U$ ein UR von $V$ mit $m\subseteq U$, so enthält $U$ alle endl. LK von El. aus $M$. \\
+$(4.7)\Rightarrow<M>_K\subseteq U \\
+\Rightarrow U$ kann nicht kleiner als $<M>_K$ sein.
+\item Nach unseren Sätzen über $dimV$ gilt $dim(<v_1,...,v_m>_K)\leq m$, und \\
+$dim(<v_1,...,v_m>_K)=m$ wenn $v_1,...,v_m$ l.u. sind.
+\item Man nennt $M\subseteq V$ eine Basis von $V$ wenn $<M>_K=V$ gilt und $M$ l.u. ist. \\
+Dieser "neue" Basisbegriff stimmt im Falle $dimV<\infty$ mit dem bisherigen überein, gilt aber auch für $dimV=\infty$ \\
+z.B. ist damit $M=\{1,x,x^2,...\}$ eine Basis von $\{p\colon\mathbb{R}\rightarrow\mathbb{R}, p$ ist Polynom $\}\subseteq\mathscr{F}(\mathbb{R},\mathbb{R})$.
+\end{enumerate}
+\newpage
+\begin{satz}
+Schnitt und Summe von UR
+\end{satz}
+$V$ ein k-VR, $U_1, U_2$ Unterraum von $V$
+\begin{enumerate}[label=\alph*)]
+\item $U_1\cap U_2:=\{u\in V\mid u\in U_1$ und $U_2\}$ (Durch)schnitt von $U_1$ und $U_2$ ist UR von $V$
+\item $U_1+U_2:=\{u_1+u_2\mid u_2\in U_1, u_2\in U_2\}$ Summe von $U_1,U_2$ ist UR von $V$ \\
+Beweis: prüfe UR-Kriterien (4.7)
+\begin{enumerate}[label=\alph*)]
+\item in moodle
+\item
+\begin{enumerate}[label=(\arabic*)]
+\item $\overset{\rightarrow}{0}\in U_1+U_2\hspace{5mm}\overset{\rightarrow}{0}=\overset{\rightarrow}{0}+\overset{\rightarrow}{0}$
+\item sei $v\in U_1+U_2$, d.h. $v=u_1+u_2 \\
+\lambda\in K$, dann ist $\lambda v=\lambda(u_1+u_2)=\underbrace{\lambda u_1}_{\in U_1}+\underbrace{\lambda u_2}_{\in U_2}\in U_1+U_2$
+\item seien $v=\underbrace{u_1}_{\in U_1}+\underbrace{u_1}_{\in U_1}\hspace{5mm}w=\underbrace{u_1}_{\in U_1}+\underbrace{u_1}_{\in U_1}\in U_1+U_2$
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\begin{bem}
+\end{bem}
+\begin{enumerate}[label=\alph*)]
+\item 4.31 a) gilt auch für unendlich viele UR, b) für endlich viele
+\item $U_1\cup U_2$ ist im Allgemeinen kein UR
+\item Der Schnitt zweier UR ist nie leer ($\overset{\rightarrow}{0}$ ist in jedem UR)
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+$v,w\in\mathbb{R}^2, v=\begin{pmatrix}1\\0\end{pmatrix}, w=\begin{pmatrix}2\\1\end{pmatrix}$ \\
+$G_1=<v>_{\mathbb{R}}=\{\lambda v\mid\lambda\in\mathbb{R}\}$ \\
+$G_2=<w>_{\mathbb{R}}=\{\mu w\mid\mu\in\mathbb{R}\}$ \\
+Geraden durch $\overset{\rightarrow}{0}$, sind UR
+\begin{enumerate}[label=\alph*)]
+\item $G_1+G_2=\{\lambda v+\mu w\mid\lambda,\mu\in\mathbb{R}\}$ \\
+Ebene durch $\overset{\rightarrow}{0}$, ist UR (hier ganz $\mathbb{R}^2)$
+\item $G_1\cap G_2=\{\begin{pmatrix}0\\0\end{pmatrix}\}$
+\end{enumerate}
+\begin{satz}
+Dimensionsformel für Unterräume
+\end{satz}
+$V$ K-VR, $dimV$ endlich $(<\infty)$ \\
+$U,W$ Unterräume von $V$, dann gilt $dim(U+W)=dimU+dimW-dim(U\cap W)$ \\
+(insbesondere: falls $U\cap W=\{\overset{\rightarrow}{0}\}$, dann nur Summe)
+\newpage
+\section{Matritzen und Lineare Gleichungssysteme}
+\begin{definition}
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+\item Seien $m.n\in\mathbb{N},K$ Körper \\
+Eine $m\times n$ Matrix $A$ über $K$ ist ein rechteckiges Schema \\
+$A=\begin{pmatrix}a_{11}&a_{12}&\cdots&a_{1n}\\a_{21}&a_{22}&\cdots&a_{2n}\\\vdots&&\ddots&\vdots\\a_{m1}&a_{m2}&\cdots&a_{mn}\end{pmatrix}$\\
+mit $m$ Zeilen und $n$ Spalten und Einträgen $a_{ij}(1\leq i\leq m, 1\leq j\leq n)\in K$ \\
+Schreiweise $A=(a_{ij})_{\substack{i=1,...,m\\j=1,...,n}}\hspace{5mm}A=(a_{ij})$
+\item $M_{m,n}(K)$ = Menge aller $m\times n$ Matritzen über $K$ \\
+$M_n(K)$ = Menge aller $n\times n$ Matritzen über $K$ (quadratische Matritzen)
+\item Ist $A\in M_{m,n}(K)$ so erhält man die zu $A$ transponierte Matrix $A^T_{n,m}(K)$ \\
+$A^T=\begin{pmatrix}a_{11}&a_{21}&\cdots&a_{m1}\\a_{12}&a_{22}&\cdots&\vdots\\\vdots&&\ddots&\vdots\\a_{nm}&\cdots&\cdots&a_{mn}\end{pmatrix}$, indem man Zeilen und Spalten der Matrix tauscht. \\
+Bsp.: $\begin{pmatrix}1&2&3\\4&5&6\end{pmatrix}^T=\begin{pmatrix}1&4\\2&4\\3&6\end{pmatrix}$ \\
+Es gilt $(A^T)^T=A$
+\item $1\times n-$Matrix: Zeilenvektor der Länge $n$ \\
+$m\times 1-$Matrix: Spaltenvektor der Länge $m$ \\
+$0=0_{m,n}=\begin{pmatrix}0&\cdots&0\\\vdots&\ddots&\vdots\\0&\cdots&0\end{pmatrix}$ (alle $a_{ij}=0)$ \\
+$E=E_n=\begin{pmatrix}1&0&\cdots&0\\0&1&&\vdots\\\vdots&&\ddots&\vdots\\0&\cdots&\cdots&1\end{pmatrix}\hspace{5mm}n\times m$ Einheitsmatrix \\
+(also $E_n=(\delta_{ij})$ mit $\delta_{ij}=\{\substack{1\cdots i=j\\0\cdots i\neq j}\}$)
+\item $M_{m,n}(K)$ läst sich zu einem K-VR machen, Vektoren sind Matritzen. Brauche Addition und Skalare Multiplikation für $A(a_{ij}),B(b_{ij})\in M_{m,n}(K)$ (beide vom selben Typ) \\
+und $\lambda\in K$ ist. \\
+$A+B:=(a_{ij}+b_{ij})_{\substack{i\in 1,...,m\\j\in 1,...,n}}$ und \\
+$\lambda*A:=(\lambda*a_{ij})_{\substack{i\in 1,...,m\\j\in 1,...,n}}$ \\
+$M{m,n}(K)$ ist damit VR, Vektoren sind Matritzen, $\overset{\rightarrow}{0}$ ist 0 (Nullmatrix) \\
+\\Basis wäre z.B.: $\begin{pmatrix}1&0&\cdots&0\\0&&&\\\vdots&&&\\0\end{pmatrix}$, $\begin{pmatrix}0&1&\cdots&0\\0&&&\\\vdots&&&\\0\end{pmatrix}$, $\begin{pmatrix}0&0&\cdots&0\\0&&&\\\vdots&&&\\0&&&1\end{pmatrix} \\ dim(M_{m,n}(K))=m*n$
+\item Für $A=(a_{ij})_{\substack{i=1,...,m\\j=1,...,n}}\in M_{m,n}(K)$ und $B=(b_{jk})_{\substack{j=1,...,n\\k=1,...,l}}\in M_{n,l}(K)$ ist das Matrixpordukt $A*B$ definiert durch $A*B=(c_{ik})_{\substack{i=1,...,m\\k=1,...,l}}\in M_{m,l}(K)$ \\
+$c_{ik}=a_{i1}b_{1k}+a_{i2}b_{2k}+...+a_{in}b_{nk}=\sum^n_{j=1}a_{ij}b_{jk}$ ($i$-te Zeile von $A$, $k$-te Spalte von $B$) \\
+$A*B$ ist nur deff., wenn Anzahl der Spalten von $A$ = Anzahl der Zeilen von $B$ ist.
+\item $M_n(K)$ bildet mit $+,*$ ein Ring mit Eins ($E_n)$ \\
+$A\in M_n(K)$ heißt Invertierbar falles es $\exists A^{-1}\in M_n(K)$ mit $AA^{-1}=A^{-1}A=E_n$
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $A=\begin{pmatrix}1&2&3\\-1&0&2\end{pmatrix}, B=\begin{pmatrix}0&0&-3\\1&0&1\end{pmatrix}\in M_{2,3}(\mathbb{R})$ \\
+$A+B=\begin{pmatrix}1&2&0\\0&0&3\end{pmatrix}, 3*B=\begin{pmatrix}0&0&-9\\3&0&3\end{pmatrix}, A*B$ nicht def. \\
+$B^T=\begin{pmatrix}0&1\\0&0\\-3&1\end{pmatrix}\in M_{3,\mathbb{R}}, A*B^T=\begin{pmatrix}1&2&3\\-1&0&2\end{pmatrix}*\begin{pmatrix}0&1\\0&0\\-3&1\end{pmatrix}=\begin{pmatrix}-9&4\\-6&1\end{pmatrix}\in M_{2,2}(\mathbb{R})$ \\
+$B^T*A=\begin{pmatrix}0&1\\0&0\\-3&1\end{pmatrix}*\begin{pmatrix}1&2&3\\-1&0&2\end{pmatrix}=\begin{pmatrix}-1&0&2\\0&0&0\\-2&-6&-7\end{pmatrix}\in M_{3,3}(\mathbb{R})$ \\
+Matrixmultiplikation ist i.A. nicht kommutativ (auch für $M_n(K)$!)
+\item $A=\begin{pmatrix}1&2&0\end{pmatrix}\in M_{1,3}(\mathbb{Z}_3), B=\begin{pmatrix}2\\2\\1\end{pmatrix}\in M_{3,1}(\mathbb{Z}_3)$ \\
+$A*B=\begin{pmatrix}1&2&0\end{pmatrix}*\begin{pmatrix}2\\2\\1\end{pmatrix}=0\in M_{1,1}(\mathbb{Z}_3)$ \\
+$B*A=\begin{pmatrix}2\\2\\1\end{pmatrix}*\begin{pmatrix}1&2&0\end{pmatrix}=\begin{pmatrix}2&1&0\\2&1&0\\1&2&0\end{pmatrix}\in M_{3,3}(\mathbb{Z}_3)$ 
+\end{enumerate}
+\begin{bem}
+Rechenregeln (wie bisher in Ringen/Vektorräumen)
+\end{bem}
+$A,A_1,A_2\in M_{m,n}(K)$ \\
+$B,B_1,B_2\in M_{n,p}(K)$ \\
+$C\in M_{p,q}$ \\
+$\lambda\in K$
+\begin{enumerate}[label=\alph*)]
+\item $(A*B)*C=A*(B*C)$
+\item $(A_1+A_2)*B=A_a*B+A_2*B$
+\item $A(B_1+B_2)=A*B_1+A*B_2$
+\item $(\lambda A)*B=\lambda(AB)=A(\lambda B)$
+\item $(AB)^T=B^TA^T$
+\end{enumerate}
+\newpage
+\begin{definition}
+LGS
+\end{definition}
+\begin{enumerate}[label=\alph*)]
+\item Allg. Form eines linearen Gleichungsystems (LGS) über Körper $K$
+\begin{flalign*}
+  \textcircled{$*$} \Bigg\{
+  \begin{matrix}
+    a_{11}x_1+a_{12}x_2+...+a_{1n}x_n=b_1 \\
+    a_{21}x_1+a_{12}x_2+...+a_{2n}x_n=b_2 \\
+    \vdots \\
+    a_{m1}x_1+a_{12}x_2+...+a_{mn}x_n=b_n \\
+  \end{matrix}
+  &&
+\end{flalign*}
+$m$ Gleichungen, $n$ Unekannte $x_1,...,x_n$, Koeffizienten $a_{ij}\in K$ \\
+rechte Seite: $b_1,...,b_m\in K$
+\item LGS heißt homogen, falls $b_1=...=b_m=0$, sonst inhomogen
+\item setzt man $A=\begin{pmatrix}a_{1}&\cdots&a_{1n}\\\vdots&\ddots&\vdots\\a_{m1}&\cdots&a_{mn}\end{pmatrix}\in M_{m,n}(K)$ (Koeffizientenmatrix), $b=\begin{pmatrix}b_1\\\vdots\\b_m\end{pmatrix}\in K^m$, so lässt sich \textcircled{$*$} in Matrixform schreiben als $Ax=b\hspace{5mm}(x=\begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix})$
+\item sind $s_1,...,s_n$ Spalten von $A$, so lässt sich \textcircled{$*$} in Spaltenform schreiben als $x_1*s_1+...+x_ns_n=b$ \\
+$x_n\begin{pmatrix}\:\end{pmatrix}+...+x_n\begin{pmatrix}\:\end{pmatrix}=\begin{pmatrix}\:\end{pmatrix}$ \\
+Beachte: Ein homogenes LGS hat immer mindestens eine Lösung nämlich $\overset{\rightarrow}{0}=\begin{pmatrix}0\\0\end{pmatrix}, \\
+(x_1=...=x_n=0)$, die triviale Lösung (Null-Lösung)
+\end{enumerate}
+\begin{bem}
+\end{bem}
+Aus 5.4 c) ergibt sich dass $\delta\colon\substack{K^n\rightarrow K^m\\x\mapsto Ax}$ für $A\in M_{m,n}(K), x\in K^n$ eine Abbildung ist, die Vektoren (aus $K^n$) auf Vektoren (aus $K^n$) abbildet. (Bsp.: Folien)
+\begin{satz}
+\end{satz}
+\begin{enumerate}[label=\alph*)]
+\item Die Menge der Lösungen des homogenen LGS $Ax=\overset{\rightarrow}{0}$ bildet ein Vektorraum von $K^n$.
+\item Ist das inhomogene LGS $Ax=b$ lösbar und $x_0\in K^n$ irgendeine spezielle Lösung, so erhält man alle Lösungen $\{x\in K^n\mid Ax=b\}$ durch $\{x_0+y\mid Ay=0\}$ \\
+Ist also $U$ der lösbare Raum des zugehörigen LGS $Ax=\overset{\rightarrow}{0}$, so ist die Lösungsmenge von $Ax=b$ vo der Form $x_0+U$. \\
+(Das nennt man einen affinen UR, UR $U$ verschoben um $x_0$)
+\end{enumerate}
+\newpage
+Beweis:
+\begin{enumerate}[label=\alph*)]
+\item mit UR Kriterium 4.7
+\begin{enumerate}[label=(\arabic*)]
+\item $\overset{\rightarrow}{0}$ ist Lösung
+\item sind $x_1, x_2$ Lösung, dann gilt $Ax_1=\overset{\rightarrow}{0}, Ax_2=\overset{\rightarrow}{0}\Rightarrow\overset{\rightarrow}{0}=Ax_1+Ax_2\overset{5.2c)}{=}A(x_1+x_2)$ d.h. $x_1+x_2$ ist Lösung
+\item analog, benutze 5.3 d)
+\end{enumerate}
+\item Sie $Ax_0=b$ \\
+Ist $Ay=\overset{\rightarrow}{0}$, dann $A(x_0+y)\overset{5.3c)}{=}\underbrace{Ax_0}_{=b}+\underbrace{Ay_0}_{=0}=b$ (d.h. $x_0+y$ löst inh. LGS) \\
+umgekehrt: \\
+$Ax=b$ \\
+$\Rightarrow\underbrace{Ax}_{=b}+\underbrace{Ax_0}_{=b}=A(x-x_0)=\overset{\rightarrow}{0}$, also $(x-x_0)\in U$ \\
+wegen $x=x_0+\underbrace{(x-x_0)}_{\in U}$ ist $x\in x_0+U$
+\end{enumerate}
+\begin{quest}
+\end{quest}
+- Wann hat $Ax=b$ mindestens/genau eine Lösung? \\
+- Wie groß ist die $dim$ des Lösungsraums von $Ax=0$? \\
+- Wie bestimmt man alle Lösungen von $Ax=b$? \\
+Diese Fragen lassen sich mittels des Gauß-Algorithmus beantworten ($\rightarrow$ Folien) bis 5.13 a)
+\setcounter{definition}{12}
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*),start=1]
+\item $\begin{pmatrix}0&2&1\\3&2&2\\6&4&4\end{pmatrix}\overset{I\leftrightarrow II}{\xrightarrow{\hspace*{1cm}}}\begin{pmatrix}3&2&2\\0&2&1\\6&4&4\end{pmatrix}\overset{I*\frac{1}{3}}{\xrightarrow{\hspace*{1cm}}}\begin{pmatrix}1&\frac{2}{3}&\frac{2}{3}\\0&2&1\\6&4&4\end{pmatrix}\overset{\substack{II: OK\\III:I*6-III}}{\xrightarrow{\hspace*{1cm}}}\begin{pmatrix}1&\frac{2}{3}&\frac{2}{3}\\0&2&1\\0&0&0\end{pmatrix}\overset{II*\frac{1}{2}}{\xrightarrow{\hspace*{1cm}}}\begin{pmatrix}1&\frac{2}{3}&\frac{2}{3}\\0&1&\frac{1}{2}\\0&0&0\end{pmatrix}$ \\
+$rang=2$\hspace{5mm}(2 Stufen)
+\end{enumerate}
+\begin{definition}
+\end{definition}
+Der Zeilensprung einer Matrix $A$ ist die Maximalzahl l.u. Zeilen von $A$. D.h. sind $z_1,...,z_m$ die Zeilen von $A$, da.  Zeilenrang=$dim<z_1,...,z_m>_K$ \\
+Analog: Spaltenrang \\
+Es gilt Zeilenrang($A$)=Spaltenrang($A^T$)
+\begin{satz}
+\end{satz}
+Elementare Zeilenumformungen (ZUF) ändern den Zeilenrang und den Spaltenrang \\
+Beweis: (Zeilenrang)
+\begin{enumerate}[label=(\arabic*)]
+\item $<z_1,...,z_m>=<z_1,z_2+\lambda z_1,...,z_m>\hspace{5mm}(\lambda\in K)$
+\item $<z_1,...,z_m>=<\lambda z_1,z_2,...,z_m>\hspace{5mm}\lambda\neq 0$
+\item $<z_1,...,z_m=<z_2,z_1,...,z_m>$
+\end{enumerate}
+\newpage
+\begin{bem}
+\end{bem}
+Bei einer Matrix in Zeilenstufenform ist der Rang direkt ablesbar: er ist die Anzahl der Zeilen $\neq\overset{\rightarrow}{0}$. \\
+Der Gauß-Algorithmus (5.12) liefert also (wegen 5.15) ein einfaches Verfahren zur Rangbestimmung. \\
+(Bsp.: Matrix im Bsp. 5.13 a) hat Rang 3, in 5.13 b) Rang 2)
+\begin{satz}
+\end{satz}
+Für jede Matrix $A\in M_{m,n}(K)$ gilt Zeilenrang($A$)=Spaltenrang($A$) \\
+Beweis: Bringe Matrix $A$ auf Zeilenstufenform (mit 5.12). Sei $r$ die Anzahl der Stufen, dann sind die Stufenspalten $s_{j1},...,s_{jr}$ l.u. \\
+Also: Spaltenrag($A$)$\geq$Zeilenrang($A$)=Spaltenrang($A^T$)$\geq$Zeilenrang($A^T$)=Spaltenrang($A$) \\
+$\Rightarrow$ überall gilt Gleichheit $\Rightarrow$ Beh.
+\begin{definition}
+\end{definition}
+Für $A\in M_{m,n}(K),B\in M_{n,p}(K)$ gilt $rg(AB)\geq rg(A)$, $rg(AB)\geq rg(B)$ \\
+Beweis: \\
+$B=(b_1,...,b_p)\Rightarrow A*B=(A*b_1,...,A*b_p)$ und $A*b_k=(a_1,...,a_n)\underbrace{\begin{pmatrix}b_{1k}\\\vdots\\b_{nk}\end{pmatrix}}_{\text{Spalte }b_k}=b_{1k}*a_1+...+b_{nk}*a_n$ \\
+$\Rightarrow\underbrace{A*b_k}_{\text{ist LK von Spalten von }A}\hspace{5mm}\forall K\in\{1,...,p\} \\
+\Rightarrow rg(AB)\geq dim<a_1,...,a_n>\overset{5.17}{=}rg(A)$ \\
+$rg(AB)=rg((AB)^T)=rg(B^TA^T)\geq rg(B^T)\overset{5.17}{=}rg(B)$
+\begin{bsp}
+\end{bsp}
+Gauß-Algorithmus zur Lösung von LGS $\rightarrow$ Folien
+\begin{koro}
+\end{koro}
+\begin{enumerate}[label=\alph*)]
+\item $Ax=b$ ist genau dann lösbar, wenn $rb(a,b)=rg(A)$ 
+\item $Ax=b$ ist genau dann eindeutig lösbar wenn $rg(A,b)=rg(A)=n$ \\
+($n$ = Anzahl der Unbekannten)
+\item Dimension des Lösungsraums von $Ax=\overset{\rightarrow}{0}$ ist $n-rg(A)$ \\
+($\underbrace{x_{r+1},...,x_n}_{n-r\text{ Stück}}$ sind frei wählbar) \\
+Beweis: folgt aus 5.29
+\end{enumerate}
+\begin{definition}
+\end{definition}
+Der Lösungsraum eines homogenen LGS $Ax=\overset{\rightarrow}{0}$ wird auch als Kern von $A$ bezeichnet. $kerA$ \\
+(Es gilt also $dim\:kerA)n-rg(A))$
+\newpage
+\begin{bsp}
+LGS über $\mathbb{R}$
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $x_1+2x_2+x_3+x_4=0\\
+x_1-x_2+2x_3-x_4=0$ \\
+$(A,b)=\left(\begin{array}{cccc|c}1&2&1&1&0\\1&-1&2&-1&0\end{array}\right)\overset{II:\:I*(-1)+II}{\xrightarrow{\hspace*{2cm}}}\left(\begin{array}{cccc|c}1&2&1&1&0\\0&-3&1&-2&0\end{array}\right)$ \\
+$\overset{II:\:II*\frac{1}{3}}{\xrightarrow{\hspace*{2cm}}}\left(\begin{array}{cccc|c}1&2&1&1&0\\0&1&-\frac{1}{3}&\frac{2}{3}&0\end{array}\right)$ \\
+$r=2\hspace{5mm}(x_3,x_4$, sind frei wählbar ("freie" Variablen)) \\
+$rg(A.b)=2<n=4\Rightarrow kerA=$ Lösungsraum $U$ de LGS ist 2-dimensional \\
+$dimU=n-rg(A)$ \\
+Wie sieht der Lösungsraum genau aus? Gib eine Basis von $U$ an. Wähle $x_3,x_4$ frei. (möglichst geschickt) \\
+$x_3=0,x_4=1$ gibt $x_2=-\frac{2}{3}, x_1=0+\frac{3}{4}+0-1=\frac{1}{3}$ \\
+$\Rightarrow v_1=\begin{pmatrix}\frac{1}{3}\\-\frac{2}{3}\\0\\1\end{pmatrix}$ ist 1. Basisvektor von $U$ \\
+$x_3=1,x_4=0$ gibt $x_2=\frac{1}{3},x_1=-\frac{2}{3}-1=-\frac{5}{3}$ \\
+$v_2=\begin{pmatrix}-\frac{5}{3}\\\frac{2}{3}\\1\\0\end{pmatrix}$ ist 2. Basisvektor von $U$ \\
+$\Rightarrow U=<v_1,v_2>_{\mathbb{R}}=<\begin{pmatrix}1\\-2\\0\\3\end{pmatrix}, \begin{pmatrix}-5\\2\\3\\0\end{pmatrix}>_{\mathbb{R}}=\{\alpha*\begin{pmatrix}1\\-2\\0\\3\end{pmatrix}+\beta*\begin{pmatrix}-5\\2\\3\\0\end{pmatrix}\mid\alpha,\beta\in\mathbb{R}\}$ 
+\item $x_1+2x_2+x_3+x_4=7 \\
+x_1-x_2-2x_3-x_4=-2$ \\
+(inhomogenes LGS, das zu homogene LGS aus Teil a)) \\
+$\left(\begin{array}{cccc|c}1&2&1&1&7\\1&-1&2&-1&-2\end{array}\right)\overset{}{\xrightarrow{\hspace*{1cm}}}\left(\begin{array}{cccc|c}1&2&1&1&7\\0&-3&1&-2&-9\end{array}\right)\overset{}{\xrightarrow{\hspace*{1cm}}}\left(\begin{array}{cccc|c}1&2&1&1&7\\0&1&-\frac{1}{3}&\frac{2}{3}&3\end{array}\right)$ \\
+spezielle Lösung $x_0$: \\
+z.B. $x_3=0,x_4=0$ (frei wählen) \\
+$\Rightarrow x_2=3$ \\
+$x_1=7-2*3=1$ gibt $x_0=\begin{pmatrix}1\\3\\0\\0\end{pmatrix}$ \\
+Allg. Lösung hat die Form: \\
+$\begin{pmatrix}1\\3\\0\\0\end{pmatrix}+\underbrace{U}_{\text{von a)}}=\{\begin{pmatrix}1\\3\\0\\0\end{pmatrix}+\alpha*\begin{pmatrix}1\\-2\\0\\3\end{pmatrix}+\beta*\begin{pmatrix}-5\\2\\3\\0\end{pmatrix}\mid\alpha,\beta\in\mathbb{R}\}$ 
+\end{enumerate}
+\newpage
+\begin{bem}
+\end{bem}
+Sei $V=\mathbb{R}^2,U=<\begin{pmatrix}2\\1\\1\end{pmatrix},\begin{pmatrix}0\\3\\-1\end{pmatrix},\begin{pmatrix}2\\7\\-1\end{pmatrix},\begin{pmatrix}-2\\-4\\0\end{pmatrix}>_{\mathbb{R}}\hspace{5mm}$UR von $V$ \\
+Wie viele l.u. Vektoren enthält $U$? (was ist $dimU$? Basis von $U$?) \\
+Dies lässt sich nun einfach mit 5.12 beatnworten: \\
+$dimU=rg\begin{pmatrix}2&0&2&-2\\1&3&7&4\\1&-1&-1&0\end{pmatrix}\underbrace{=}_{\substack{II:\:II*(-2)+I\\III:\:III*(-2)+I}}rg\begin{pmatrix}2&0&2&-2\\0&-6&-12&6\\0&2&4&-2\end{pmatrix} \\ 
+\underbrace{=}_{III:\:3*III+II}rg\begin{pmatrix}2&0&2&-2\\0&-6&-12&6\\0&0&0&0\end{pmatrix}=2$ \\
+Also gibt es 2 l.u. Vektoren in $U$, die den Stufenspalten entsprechen $\begin{pmatrix}2\\1\\1\end{pmatrix},\begin{pmatrix}0\\3\\-1\end{pmatrix}$ \\
+Diese bilden Basis von $U$ \\
+weiteres Bsp.: \\
+$V=\{p\mid p $Polynom vom Grad $\leq2\}\subseteq \mathscr{F}(\mathbb{R},\mathbb{R})$ \\
+$U=<3x,4x^2+2x+2,2x^2+x+1>\subseteq V$ \\
+$dimU$? Basis von $U$ \\
+Erstelle Matrix aus Koodinatenvektoren bezgl. (geordneter) Basis $(1,x,x^2)$ von $V$: \\
+$dimU=rg\begin{pmatrix}0&2&1&1\\3&2&1&0\\0&4&2&2\end{pmatrix}=rg\begin{pmatrix}3&2&1&0\\0&4&2&2\\0&2&1&1\end{pmatrix}=rg\begin{pmatrix}3&2&1&0\\0&4&2&2\\0&0&0&0\end{pmatrix}=2$ \\
+Basis von $U=\{3x,4x^2+2x+2\}$
+\begin{bem}
+\end{bem}
+Gegeben ist das LGS (*) $Ax=b$ mit $A\in M_n(K), b\in K^n, rg(A)=n$. \\
+Nach 5.21 b) besitzt (*) genau einen Vektor $x\in K^n$ als Lösung, dieser kann mittels 5.12/5.20 gefunden werden. \\
+Statt nur auf Zeilenstufenform kann man $(A,b)$ durch elementare ZUF auch auf die Form $(E_n,b\prime)$ bringen. Dann ist $b\prime$ genau der gesuchte Lösungsvektor $x$. \\
+Bsp.: $2x_1+x_2=10 \\
+x_1+3_2=15$ \\
+$(A,b)=\left(\begin{array}{cc|c}2&1&10\\1&3&15\end{array}\right)\overset{II:\:I-2*II}{\xrightarrow{\hspace*{1.5cm}}}\left(\begin{array}{cc|c}2&1&10\\0&-5&-20\end{array}\right)\overset{II:\:II*(-\frac{1}{5})}{\xrightarrow{\hspace*{1.5cm}}}\left(\begin{array}{cc|c}2&1&10\\0&1&4\end{array}\right)$ \\
+$\overset{I:\:I-II}{\xrightarrow{\hspace*{1.5cm}}}\left(\begin{array}{cc|c}2&0&6\\0&1&4\end{array}\right)\overset{II:\:I*\frac{1}{2}}{\xrightarrow{\hspace*{1.5cm}}}\left(\begin{array}{cc|c}1&0&3\\0&1&4\end{array}\right)$ \\
+Ähnlich lässt sich die Inverse $A^{-1}\in M_n(K)$ einer Matrix $A\in M_n(K)$ berechnen. (falls $A$ invertierbar ist) \\
+Gegeben sei die Gleichung $A*x=E_n\hspace{5mm}(A*A^{-1}=E_n)$ mit $A,E_n\in M_n(K)$ gesucht ist die Matrix $X(=A^{-1})\in M_n(K)$ \\
+Bringe die erweiterte Koeffizientenmatrix $A,E_n)$ mittels Gauß-Algoritmus (5.12) auf die Form $(E_n,E_n\prime)$. Dann ist $E_n\prime$ genau die gesuchte Lösungsmatrix $X$ (also $A^{-1}$)
+\newpage
+Bsp.: $A=\begin{pmatrix}2&1\\1&3\end{pmatrix}\in M_2(\mathbb{R})$, gesucht $A^{-1}$ mit $AA^{-1}=\begin{pmatrix}1&0\\0&1\end{pmatrix}$ \\
+$\left(\begin{array}{cc|cc}2&1&1&0\\1&3&0&1\end{array}\right)\overset{II:\:2*II}{\xrightarrow{\hspace*{1.5cm}}}\left(\begin{array}{cc|cc}2&1&1&0\\2&6&0&2\end{array}\right)\overset{II:\:I-II}{\xrightarrow{\hspace*{1.5cm}}}\left(\begin{array}{cc|cc}2&1&1&0\\0&-5&1&-2\end{array}\right)$ \\
+$\overset{II:\:II*(-\frac{1}{5})}{\xrightarrow{\hspace*{1.5cm}}}\left(\begin{array}{cc|cc}2&1&1&0\\0&1&-\frac{1}{5}&\frac{2}{5}\end{array}\right)\overset{I:\:I-II}{\xrightarrow{\hspace*{1.5cm}}}\left(\begin{array}{cc|cc}2&0&\frac{6}{5}&-\frac{2}{5}\\0&1&-\frac{1}{5}&\frac{2}{5}\end{array}\right)\overset{I:\:I*\frac{1}{2}}{\xrightarrow{\hspace*{1.5cm}}}\left(\begin{array}{cc|cc}1&0&\frac{3}{5}&-\frac{1}{5}\\0&1&-\frac{1}{5}&\frac{2}{5}\end{array}\right)$ \\
+Test: $A*A^{-1}=A^{-1}*A=E_n$ \\
+Das führt zu folgendem Satz.
+\begin{satz}
+Charakterisierung invertierbarer Matritzen
+\end{satz}
+$A\in M_n(K)$ ist invertierbar $\Leftrightarrow rg(A)=n$. \\
+Beweis: $\Rightarrow$ Sei $A$ invertierbar. Dann gilt $n=rg(E_n)=rg(A*A^{-1})\overset{5.19}{\geq}rg(A)\geq$ (größer geht nicht, $A\in M_n(K))\Rightarrow rg(A)=n)$ \\
+$\Leftarrow$ folgt aus Bem. 5.25
+\newpage
+\section{Determinante}
+\begin{definition}
+\end{definition}
+$A\in M_{n-1}(K)\hspace{5mm} i,j\in\{1,...,n\}$ \\
+$A_{ij}\in M_{n-1}(K)$ sei die Matrix, die man aus $A$ durch streichen der $i$-ten Zeile und der $j$-ten Spalte erhält. \\
+(z.B. $A=\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}, A_{1,1}=\begin{pmatrix}5&6\\8&9\end{pmatrix}, A_{3,2}=\begin{pmatrix}1&3\\2&6\end{pmatrix}$)
+\begin{definition}
+Determinante
+\end{definition}
+(rekursive Definition) \\\
+$A\in M_n(K)$ \\
+$n=1:A=(a)$, dann ist $det(A):=a$ \\
+$n>1:det(A):=\sum^n_{j=1}(-1)^{1+j}a_{ij}*det(A_{1j}) \\
+=a_{11}*det(A_{11})-a_{12}*det(A_{12})+a_{13}*det(A_{13})-...+/-a_{1n}*det(A_{1n})$ \\
+$det(A)$ heißt Determinante von $A$ \\
+(Formel heißt auch "Entwicklung nach der 1. Zeile")
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item $det\begin{pmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{pmatrix}=a_{11}*a_{22}-a_{12}*a_{21}$
+\item $det\begin{pmatrix}a_{11}&a_{12}&a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{pmatrix}$ \\
+$=a_{11}*(a_{22}*a_{33}-a_{23}*a_{32})-a_{12}*(a_{21}*a_{33}-a_{23}*a_{31})+a_{13}*(a_{21}*a_{32}-a_{22}*a_{31})$ \\
+Regel von Sarrus
+\item für $n\times n$ Matrix ermittle i.A. $n!$ Summanden
+\item Ist $A$ eine obere oder untere Dreiecksmatrix, so lässt sich $det(A)$ einfach berechnen: \\
+$A=\begin{pmatrix}a_{11}&0&0&0\\a_{21}&a_{22}&0&0\\0&0&\ddots&0\\0&0&0&a_{nm}\end{pmatrix}, det(A)=a_{11}*a_{12}*...*a_{nm}$ \\
+klar für $n=1: A(0)$ \\
+$n>1:\:det\begin{pmatrix}a_{11}&\cdots&0\\\vdots&\ddots&\vdots\\0&\cdots&a_{nm}\end{pmatrix}=a_{11}*det\begin{pmatrix}a_{12}&\cdots&0\\\vdots&\ddots&\vdots\\0&\cdots&a_{nm}\end{pmatrix}$ \\
+Induktion $\Rightarrow$ Behauptung
+\item damit ist klar $det(E_n)=1$ \\
+Man kann Def. 6.2 verallgemeinern und folgenden Satz zeigen
+\end{enumerate}
+\newpage
+\begin{satz}
+Entwicklungssatz von Laplace
+\end{satz}
+$A\in M_n(K)$
+\begin{enumerate}[label=\alph*)]
+\item Entwicklung nach der $i$-ten Zeile für $i\in\{1,...,n\}$ gilt $det(A)=\sum^n_{j=1}(-1)^{i+j}a_{ij}*det(A_{ij})$ 
+\item Entwicklung nach der $j$-ten Spalte für $j\in\{1,...,n\}$ gilt $det(A)=\sum^n_{i=1}(-1)^{i+j}a_{ij}*det(A_{ij})$
+\end{enumerate}
+\begin{bsp}
+\end{bsp}
+$A=\begin{pmatrix}2&1&1\\-1&0&3\\2&0&4\end{pmatrix}\in M_3(\mathbb{R})\hspace{5mm}\begin{pmatrix}+&-&+\\-&+&-\\+&-&+\end{pmatrix}$ \\
+mit Def. 6.2 Entwicklung nach 1. Zeile: \\
+$det(A)=2*det\begin{pmatrix}0&3\\0&4\end{pmatrix}-1*det\begin{pmatrix}-1&2\\3&4\end{pmatrix}+1*det\begin{pmatrix}-1&0\\2&0\end{pmatrix}=2*0-1(-10)+1*0=10$ \\
+oder Entwicklung nach 3. Zeile: \\
+$det(A)=2*det\begin{pmatrix}1&1\\0&3\end{pmatrix}-0*det(...)+4*det\begin{pmatrix}2&1\\-1&0\end{pmatrix}=2*3-0*...+4*1=10$ \\
+oder (besser) Entwicklung nach 2. Spalte: \\
+$det(A)=-1*det\begin{pmatrix}-1&3\\2&4\end{pmatrix}+0*det(...)-0*det(...)=-1*(-10)=10$ \\
+Also: Geschickt nach einer Zeile oder Spalte zu entwickeln, in der viele Nullen stehen. \\
+Falles es nur wenig Nullen gibt: zuerst Gauß anwenden. (Achtung: $det$ ändert sich evtl.)
+\begin{bem}
+\end{bem}
+Aus 6.4 folgt $det(A)=det(A^T)$
+\begin{satz}
+Eigenschaften der Determinante
+\end{satz}
+$A,B\in M_n(K)\hspace{5mm}s_1,...,s_n$ Spalten von $A$ \\
+$s_i\in K^n, \lambda\in K$ \\
+Also $A=\{s_1,...,s_n)$
+\begin{enumerate}[label=(D\arabic*)]
+\item $det(s_1,...,s_i+s_i\prime,...,s_n)=det(s_1.,,,s_1,...,s_n)+det(s_1,...,s_i\prime,...,s_n)$
+\item Beim vertauschen zweier Spalten von $A$ ändert sich das Vorzeichen von $det(A)$
+\item $det(s_1,...,\lambda s_i,...,s_n)=\lambda*det(s_1,...,s_i,...,s_n)$
+\item $det(\lambda*A)\overset{D3}{=}\lambda^n*det(A)$
+\item Ist eine Spalten von $A$ gleich $\overset{\rightarrow}{0}$, so ist $det(A)=0$ (folgt aus D3)
+\item Besitzt $A$ zwei identische Spalten, so ist $det(A)=0$ \\
+(vertausche id Spalte, erhalte Matrix $A\prime(=A)$. \\
+Nach D2:  $detA=-detA\prime=-detA$, dies ist nur möglich wenn $det(A)=0$)
+\item $det(s_1,...,s_i+\lambda s_j,...,s_n)=det(A)\hspace{5mm}(i\neq j)$ mit (D1,D2, D6) 
+\item $det(A*B)=det(A)*det(B)$
+\end{enumerate}
+Analog mit Zeilen statt Spalten
+\newpage
+\begin{bem}
+\end{bem}
+Also: Erzeuge mit Gauß viele Nulleinträge (D2, D3 ($det$ ändert sich) D7 ($det$ bleibt)), entwickle nach guter Zeile/Spalte. (oder: bringe Matrix auf obere/untere Dreiecks-Form) \\
+z.B. $det\begin{pmatrix}0&1&2\\-2&0&3\\0&-2&3\end{pmatrix}\overset{D2}{=}-det\begin{pmatrix}-2&0&3\\0&1&2\\0&-2&3\end{pmatrix}\overset{\substack{D7\\III:\:2II+III}}{=}-det\begin{pmatrix}-2&0&3\\0&1&2\\0&0&7\end{pmatrix} \\
+=-(-2*1*7)=14$
+\begin{satz}
+Charakterisierung invertierbarer Matritzen über Determinante
+\end{satz}
+$A\in M_n(K)$ ist invertierbar $\Leftrightarrow det(A)\neq 0$ \\
+In diesem Fall gilt: $det(A^{-1})=(detA)^{-1}\hspace{5mm}(=\frac{1}{detA}$ in $\mathbb{R})$ \\
+Beweis "$\Rightarrow$\grqq Sei $A$ invertierbar $\exists A^{-1}$ mit $A*A^{-1}=E_n\Rightarrow det(A*A^{-1})=det(E_n)=1$ \\
+$=det(A)*det(A^{-1})$ (D8) \\
+$\Rightarrow det(A)\neq0 \hspace{5mm}det(A^{-1})=\frac{1}{det(A)}=((det(A))^{-1})$ \\
+"$\Leftarrow$" (mit Kontraposition:) Sei $A$ nicht invertierbar $\overset{\text{Satz 5.26}}{\Rightarrow} rg(A)<n\Rightarrow$ Spalten von $A$ sind l.a. d.h. $\exists i$ mit $s_i=\sum^n_{k=1}\lambda_ks_k$ \\
+($s_i$ als LK der restlichen Spalten) \\
+$\Rightarrow det(A)\overset{D7}{=}det(s_1,...,\underbrace{s_i-\sum\lambda_ks_k}_{i},...,s_n)=det(s_1,...,\overset{\rightarrow}{0},...,s_n)\overset{D5}{=}0$
+\begin{bem}
+\end{bem}
+Für $A\in M_2(K)$ lässt sich $A^{-1}$ auch schnell mittels Determinante berechnen: \\
+Es gilt: $A=\begin{pmatrix}a&b\\c&d\end{pmatrix}\in M_2(K)\Rightarrow A^{-1}=\frac{1}{detA}*\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\hspace{10mm}\frac{1}{detA}=(detA)^{-1}$
+\newpage
+\section{Eigenwerte und Eigenvektoren}
+Sei $A\in M_n(K).$ Ein Skalar $\lambda\in K$ heißt Eigenwert von $A$ wenn es einen Vektor $\overset{\rightarrow}{0}\neq x\in K^n$ gibt ("nichttrivial" d.h. $\neq\overset{\rightarrow}{0}$) mit $Ax=\lambda x$. \\
+(d.h. der Vektor wird von $A$ nur um $\lambda$ gestreckt und sonst nicht verändert) \\
+Jedes solche $x$ heißt ein zu $\lambda$ gehöriger Eigenvektor von $A$, \\
+und $Eig(\lambda)=Eig_A(\lambda)=\{x\in K^n\mid Ax=\lambda x\}$ (alle zu $\lambda$ geh. EV und der Nullvektor $\overset{\rightarrow}{0}$) der $\lambda$ zugeordnete Eigenraum. 
+\begin{satz}
+\end{satz}
+$\lambda\in K$ ist Eigenwert von $A\in M_n(K)\Leftrightarrow det(A-\lambda E_n)=0$, und die zu $\lambda$ gehörenden Eigenvektoren sind genau die nichttrivialen Lösungen des homogenen LGS $[A-\lambda E_n]x=\overset{\rightarrow}{0}$ \\
+also: $Eig_A(\lambda))ker(A-\lambda E_n)$ \\
+Beweis: $(x\neq\overset{\rightarrow}{0})\hspace{5mm}Ax=\lambda x\Leftrightarrow Ax=\lambda E_n\:x\Leftrightarrow(A-\lambda E_n)x=\overset{\rightarrow}{0}$ \\
+Also: $\lambda$ Eigenwert von $A$ \\
+$\Leftrightarrow(A-\lambda E_n)x=\overset{\rightarrow}{0}$ hat noch weitere Lösungen als $x=\overset{\rightarrow}{0}$ \\
+$\overset{Kor.\:5.21}{\Leftrightarrow}rg(A-\lambda E_n)<n$ \\
+$\overset{5.26}{\Leftrightarrow}(A-\lambda E_n)$ nicht invertierbar \\
+$\overset{6.9}{\Leftrightarrow}det(A-\lambda E_n)=0$ \\
+$x$ Eigenvektor $\Leftrightarrow x\neq\overset{\rightarrow}{0}$ und $(A-\lambda E_n)x=\overset{\rightarrow}{0}$
+\begin{bem}
+\end{bem}
+$\lambda\in K$ ist Eigenwert von $A\Leftrightarrow det(A-\lambda E_n)=0$ \\
+$Eig_A(\lambda)=ker(A-\lambda E_n)$
+\begin{definition}
+\end{definition}
+Für $A\in M_n(K)$ heißt $P_A(\lambda):=det(A-\lambda E_n)$ das charakteristische Polynom von $A$
+\begin{bsp}
+\end{bsp}
+$A=\begin{pmatrix}1&1\\-2&4\end{pmatrix}\in M_2(\mathbb{R})$ \\
+Eigenwerte, Eigenvektoren, $Eig(A)$, $P_A(\lambda)$? \\
+$A-\lambda E_2=\begin{pmatrix}1&1\\-2&4\end{pmatrix}-\lambda\begin{pmatrix}1&0\\0&1\end{pmatrix}=\begin{pmatrix}1-\lambda&1\\-2&4-\lambda\end{pmatrix}$ \\
+$P_A(\lambda)=det\begin{pmatrix}1-\lambda&1\\-2&4-\lambda\end{pmatrix}=(1-\lambda)(4-\lambda)-(1)+(-2)=\lambda^2-5\lambda+6=/\lambda-2)(\lambda-3)$ \\
+Eigenwerte von $A$: \\
+$\lambda\in W$ von $A\Leftrightarrow P_A(\lambda)=0\overset{7.2}{\Leftrightarrow}\lambda=2$ oder $\lambda=3$ \\
+d.h. $\lambda_1=2,\lambda_2=3$ Eigenwerte von $A$ \\
+Eigenvektoren von $A$: \\
+$x$ ist EV zu $\lambda_1=2\Leftrightarrow x\neq0$ und $(A-\lambda_1E_2)x=\overset{\rightarrow}{0}$, also $\begin{pmatrix}1-2&1\\-2&4-2\end{pmatrix}x=\begin{pmatrix}0\\0\end{pmatrix}$ \\
+$\Leftrightarrow\begin{pmatrix}-1&1\\-2&2\end{pmatrix}x=\begin{pmatrix}0\\0\end{pmatrix}$ (z.B. $x=\begin{pmatrix}1\\1\end{pmatrix}$, welche noch?)
+\newpage
+Eigenraum von $A$: \\
+$Eig_A(\lambda_1)=ker\begin{pmatrix}-1&1\\-2&2\end{pmatrix}=<\begin{pmatrix}1\\1\end{pmatrix}>_{\mathbb{R}}$ \\
+$x$ ist EV von $\lambda_2=3\Leftrightarrow x\neq\overset{\rightarrow}{0}$ und $(A-\lambda_2E_2)x=\overset{\rightarrow}{0}$ also $\begin{pmatrix}-2&1\\-2&1\end{pmatrix}x=\begin{pmatrix}0\\0\end{pmatrix}$ \\
+$Eig_A(\lambda_2)=ker\begin{pmatrix}-2&1\\-2&1\end{pmatrix}=<\begin{pmatrix}1\\2\end{pmatrix}>_{\mathbb{R}}$ 
+\begin{anw}
+\end{anw}
+\begin{enumerate}[label=\alph*)]
+\item Matrixpotenzen \\
+Berechne $A^{2019}=\underbrace{A*A*...*A}_{\text{2019 mal}}$ für $A=\begin{pmatrix}1&1\\-2&4\end{pmatrix}$ aus Bsp. 7.4 \\
+Es gilt: $S:=\begin{pmatrix}1&1\\1&2\end{pmatrix}$ (linke Spalte Eigenvektor zu $\lambda_1$, rechte Spalte EV zu $\lambda_2$) \\
+$S^{-1}\underbrace{=}_{\text{Formel 6.10 ($detS=1$)}}\frac{1}{1}*\begin{pmatrix}2&-1\\-1&1\end{pmatrix}$ dann ist $A=S*\underbrace{\begin{pmatrix}2&0\\0&3\end{pmatrix}}_{=D\text{ Diagonalmatrix}}*S^{-1}$ \\
+$\Rightarrow A^{2019}=(SDS^{-1}=^{2019}=(SD\underbrace{S^{-1})(S}_{=E_2}D\underbrace{S^{-1})...(S}_{=E_2}DS^{-1})$ \\
+$=SD^{2019}S^{-1} \\
+S\begin{pmatrix}2^{2019}&0\\0&3^{2019}\end{pmatrix}S^{-1}$
+\item -Schwingungen, Eigenfrequenz (Tacoma Bridge) \\
+- Googles PageRang Algo. \\
+- Hauptachsentransformation, PCA (Eigenfaces)
+\end{enumerate}
+\begin{bem}
+\end{bem}
+Für $A\in M_n(K)$ ist $P_A(\lambda)=det(A-E_n)=det\begin{pmatrix}a_{11}-\lambda&a_{12}&\cdots&a_{1m}\\\vdots&a_{22}-\lambda&&\vdots\\\vdots&&\ddots&\vdots\\a_{nm}&&&a_{nm}-\lambda\end{pmatrix}$ \\
+ein Polynom von Grad $N$ (folgt aus Definition der Determinante) die Nulstellen von $P_A(\lambda)$ sind EW von $A$. \\
+$K=\mathbb{R}:\leq n$ Eigenwerte \\
+$K=\mathbb{C}$: hier gilt der sog. "Fundamentalsatz der Algebra": jedes Polynom $p(\lambda)\sum^n_{k=0}a_k\lambda^k \\
+(a_k\in\mathbb{C})$ vom Grad $n$ (d.h. $a_n\neq0)$ besitzt genau $n$ Nullstellen in $\mathbb{C}$ genauer $\exists\lambda_1,...,\lambda_n\in\mathbb{C}$ mit $p(\lambda)=a_n\lambda-\lambda_1)...(\lambda-\lambda_n).$\\
+Von den Zahlen $\lambda_1,...,\lambda_n$ können auch einige gleich sein, daher präziser formuliert: $\exists l\in\mathbb{N},\lambda_1,...,\lambda_l\in\mathbb{C}$ mit $\lambda_i\neq\lambda_j(i\neq j)$ und $\exists n_1,...,n_l\in\mathbb{N}$ und $p(\lambda)=a_n(\lambda-\lambda_1)^{n_1}...(\lambda-\lambda_l)^{n_l}$. \\
+Die Zahl $n_j$ nennt man dann die algebraische Vielfachheit vin $\lambda_j$.
+\newpage
+\begin{bsp}
+\end{bsp}
+\begin{enumerate}[label=\alph*)]
+\item$A=\begin{pmatrix}0&-1\\1&0\end{pmatrix},p_A(\lambda)=det\begin{pmatrix}-\lambda&1\\1&-\lambda\end{pmatrix}=\lambda^2+1=(\lambda+i)(\lambda-i)$ \\
+$\Rightarrow$ Eigenwerte: $\lambda_1=i,\lambda_2=-i$ \\
+Eigenvektoren: \\
+zu $\lambda_1=i$: löse $\begin{pmatrix}-1&-1\\1&-i\end{pmatrix}x=\overset{\rightarrow}{0}\hspace{5mm}\left(\begin{array}{cc|c}-1&-1&0\\0&0&0\end{array}\right)$ \\
+$Eig_A(\lambda_1)=<\begin{pmatrix}1\\-i\end{pmatrix}>$ \\
+zu $\lambda_2=-i$: löse $\begin{pmatrix}i&-1\\1&i\end{pmatrix}x=\overset{\rightarrow}{0}$ \\
+$Eig_A(\lambda_2)=<\begin{pmatrix}1\\i\end{pmatrix}>$
+\item $A=\begin{pmatrix}2&0&-1\\0&2&-1\\1&0&0\end{pmatrix} p_A=det\begin{pmatrix}2-\lambda&0&-1\\0&2-\lambda&-1\\1&0&-\lambda\end{pmatrix} \\
+=(2-\lambda)*det\begin{pmatrix}2-\lambda&-1\\0&-\lambda\end{pmatrix}-1*det\begin{pmatrix}0&2-\lambda\\1&0\end{pmatrix}=...=(2-\lambda)(\lambda-1)$ \\
+$\Rightarrow \lambda_1=2$ ist EW mit algebraischer Vielfachkeit 1 \\
+$\lambda_2=1$ ist EW mit algebraischer Vielfachkeit 2 \\
+$Eig_A(\lambda_1=2)=ker\begin{pmatrix}0&0&-1\\0&0&-1\\1&0&-2\end{pmatrix}=ker\begin{pmatrix}1&0&-2\\0&0&-1\\0&0&0\end{pmatrix}$ ($x_2$ frei, setze $x_1=1$, rechne: $x_3=0, x_1=0$) \\
+$=<\begin{pmatrix}0\\1\\0\end{pmatrix}>$ \\
+$Eig_A(\lambda_2=1)=ker\begin{pmatrix}1&0&-1\\0&1&-1\\1&0&-1\end{pmatrix}=ker\begin{pmatrix}1&0&-1\\0&1&-1\\0&0&0\end{pmatrix}$ ($x_2$ frei) \\
+$=<\begin{pmatrix}1\\1\\1\end{pmatrix}>$
+\end{enumerate}
+\begin{definition}
+Diagonalisierbarkeit
+\end{definition}
+Eine Matrix $A\in M_n(K)$ heißt diagonalisierbar, wenn eine invertierbare Matrix $S\in M_n(K)$ existiert, so dass $A=SDS^{-1}$ gilt, wobei $D=\begin{pmatrix}\lambda_1&\cdots&0\\\vdots&\ddots&\vdots\\0&\cdots&\lambda_n\end{pmatrix}$ Diagonalmatrix ist. \\
+(Die $\lambda_i$ sind gerade die EW von $A$. Es gilt dann auch $D=S^{-1}AS$) \\
+Ist jede Matrix diagonalisierbar?
+\newpage
+\begin{satz}
+Spektralsatz
+\end{satz}
+\begin{enumerate}[label=\alph*)]
+\item $A\in M_n(K)$ ist diagonalisierbar $\Leftrightarrow$ Es gibt $n$ l.u. Eigenvektoren von $A$
+\item Besitzt $A$ $n$ verschiedene EW, so ist $A$ diagonalisierbar. \\
+($A$ diagonalisierbar $\Leftrightarrow A$ besitzt $n$ verschiedene EW)
+\end{enumerate}
+Beweis:
+\begin{enumerate}[label=\alph*)]
+\item $A$ diagonaliierbar, d.h. $\exists S$ invertierbar mit $S^{-1}AS=\begin{pmatrix}\lambda_1&\cdots&0\\\vdots&\ddots&\vdots\\0&\cdots&\lambda_n\end{pmatrix}$ \\ $\overset{\text{Mult. mit $S$ von links}}{\Leftrightarrow} AS=S*\begin{pmatrix}\lambda_1&\cdots&0\\\vdots&\ddots&\vdots\\0&\cdots&\lambda_n\end{pmatrix}$ \\
+Sei $S=(\underbrace{s_1,...,s_n}_{\text{Spalten}}$ \\
+Für die $i$-te Spalte $s_i$ von $S$ gilt dann $As_i=\lambda_is_i\hspace{5mm}(i=1,...,n)$ \\
+Also ist $s_i$ EV zum EW von $A$. \\
+$S$ ist invertierbar $\Leftrightarrow$ Spalten $s_1,...,s_n$ l.u \
+\item Zeige per Induktion, dass die zugehörigen EV l.u. sind, Beh. folgt aus Teil a)
+\end{enumerate}
+\begin{bem}
+zu 7.9 b)
+\end{bem}
+Es gibt auch diagonalisierbare Matritzen, die nicht $n$ verschiedene EW haben! \\
+z.B.: $E_n$: ist bereits in Diagonalform \\
+$E_n=\begin{pmatrix}1&\cdots&0\\\vdots&\ddots&\vdots\\0&\cdots&1\end{pmatrix}=\underbrace{\begin{pmatrix}1&\cdots&0\\\vdots&\ddots&\vdots\\0&\cdots&1\end{pmatrix}}_{S}\underbrace{\begin{pmatrix}1&\cdots&0\\\vdots&\ddots&\vdots\\0&\cdots&1\end{pmatrix}}_{D}\underbrace{\begin{pmatrix}1&\cdots&0\\\vdots&\ddots&\vdots\\0&\cdots&1\end{pmatrix}}_{S^{-1}}$ \\
+$\lambda_1=1$ ist $n$-facher EW \\
+EV sind die kanonischen Einheitsvektoren $(1-\lambda)^n=0$
+
+\end{document}
+
